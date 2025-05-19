@@ -76,6 +76,8 @@
   )
 
   #br()#br()
-  This website is written almost entierly in typst.
+  This website is written almost entierly in #link("https://typst.app/docs")[typst].
+
+  #link("https://github.com/alex-s168/website")[Website source code]
 
 ]
