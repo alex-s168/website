@@ -1,0 +1,81 @@
+#import "../common.typ": *
+#import "../simple-page-layout.typ": *
+
+#let gen-page(content) = {
+  core-page-style[
+    #if is-web {
+    table(
+      stroke: none,
+      columns: (25%, 50%, 25%),
+      [],
+      [
+        #html-style("position: absolute; left: 28%; width: 100%")[
+          #box(width: 50%, content)
+        ]
+      ],
+    )
+    } else {
+    content
+    }
+  ]
+}
+
+#let tree-list(..elements) = {
+  gen-tree-from-headings(elemfn: (content, x) => [
+    #html-opt-elem("p", (style:"line-height:1.1"))[
+      #html-style("display:flex; text-indent:0pt;")[
+        #html-style("margin-right: 11pt;", content)
+        #html-style("flex:1;", x.body)
+      ]
+    ]
+  ], elements.pos())
+}
+
+#gen-page[
+
+  #br()
+  #title[alex_s168's]
+  #br()
+
+  Articles
+  #br()
+  #tree-list(
+    (level:1, body: [ Making a simple RegEx engine ]),
+     (level:2, body: html-href("article-make-regex-engine-1.typ.desktop.html")[ Part 1: Introduction to RegEx ]),
+  )
+  #br()
+
+  Socials
+  #br()
+  #tree-list(
+    (level:1, body: html-href("https://github.com/alex-s168")[ GitHub ]),
+    (level:1, body: [Discord: alex_s168]),
+    (level:1, body: html-href("mailto:alexandernutz68@gmail.com")[ E-Mail ]),
+    (level:1, body: html-href("https://codeberg.org/alex-s168")[ Codeberg ]),
+  )
+  #br()
+
+  Working on
+  #br()
+  #tree-list(
+    (level:1, body: [ Programming languages and compilers ]),
+     (level:2, body: [ #link("https://github.com/vxcc-backend/vxcc")[ vxcc-old ]: (discontinued) Simple optimizing compiler backend ]),
+     (level:2, body: [ #link("https://github.com/alex-s168/uiuac")[ uiuac ]: (discontinued) Optimizing compiler for the #link("https://uiua.org")[Uiua programming language] ]),
+     (level:2, body: [ #link("https://github.com/Lambda-Mountain-Compiler-Backend/lambda-mountain")[ LSTS's standard library ] ]),
+     (level:2, body: [ #link("https://github.com/h6-lang/h6")[ h6 ]: Minimal stack-based programming language ]),
+     (level:2, body: [ #link("https://github.com/alex-s168/lil-rs")[ lil-rs ]: Rust implementation of #link("http://beyondloom.com/decker/lil.html")[lil] ]),
+
+    (level:1, body: [ Misc. ]),
+     (level:2, body: [ #link("https://github.com/alex-s168/tpre")[ tpre ]: Fast and minimal RegEx engine ]),
+
+    (level:1, body: [ PCBs ]),
+     (level:2, body: [ #link("project-etc-nand.typ.desktop.html")[ etc-nand ]: #link("https://github.com/ETC-A/etca-spec/")[ ETC.A ] CPU from NAND gates ]),
+
+    (level:1, body: [ FPGA designs ]),
+     (level:2, body: [ RMII MAC in #link("https://www.chisel-lang.org/")[ Chisel ] ]),
+  )
+
+  #br()#br()
+  This website is written almost entierly in typst.
+
+]
