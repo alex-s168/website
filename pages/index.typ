@@ -34,7 +34,7 @@
 #gen-page[
 
   #br()
-  #title[alex_s168's]
+  #title[alex_s168]
   #br()
 
   Articles
@@ -48,10 +48,11 @@
   Socials
   #br()
   #tree-list(
-    (level:1, body: html-href("https://github.com/alex-s168")[ GitHub ]),
+    (level:1, body: link("https://github.com/alex-s168")[ GitHub ]),
     (level:1, body: [Discord: alex_s168]),
-    (level:1, body: html-href("mailto:alexandernutz68@gmail.com")[ E-Mail ]),
-    (level:1, body: html-href("https://codeberg.org/alex-s168")[ Codeberg ]),
+    (level:1, body: link("mailto:alexandernutz68@gmail.com")[ E-Mail ]),
+    (level:1, body: link("https://njump.me/npub17semnd065ahhsajlylkyd3lahcykpuw45rhj7cge3uqdfq24y84st0g4gr")[ nostr ]),
+    (level:1, body: link("https://codeberg.org/alex-s168")[ Codeberg ]),
   )
   #br()
 
@@ -59,7 +60,7 @@
   #br()
   #tree-list(
     (level:1, body: [ Programming languages and compilers ]),
-     (level:2, body: [ #link("https://github.com/vxcc-backend/vxcc")[ vxcc-old ]: (discontinued) Simple optimizing compiler backend ]),
+     (level:2, body: [ #link("https://github.com/vxcc-backend/vxcc-new")[ vxcc ]: Advanced multi-level compiler ]),
      (level:2, body: [ #link("https://github.com/alex-s168/uiuac")[ uiuac ]: (discontinued) Optimizing compiler for the #link("https://uiua.org")[Uiua programming language] ]),
      (level:2, body: [ #link("https://github.com/Lambda-Mountain-Compiler-Backend/lambda-mountain")[ LSTS's standard library ] ]),
      (level:2, body: [ #link("https://github.com/h6-lang/h6")[ h6 ]: Minimal stack-based programming language ]),
@@ -67,6 +68,7 @@
 
     (level:1, body: [ Misc. ]),
      (level:2, body: [ #link("https://github.com/alex-s168/tpre")[ tpre ]: Fast and minimal RegEx engine ]),
+     (level:2, body: [ nostr relay implementation ]),
 
     (level:1, body: [ PCBs ]),
      (level:2, body: [ #link("project-etc-nand.typ.desktop.html")[ etc-nand ]: #link("https://github.com/ETC-A/etca-spec/")[ ETC.A ] CPU from NAND gates ]),
