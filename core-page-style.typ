@@ -1,8 +1,8 @@
 #import "common.typ": *
 
 // pdfs need to be smaller text
-#let small-font-size = if is-web { 14pt } else { 7pt }
-#let default-font-size = if is-web { 17pt } else { 9pt }
+#let small-font-size = if is-web { 14pt } else { 9pt }
+#let default-font-size = if is-web { 17pt } else { 10pt }
 
 #let core-page-style(content) = {[
 

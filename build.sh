@@ -3,8 +3,11 @@ set -e
 rm -rf build
 mkdir build
 
+git_rev=$(git rev-parse --short=12 HEAD)
+git_commit_date=$(date -d @$(git log -1 --format=%at) +'%d. %B %Y %H:%M')
+
 compile ()  {
-    typst compile --root . --features html -j 4 $@
+    typst compile --root . --features html --input git_rev=$git_rev --input git_commit_date="$git_commit_date" -j 6 $@
 }
 
 page () {

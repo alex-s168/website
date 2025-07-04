@@ -42,6 +42,10 @@
     function gotoMinPdf() {
       window.location.href = window.location.href.replace(/\.\w+.html/g, '.min.pdf');
     }
+
+    window.addEventListener('beforeprint', (event) => {
+      gotoMinPdf();
+    });
   ")
   ]
 }

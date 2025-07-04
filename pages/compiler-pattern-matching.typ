@@ -10,6 +10,14 @@
   #title[Approaches to pattern matching in compilers]
 
   #sized-p(small-font-size)[
+    #if git_rev != "" {[
+      Git revision #flink("https://github.com/alex-s168/website/tree/" + git_rev)[\##git_rev]
+    ]}
+
+    #if git_commit_date != "" {[
+      Modified at #git_commit_date
+    ]}
+
     Written by alex_s168
   ]
 ]
@@ -20,7 +28,7 @@
 
 #section[
   = Introduction
-  Compilers often have to deal with find-and-replace (pattern matching and rewriting) inside the compiler IR (intermediate representation).
+  Compilers often have to deal with pattern matching and rewriting (find-and-replace) inside the compiler IR (intermediate representation).
 
   Common use cases for pattern matching in compilers:
   - "peephole optimizations": the most common kind of optimization in compilers.
@@ -38,22 +46,24 @@
 
 #section[
   = Simplest Approach
-  Currently, most compilers mostly do this inside the compiler's source code.
-  For example, in MLIR, *most* pattern matches are performed in C++ code.
+  Currently, most compilers mostly do this inside their source code.
+  For example, in MLIR, most (but not all) pattern matches are performed in C++ code.
 
   The only advantage to this approach is that it doesn't require a complex pattern matching system.
+
+  I only recommend doing this for small compiler toy projects.
 ]
 
 #section[
   == Disadvantages
-  Doing pattern matching that way has many disadvantages.
+  Doing pattern matching this way has many disadvantages.
 
   \
   Some (but not all) disadvantages:
-  - debugging pattern matches can be hard
+  - debugging pattern match rules can be hard
   - IR rewrites need to be tracked manually (for debugging)
-  - source locations and debug information needs to be tracked manually, which often isn't implemented very well.
-  - verbose and hardly readable pattern matching code
+  - source locations and debug information also need to be tracked manually, which often isn't implemented very well.
+  - verbose and barely readable pattern matching code
   - overall error-prone
 
   I myself did pattern matching this way in my old compiler backend,
@@ -62,19 +72,18 @@
 
 #section[
   = Pattern Matching DSLs
-  A custom language for describing IR patterns and IR rewrites.
+  A custom language for describing IR patterns and IR transformations (aka rewrites).
 
   I will put this into the category of "structured pattern matching".
 ]
 
 #section[
-  An example is Cranelift's ISLE:
+  An example is Cranelift's ISLE DSL:
   #context html-frame[```lisp
   ;; x ^ x == 0.
   (rule (simplify (bxor (ty_int ty) x x))
         (subsume (iconst_u ty 0)))
   ```]
-  Don't ask me what that does exactly. I have no idea...
 ]
 
 #section[
@@ -87,12 +96,10 @@
        UPat.var("b")))),
    lambda x,b: UOp(Ops.BIT_TEST, src=(x, b)))
   ```]
-  Fun fact: tinygrad actually decompiles the python code inside the second element of the pair to optimize complex matches.
+  Fun fact: tinygrad actually decompiles the python code inside the second element of the pair, and runs multiple optimization passes on that.
 ]
 
 #section[
-  Pattern matching and IR rewrite DSLs are a far better way of doing pattern matching.
-
   This approach is used by many popular compilers such as
   LLVM, GCC, and Cranelift for peephole optimizations and code generation.
 ]
@@ -101,7 +108,7 @@
   == Advantages
   - *debugging and tracking of rewrites, source locations, and debug information can be done properly*
   - patterns themselves can be inspected and modified programmatically.
-  - they are easier and nicer to use and read than manual pattern matching in the compiler's source code.
+  - they are easier to use and read than manual pattern matching in the source code.
 
   \
   There is however an even better alternative:
@@ -109,16 +116,12 @@
 
 #section[
   = Pattern Matching Dialects
-  This section also applies to compilers that don't use dialects, but do pattern matching this way.
-  For example, GHC has the `RULES` pragma, which does something like this. I however don't know what that is actually used for...
-
-  \
   I will also put this method into the category of "structured pattern matching".
 
   \
   The main example of this is MLIR, with the `pdl` and the `transform` dialects.
-  Sadly few projects/people use these dialects, and instead use C++ pattern matching code.
-  I think that is because the dialects aren't documented very well.
+  Sadly few projects/people use these dialects, and instead do pattern matching in C++ code.
+  Probably because the dialects aren't documented very well.
 ]
 
 #section[
@@ -126,17 +129,16 @@
   Modern compilers, especially multi-level compilers, such as MLIR,
   have their operations grouped in "dialects".
 
-  Each dialect represents either specific kind of operations, like arithmetic operations,
-  or a specific compilation target/backend's operations, such as the `llvm` dialect in MLIR.
+  Each dialect either represents specific kinds of operations, like arithmetic operations,
+  or a specific backend's/frontend's operations, such as the `llvm`, `emitc`, and the `spirv` dialects in MLIR.
 
   Dialects commonly contain operations, data types, as well as optimization and dialect conversion passes.
 ]
 
 #section[
   == Core Concept
-  Instead of, or in addition to having a separate language for pattern matching and rewrites,
-  the IR patterns and rewrites are represented in the compiler IR itself.
-  This is mostly done in a separate dialect, with dedicated operations for operating on compiler IR.
+  The IR patterns and transformations are represented using the compiler's IR.
+  This is mostly done in a separate dialect, with dedicated operations for operating on IR.
 ]
 
 #section[
@@ -169,10 +171,10 @@
 
 #section[
   == Combining with a DSL
-  The best way to do pattern matching is to have a pattern matching / rewrite DSL,
+  I recommend having a pattern matching / rewrite DSL,
   that transpiles to pattern matching / rewrite dialect operations.
 
-  The advantage of this over just having a rewrite dialect is that it (should) make patterns even more readable.
+  The advantage of this over just having a rewrite dialect is that it makes patterns even more readable (and maintainable!)
 ]
 
 #section[
@@ -196,7 +198,7 @@
 #section[
   Optimizing compilers typically deal with code (mostly written by people)
   that is on a lower level than the compiler theoretically supports.
-  For example, humans tend to write code like this for testing for a bit: ```c x & (1 << b)```,
+  For example, humans tend to write code like this for extracting a bit: ```c x & (1 << b)```,
   but compilers tend to have a high-level bit test operation (with exceptions).
   A reason for having higher-level primitives is that it allows the compiler to do more high-level optimizations,
   but also some target architectures have a bit test operation, that is more optimal.
@@ -205,25 +207,29 @@
 #section[
   This is not just the case for "low-level" things like bit tests, but also high level concepts,
   like a reduction over an array, or even the implementation of a whole algorithm.
-  For example LLVM, since recently, can detect implementations of CRC.
+  For example LLVM, since recently, can detect implementations of #flink("https://en.wikipedia.org/wiki/Cyclic_redundancy_check")[CRC].
 ]
 
 #section[
   LLVM actually doesn't have many dedicated operations like a bit-test operation,
   and instead canonicalizes all bit-test patterns to ```c x & (1 << b) != 0```,
-  and matches for that in passes that expect bit test operations.
+  and matches for that in compiler passes that expect bit test operations.
 ]
 
 #section[
   Now let's go back to the ```c x & (1 << b)``` (bit test) example.
-  Optimizing compilers should be able to detect that pattern, and also other bit test patterns (like ```c x & (1 << b) > 0```),
-  and then replace those with a bit test operation.
-  But they also have to be able to convert bit test operations back to their implementation for targets that don't have a bit test operation.
-  (Another reason to convert a pattern to a operation and then back to a different implementation is to optimize the implementation)
-  Currently, compiler backends to this by having separate patterns for converting to the bit test operation, and back.
+  Optimizing compilers should be able to detect that, and other bit test patterns (like ```c x & (1 << b) > 0```),
+  and then replace those with a bit-test operation.
+  But they also have to be able to convert bit-test operations back to their implementation for compilation targets that don't have a bit-test instruction.
+  Currently, compiler backends do this by having separate patterns for converting bit-test to it's dedicated operation, and back.
+]
 
+#section[
   A better solution is to associate a set of implementations with the bit test operation,
   and make the compiler *automatically reverse* those to generate the best implementation (in the instruction selector for example).
+
+  Implementing pattern/transformation reversion can be challenging however,
+  but it provides many benefits, and all "big" compilers should definitely do this, in my opinion.
 ]
 
 #section[
@@ -231,9 +237,9 @@
   Compilers typically come with a runtime library that implement more complex operations
   that aren't supported by most processors or architectures.
 
-  The implementation of those functions should also use that pattern matching / rewriting "dialect".
-  The reason for this is that this allows your backend to detect code written by users with a similar implementation as in the runtime library,
-  giving you some more free optimizations.
+  The implementation of those functions should also use that pattern matching dialect.
+  This allows your backend to detect code written by users with a similar implementation as in the runtime library,
+  giving you some additional optimizations for free.
 
   I don't think any compiler currently does this either.
 ]

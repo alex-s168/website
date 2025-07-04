@@ -13,6 +13,9 @@
 #let is-web = to-bool(sys.inputs.at("web", default: "true"))
 #let is-html() = { return target() == "html" }
 
+#let git_rev = sys.inputs.at("git_rev", default: "")
+#let git_commit_date = sys.inputs.at("git_commit_date", default: "")
+
 #let res-path() = {
   if is-html() {
     "res/"
