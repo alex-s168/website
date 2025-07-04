@@ -52,6 +52,7 @@
   Some (but not all) disadvantages:
   - debugging pattern matches can be hard
   - IR rewrites need to be tracked manually (for debugging)
+  - source locations and debug information needs to be tracked manually, which often isn't implemented very well.
   - verbose and hardly readable pattern matching code
   - overall error-prone
 
@@ -98,7 +99,7 @@
 
 #section[
   == Advantages
-  - debugging and tracking of rewrites can be done properly
+  - *debugging and tracking of rewrites, source locations, and debug information can be done properly*
   - patterns themselves can be inspected and modified programmatically.
   - they are easier and nicer to use and read than manual pattern matching in the compiler's source code.
 
@@ -201,18 +202,16 @@
   but also some target architectures have a bit test operation, that is more optimal.
 ]
 
-// TODO! DEBUG INFORMATION
+#section[
+  This is not just the case for "low-level" things like bit tests, but also high level concepts,
+  like a reduction over an array, or even the implementation of a whole algorithm.
+  For example LLVM, since recently, can detect implementations of CRC.
+]
 
 #section[
   LLVM actually doesn't have many dedicated operations like a bit-test operation,
   and instead canonicalizes all bit-test patterns to ```c x & (1 << b) != 0```,
   and matches for that in passes that expect bit test operations.
-]
-
-#section[
-  This is not just the case for "low-level" things like bit tests, but also high level concepts,
-  like a reduction over an array, or even the implementation of a whole algorithm.
-  For example LLVM, since recently, can detect implementations of CRC.
 ]
 
 #section[

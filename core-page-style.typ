@@ -10,6 +10,7 @@
 #show: x => context {
   set page(width: auto, height: auto) if is-web and not is-html()
   set page(paper: "a4") if not is-web and not is-html()
+  set page(numbering: "1 of 1") if not is-web and not is-html()
   x
 }
 
