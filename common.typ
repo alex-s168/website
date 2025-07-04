@@ -1,6 +1,5 @@
 #let alex_contact_url = "https://alex.vxcc.dev"
 
-
 #let to-bool(str) = {
   if str == "true" {
     return true
