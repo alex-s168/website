@@ -106,7 +106,7 @@
   - they are easier and nicer to use and read than manual pattern matching in the compiler's source code.
 
   \
-  There is however a even better alternative:
+  There is however an even better alternative:
 ]
 
 #section[

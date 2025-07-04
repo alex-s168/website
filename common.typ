@@ -211,22 +211,28 @@
 }
 
 #let table-of-contents() = {
-  html-style(class:"table-of-contents", "", [
-    #box(
+  html-style(class:"table-of-contents", "", box(
       stroke: black,
       radius: 2pt,
       inset: 3%,
-    )[
-      Table of contents\
-      #context {
-        let idx = state("stupid-gen-page-state", 0);
-        gen-tree-from-headings(query(heading),
+    [Table of contents\
+      #let idx = state("stupid-gen-page-state", 0);
+
+      #context gen-tree-from-headings(query(heading),
           elemfn: (content, x) => { 
-            [#content #context html-span((class:"headingr",id:"headingr-"+str(idx.get())), link(x.location(), x.body)) #context idx.update(x=> x + 1) #br()]
+            [ 
+              #html-opt-elem("p", (style:"line-height:1.1"))[
+                #html-style("display:flex; text-indent:0pt;")[
+                  #html-style("margin-right: 11pt;", content)
+                  #html-style("flex:1;")[
+                    #context html-span((class:"headingr",id:"headingr-"+str(idx.get())), link(x.location(), x.body))
+                    #context idx.update(x=> x + 1)
+                  ]
+                ]
+              ]
+            ]
           })
-      }
-    ]
-    #html-script-dom-onload("
+    ])) + html-style(class:"table-of-contents", "", html-script-dom-onload("
       let tags = ['h2','h3','h4'].flatMap(x => Array.from(document.getElementsByTagName(x)));
       document.getElementById('headingr-0').classList.add('current')
       document.addEventListener('scroll', (event) => {
@@ -235,8 +241,7 @@
         Array.from(document.getElementsByClassName('headingr')).map(x => x.classList.remove('current'))
         document.getElementById('headingr-'+idx).classList.add('current')
       });
-    ")
-  ] + [
+    ") + [
     #context if is-html() {
       html.elem("style", "
         .table-of-contents > p > span { width: 100%; }
