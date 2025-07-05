@@ -188,6 +188,14 @@
         padding: " + len2css(it.inset)
 }
 
+#let wimage(path, width:100%, alt:"image") = {
+  context if is-html() {
+    html.elem("img", attrs:(src:path, alt:alt, style:"width:"+len2css(width+0pt)+";"))
+  } else {
+    image(path)
+  }
+}
+
 #let html-script(code) = {
   [#context if is-html(){
   html.elem("script", code)

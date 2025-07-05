@@ -29,6 +29,7 @@
     (level:1, body: [ Making a simple RegEx engine ]),
      (level:2, body: html-href("article-make-regex-engine-1.typ.desktop.html")[ Part 1: Introduction to RegEx ]),
     (level:1, body: html-href("compiler-pattern-matching.typ.desktop.html")[ Approaches to pattern matching in compilers ]),
+    (level:1, body: html-href("article-favicon.typ.desktop.html")[ Making of the favicon ]),
   )
   #br()
 

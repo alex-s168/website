@@ -22,5 +22,6 @@ page "article-make-regex-engine-1.typ"
 page "project-etc-nand.typ"
 page "index.typ"
 page "compiler-pattern-matching.typ"
+page "article-favicon.typ"
 
 cp build/index.typ.desktop.html build/index.html
