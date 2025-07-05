@@ -3,6 +3,8 @@ set -e
 rm -rf build
 mkdir build
 
+ln -s $(realpath res) build/res
+
 git_rev=$(git rev-parse --short=12 HEAD)
 git_commit_date=$(date -d @$(git log -1 --format=%at) +'%d. %B %Y %H:%M')
 

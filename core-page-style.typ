@@ -4,8 +4,18 @@
 #let small-font-size = if is-web { 14pt } else { 9pt }
 #let default-font-size = if is-web { 17pt } else { 10pt }
 
-#let core-page-style(content) = {[
+#let core-page-style(content) = {context html-opt-elem("html", (:))[
+#context if is-html() {
+  html.elem("head",[
+    #html.elem("meta", attrs:(charset:"utf-8"))
+    #html.elem("meta", attrs:(name:"viewport", content:"width=device-width, initial-scale=1"))
 
+    #let ico = res-path()+"favicon.png"
+    #html.elem("link", attrs:(rel:"icon", sizes:"512x512", href:ico))
+    #html.elem("link", attrs:(rel:"image_src", type:"image/png", href:ico))
+  ])
+}
+#context html-opt-elem("body", (:))[
 
 #show: x => context {
   set page(width: auto, height: auto) if is-web and not is-html()
@@ -112,5 +122,5 @@ html.elem("style", "
 
 
 #content
-]
+]]
 }
