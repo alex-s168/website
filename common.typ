@@ -212,6 +212,22 @@
   ]
 }
 
+#let spoiler(content) = {
+  [#context if is-html() {
+    html-style(class:"hide", "", content)
+  } else {
+    content
+  }]
+}
+
+#let inline-block(content) = {
+  [#context if is-html() {
+    html-style("white-space:nowrap;", content)
+  } else {
+    block(breakable:false, content)
+  }]
+}
+
 #let table-of-contents() = {
   html-style(class:"table-of-contents", "", box(
       stroke: black,
@@ -235,14 +251,18 @@
             ]
           })
     ])) + html-style(class:"table-of-contents", "", html-script-dom-onload("
-      let tags = ['h2','h3','h4'].flatMap(x => Array.from(document.getElementsByTagName(x)));
-      document.getElementById('headingr-0').classList.add('current')
-      document.addEventListener('scroll', (event) => {
-        let curr = tags.map(x => [x, (x.getBoundingClientRect().top + x.getBoundingClientRect().bottom) / 2]).filter(x => x[1] >= 0).sort((a,b) => a[1] > b[1])[0][0];
-        let idx = tags.sort((a,b) => a.getBoundingClientRect().top > b.getBoundingClientRect().top).map((x, idx) => [idx, x]).filter(x => x[1] == curr)[0][0];
-        Array.from(document.getElementsByClassName('headingr')).map(x => x.classList.remove('current'))
-        document.getElementById('headingr-'+idx).classList.add('current')
-      });
+let tags = ['h2', 'h3', 'h4'].flatMap(x => Array.from(document.getElementsByTagName(x))).sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+let pageHeight = document.documentElement.scrollHeight-window.innerHeight;
+document.addEventListener('scroll', (event) => {
+    let progress = -(document.documentElement.getBoundingClientRect().y / pageHeight);
+    let delta = progress * window.innerHeight;
+    let idx = tags.map(x => 0 > x.getBoundingClientRect().top - delta).lastIndexOf(true);
+    Array.from(document.getElementsByClassName('headingr')).map(x => x.classList.remove('current'));
+    if (idx != -1) {
+        document.getElementById('headingr-' + idx).classList.add('current');
+    }
+}
+);
     ") + [
     #context if is-html() {
       html.elem("style", "

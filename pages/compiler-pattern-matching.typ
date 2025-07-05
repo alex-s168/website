@@ -59,7 +59,7 @@
   Doing pattern matching this way has many disadvantages.
 
   \
-  Some (but not all) disadvantages:
+  Some (but not all):
   - debugging pattern match rules can be hard
   - IR rewrites need to be tracked manually (for debugging)
   - source locations and debug information also need to be tracked manually, which often isn't implemented very well.
@@ -166,7 +166,7 @@
   - the compiler could AOT compile patterns
   - the compiler could optimize, analyze, and combine patterns to reduce compile time.
   - IR (de-)serialization infrastructure in the compiler can also be used to exchange peephole optimizations.
-  - bragging rights: your compiler represents it's own patterns in it's own IR
+  - bragging rights: your compiler represents its patterns in it's own IR
 ]
 
 #section[
@@ -175,6 +175,29 @@
   that transpiles to pattern matching / rewrite dialect operations.
 
   The advantage of this over just having a rewrite dialect is that it makes patterns even more readable (and maintainable!)
+]
+
+#section[
+  == egg
+  Some people might say: "bUt Im JuSt GoInG tO uSe EgG, i DoNt NeEd A pAtTeRn MaTcHiNg DiAlEcT"
+  (specifically #spoiler[otesunki] said something like that)
+
+  #flink("https://egraphs-good.github.io/")[egg] is a IR pattern matching and transformation library
+  that uses #inline-block(flink("https://en.wikipedia.org/wiki/E-graph")[E-Graphs]) to
+  magically solves (almost) all problems regarding IR pattern matching.
+
+  Even though egg solves most problems, I still recommend using a pattern matching dialect, especially in multi-level compilers,
+  to be more flexible, and have more future-proof pattern matching, if for example there suddenly is a better alternative to egg,
+  or you decide that you want to match some complex patterns manually.
+]
+
+#section[
+  A problem with using egg in combination with pattern matching dialects is that it might be harder
+  to write the code to convert the pattern matching dialect to egg patterns.
+
+  Additionally, some more complex transformations (not the matches) can't always be directly converted to egg transformations
+  (depending on the feature set provided by the transformation dialect),
+  but that can be solved by using a custom ```rust egg::Applier```
 ]
 
 #section[
@@ -192,7 +215,7 @@
 #section[
   == Reversible Transformations
   I don't think that there currently is any compiler that does this.
-  If you do know one, again, please #flink(alex_contact_url)[contact me.]
+  If you do know one, again, please contact me.
 ]
 
 #section[
@@ -207,7 +230,7 @@
 #section[
   This is not just the case for "low-level" things like bit tests, but also high level concepts,
   like a reduction over an array, or even the implementation of a whole algorithm.
-  For example LLVM, since recently, can detect implementations of #flink("https://en.wikipedia.org/wiki/Cyclic_redundancy_check")[CRC].
+  For example LLVM, since recently, can detect implementations of #flink("https://en.wikipedia.org/wiki/Cyclic_redundancy_check")[CRC.]
 ]
 
 #section[
@@ -242,6 +265,54 @@
   giving you some additional optimizations for free.
 
   I don't think any compiler currently does this either.
+]
+
+#section[
+  = Problems with Pattern Matching
+  The main problem is ordering the patterns.
+
+  As an example, consider these three patterns:
+  #context html-frame[```lisp
+  ;; A
+  (add x:Const y) => (add y x)
+
+  ;; B
+  (sub (add x y:Const) z:Const) => (lea x y (const_neg z))
+
+  ;; C
+  (add x 1) => (inc x)
+  ```]
+]
+
+#section[
+  Now what should the compiler do when it sees this?
+  #context html-frame[```lisp (sub (add 5 1) 2)```]
+]
+
+#section[
+  All three patterns would match:
+  #context html-frame[```lisp
+  ;; apply A
+  (sub (add 5 1) 2) => (sub (add 1 5) 2)
+  ;; only B applies now
+  (sub (add 1 5) 2) => (lea 1 5 (const_neg 2))
+  ;; nothing applies anymore
+
+  ;; alternatively apply B
+  (sub (add 5 1) 2) => (lea 5 1 (const_neg 2))
+  ;; nothing applies anymore
+
+  ;; atlernatively apply C
+  (sub (add 5 1) 2) => (sub (inc 5) 2)
+  ;; nothing applies anymore
+  ```]
+]
+
+#section[
+  Now which of those transformations should be performed?
+
+  This is not as easy to solve as it seems, especially in the context of instruction selection (specifically scheduling),
+  where the performance on processors depends on a sequence of instructions, instead of just a single instruction.
 ]
 
 #section[

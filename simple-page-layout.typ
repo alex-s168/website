@@ -60,6 +60,9 @@
                 width: 100% !important;
               }
             }
+
+            .hide { display: inline;  background: black; transition: background 0.3s linear; }
+            .hide:hover, .hide:focus { background: transparent; }
           ")
         }],
       )),
