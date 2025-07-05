@@ -1,5 +1,3 @@
-#let alex_contact_url = "https://alex.vxcc.dev"
-
 #let to-bool(str) = {
   if str == "true" {
     return true
@@ -270,4 +268,19 @@ document.addEventListener('scroll', (event) => {
       ")
     }
   ])
+}
+
+#let people = (
+  alex: (
+    nick: "alex_s168",
+    url: "https://alex.vxcc.dev"
+  ),
+  ote: (
+    nick: "otesunki",
+    url: "https://512b.dev/ote/"
+  ),
+)
+
+#let person(p) = {
+  flink(p.url, p.nick)
 }

@@ -180,7 +180,7 @@
 #section[
   == egg
   Some people might say: "bUt Im JuSt GoInG tO uSe EgG, i DoNt NeEd A pAtTeRn MaTcHiNg DiAlEcT"
-  (specifically #spoiler[otesunki] said something like that)
+  (specifically #person(people.ote) said something like that)
 
   #flink("https://egraphs-good.github.io/")[egg] is a IR pattern matching and transformation library
   that uses #inline-block(flink("https://en.wikipedia.org/wiki/E-graph")[E-Graphs]) to
@@ -207,7 +207,7 @@
   Instead of brute-forcing all peephole optimizations
   (of which there can be a LOT in advanced compilers),
   the compiler can organize all the patterns to provide more efficient matching.
-  I didn't yet investigate how to do this. If you have any ideas regarding this, please #flink(alex_contact_url)[contact me.]
+  I didn't yet investigate how to do this. If you have any ideas regarding this, please #flink(people.alex.url)[contact me.]
 
   There are other ways to speed up the pattern matching and rewrite process using this too.
 ]
@@ -215,7 +215,7 @@
 #section[
   == Reversible Transformations
   I don't think that there currently is any compiler that does this.
-  If you do know one, again, please contact me.
+  If you do know one, again, please #slink(people.alex.url)[contact me.]
 ]
 
 #section[
