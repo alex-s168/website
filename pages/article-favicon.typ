@@ -37,8 +37,8 @@
 
 #section[
   = Step 1: Sketching
-  While starting doing this, I realised that a wire would always overlap with the node triangles, unless I cheat.
-  Here is a visual representation of this (inacrruate):
+  While starting doing this, I realised that one wire always overlaps with one node triangle, unless I cheated.
+  Here is a visual representation of this (inaccurate):
   #context wimage(res-path()+"article-favicon/step1_0.png", width:18%)
 
   \
@@ -85,11 +85,11 @@
 
   \
   I only told her (translated):
-  ```
+  #context html-frame[```
   Can you please color this?
   It's supposed to be a circuit, and it will be a small logo for a website.
   The website is mainly black and white, but this (context: persian blue) blue would work too.
-  ```
+  ```]
 
   And less than half a minute later, she came up with this:
   #context wimage(res-path()+"article-favicon/step4_1.png", width:w)
@@ -109,7 +109,7 @@
 ]
 
 #section[
-  = Step 5: Digitall Modifications
+  = Step 5: Digital Modifications
   As last step, I removed some of the sketch lines and some minor imperfections digitally.
 ]
 
