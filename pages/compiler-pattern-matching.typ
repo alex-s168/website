@@ -286,8 +286,8 @@
 
 #section[
   Now what should the compiler do when it sees this:
-  #context html-frame[```
-  lisp (sub (add 5 1) 2)
+  #context html-frame[```lisp
+  (sub (add 5 1) 2)
   ```]
 ]
 
