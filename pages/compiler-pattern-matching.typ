@@ -23,7 +23,7 @@
 ]
 
 #if is-web {section[
-  Note that the #min-pdf-link[PDF Version] of this page might look a bit better styling wise.
+  Note that the #gen-min-pdf-link[PDF Version] of this page might look a bit better styling wise.
 ]}
 
 #section[

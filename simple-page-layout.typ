@@ -7,13 +7,18 @@
   } else { content }]
 }
 
-#let min-pdf-link(content) = {
+#let gen-min-pdf-link(content) = {
   [#context if is-html() {
     html.elem("a", attrs:(href:"#",onclick:"gotoMinPdf();"), content)
   } else { content }]
 }
 
-#let simple-page(gen-table-of-contents: true, gen-index-ref: true, content) = {
+#let simple-page(
+  gen-table-of-contents: true,
+  gen-index-ref: true,
+  min-pdf-link: true,
+  content) = {
+
   core-page-style[
   #if is-web {
     let off = 3;
@@ -24,7 +29,9 @@
       
       html-style(class:"sidebar", "", column-fixed(
         [#if gen-table-of-contents { [#table-of-contents()] }],
-        min-pdf-link("Minimal PDF Version"),
+        [#context if min-pdf-link and is-html() {
+          gen-min-pdf-link("Minimal PDF Version")
+        }],
         [#if gen-index-ref {[
            #context br()
            #context html-href("index.html")[#html-bold[Website Home]]

@@ -1,24 +1,6 @@
 #import "../common.typ": *
 #import "../simple-page-layout.typ": *
-
-#let gen-page(content) = {
-  core-page-style[
-    #if is-web {
-    table(
-      stroke: none,
-      columns: (25%, 50%, 25%),
-      [],
-      [
-        #html-style("position: absolute; left: 28%; width: 100%")[
-          #box(width: 50%, content)
-        ]
-      ],
-    )
-    } else {
-    content
-    }
-  ]
-}
+#import "../core-page-style.typ": *
 
 #let tree-list(..elements) = {
   gen-tree-from-headings(elemfn: (content, x) => [
@@ -31,7 +13,11 @@
   ], elements.pos())
 }
 
-#gen-page[
+#simple-page(
+  gen-table-of-contents: false,
+  gen-index-ref: false,
+  min-pdf-link: false,
+)[
 
   #br()
   #title[alex_s168]
