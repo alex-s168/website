@@ -318,6 +318,38 @@
 ]
 
 #section[
+  == Superscalar CPUs
+  Modern processor architecture features like superscalar execution make this even more complicated.
+
+  \
+  As a simple, *non realistic* example, let's imagine a CPU (core) that has one bit operations execution unit,
+  and two ALU execution units:
+  #context html-frame[```
+  +---------+-----+-----+
+  | Bit Ops | ALU | ALU |
+  +---------+-----+-----+
+  ```]
+  This means that the CPU can execute two instructions in the ALU unit and one instruction in the bit ops unit at the same time.
+]
+
+#section[
+  One might think that always optimizing `a & (1 << b)` to a bit test operation is good for performance.
+  But in this example, that is not the case.
+
+  If we have a function that does a lot of bitwise operations next to each other,
+  and the compiler replaces all bit tests with bit test operations, suddenly all operations depend on the bit ops unit,
+  which means that instead of executing 3 instructions at a time (ignoring pipelining), the CPU can only execute one instruction at a time.
+]
+
+#section[
+  This shows that we won't know if an optimization is actually good,
+  until we are at a late point in the compilation process where we can simulate the CPU's instruction scheduling.
+
+  This does not only apply to instruction selection, but also to more higher-level optimizations,
+  such as loop and control flow related optimizations.
+]
+
+#section[
   = Conclusion
   One can see how pattern matching dialects are the best option by far.
 

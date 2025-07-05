@@ -63,7 +63,7 @@
 
   \
   Then I used modern technology (a copier) to copy that piece of paper multiple times,
-  and also scale it up (for higher coloring details and image resolution).
+  and also scale it up (to allow for more details).
 ]
 
 #section[
@@ -78,7 +78,7 @@
 ]
 
 #section[
-  = Step 4: Outsourcing the logo
+  = Step 4: Outsourcing the coloring
   After some time, I just gave up, and decided to ask my sister for help...
 
   #context wimage(res-path()+"article-favicon/step4_0.png", width:70%)
