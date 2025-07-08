@@ -17,6 +17,7 @@
   gen-table-of-contents: false,
   gen-index-ref: false,
   min-pdf-link: false,
+  [Alexander Nutz]
 )[
 
   #br()

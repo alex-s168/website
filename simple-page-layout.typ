@@ -17,9 +17,16 @@
   gen-table-of-contents: true,
   gen-index-ref: true,
   min-pdf-link: true,
+  html-title,
   content) = {
 
-  core-page-style[
+  let head = context if is-html() {
+    [
+      #html.elem("title", html-title)
+    ]
+  } else {[]}
+
+  core-page-style(html-head: head)[
   #if is-web {
     let off = 3;
 

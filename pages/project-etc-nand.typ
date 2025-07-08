@@ -9,7 +9,8 @@
 }
 
 #simple-page(
-  gen-table-of-contents: true
+  gen-table-of-contents: true,
+  [etc-nand]
 )[
 
 

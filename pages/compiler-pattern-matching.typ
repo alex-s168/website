@@ -3,7 +3,8 @@
 #import "../core-page-style.typ": *
 
 #simple-page(
-  gen-table-of-contents: true
+  gen-table-of-contents: true,
+  [Alexander Nutz - Approaches to Pattern Matching]
 )[
 
 #section[
@@ -324,11 +325,12 @@
   \
   As a simple, *non realistic* example, let's imagine a CPU (core) that has one bit operations execution unit,
   and two ALU execution units:
-  #context html-frame[```
-  +---------+-----+-----+
-  | Bit Ops | ALU | ALU |
-  +---------+-----+-----+
-  ```]
+  #context html-frame(table(
+    columns: 3,
+    inset: 7pt,
+    [ Bit Ops ],
+    [ ALU ], [ ALU ],
+  ))
   This means that the CPU can execute two instructions in the ALU unit and one instruction in the bit ops unit at the same time.
 ]
 
@@ -351,7 +353,7 @@
 
 #section[
   = Conclusion
-  One can see how pattern matching dialects are the best option by far.
+  One can see how pattern matching dialects are the best option to approach pattern matching.
 
   \
   Someone wanted me to insert a takeaway here, but I won't.

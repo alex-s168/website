@@ -4,9 +4,11 @@
 #let small-font-size = if is-web { 14pt } else { 9pt }
 #let default-font-size = if is-web { 17pt } else { 10pt }
 
-#let core-page-style(content) = {context html-opt-elem("html", (:))[
+#let core-page-style(html-head: [], content) = {context html-opt-elem("html", (:))[
 #context if is-html() {
   html.elem("head",[
+    #html-head
+
     #html.elem("meta", attrs:(charset:"utf-8"))
     #html.elem("meta", attrs:(name:"viewport", content:"width=device-width, initial-scale=1"))
 

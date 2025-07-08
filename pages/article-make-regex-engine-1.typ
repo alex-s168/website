@@ -3,7 +3,8 @@
 #import "../core-page-style.typ": *
 
 #simple-page(
-  gen-table-of-contents: true
+  gen-table-of-contents: true,
+  [Introduction to RegEx]
 )[
 
 #section[
