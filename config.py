@@ -21,9 +21,14 @@ rule curl
 rule cp
   command = cp $in $out
 
+rule runclean
+  command = ninja -t clean && rm -rf build
+
 build build/badges.txt: badges_list common.typ
 
 build build.ninja: regen config.py build/badges.txt
+
+build clean : runclean
 """
 
 pages = [
@@ -53,13 +58,17 @@ variants = [
     },
 ]
 
+web_targets = []
+
 for page in pages:
     gr = "build/" + page + ".git_rev.txt"
     gen += "\n"
     gen += "build "+gr+" : git_inp pages/" + page
     for var in variants:
+        tg = "build/" + page + var["suffix"]
+        web_targets.append(tg)
         gen += "\n"
-        gen += "build build/" + page + var["suffix"] + " : typst " + "pages/" + page + " | "+gr+"\n"
+        gen += "build "+tg+" : typst " + "pages/" + page + " | "+gr+"\n"
         gen += "  flags = " + var["args"] + " $$(cat "+gr+")\n"
 
 if os.path.isfile("build/badges.txt"):
@@ -73,8 +82,10 @@ if os.path.isfile("build/badges.txt"):
         badge = badge.split("\t")
         user = badge[0]
         url = badge[1]
+        tg = "res/badges/" + user
+        web_targets.append(tg)
         gen += "\n"
-        gen += "build res/badges/" + user + ": "
+        gen += "build "+tg+": "
         if user == "alex":
             gen += "cp res/badge.png\n"
         else:
@@ -83,6 +94,10 @@ if os.path.isfile("build/badges.txt"):
 
 gen += "\n"
 gen += "build build/index.html : cp build/index.typ.desktop.html\n"
+web_targets.append("build/index.html")
+
+gen += "\n"
+gen += "default " + " ".join(web_targets) + "\n"
 
 with open("build.ninja", "w") as f:
     f.write(gen)
