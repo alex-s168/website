@@ -1,25 +1,18 @@
 #import "../common.typ": *
 #import "../simple-page-layout.typ": *
 #import "../core-page-style.typ": *
+#import "../components/header.typ": rev-and-authors
 
 #simple-page(
   gen-table-of-contents: true,
-  [Alexander Nutz - Approaches to Pattern Matching]
+  [Approaches to Pattern Matching - Alexander Nutz]
 )[
 
 #section[
   #title[Approaches to pattern matching in compilers]
 
   #sized-p(small-font-size)[
-    #if git_rev != "" {[
-      Git revision #flink("https://github.com/alex-s168/website/tree/" + git_rev)[\##git_rev]
-    ]}
-
-    #if git_commit_date != "" {[
-      Modified at #git_commit_date
-    ]}
-
-    Written by alex_s168
+    #rev-and-authors((people.alex,))
   ]
 ]
 
@@ -80,23 +73,23 @@
 
 #section[
   An example is Cranelift's ISLE DSL:
-  #context html-frame[```lisp
+  #blocking-code(```lisp
   ;; x ^ x == 0.
   (rule (simplify (bxor (ty_int ty) x x))
         (subsume (iconst_u ty 0)))
-  ```]
+  ```)
 ]
 
 #section[
   Another example is tinygrad's pattern system:
-  #context html-frame[```python
+  #blocking-code(```python
   (UPat(Ops.AND, src=(
      UPat.var("x"),
      UPat(Ops.SHL, src=(
        UPat.const(1),
        UPat.var("b")))),
    lambda x,b: UOp(Ops.BIT_TEST, src=(x, b)))
-  ```]
+  ```)
   Fun fact: tinygrad actually decompiles the python code inside the second element of the pair, and runs multiple optimization passes on that.
 ]
 
@@ -145,7 +138,7 @@
 #section[
   == Examples
   MLIR's `pdl` dialect can be used to replace `arith.addi` with `my.add` like this:
-  #context html-frame[```llvm
+  #blocking-code(```llvm
   pdl.pattern @replace_addi_with_my_add : benefit(1) {
     %arg0 = pdl.operand
     %arg1 = pdl.operand
@@ -156,7 +149,7 @@
       pdl.replace %op with %new_op
     }
   }
-  ```]
+  ```)
 ]
 
 #section[
@@ -273,7 +266,7 @@
   The main problem is ordering the patterns.
 
   As an example, consider these three patterns:
-  #context html-frame[```lisp
+  #blocking-code(```lisp
   ;; A
   (add x:Const y) => (add y x)
 
@@ -282,19 +275,19 @@
 
   ;; C
   (add x 1) => (inc x)
-  ```]
+  ```)
 ]
 
 #section[
   Now what should the compiler do when it sees this:
-  #context html-frame[```lisp
+  #blocking-code(```lisp
   (sub (add 5 1) 2)
-  ```]
+  ```)
 ]
 
 #section[
   All three patterns would match:
-  #context html-frame[```lisp
+  #blocking-code(```lisp
   ;; apply A
   (sub (add 5 1) 2) => (sub (add 1 5) 2)
   ;; only B applies now
@@ -308,7 +301,7 @@
   ;; atlernatively apply C
   (sub (add 5 1) 2) => (sub (inc 5) 2)
   ;; nothing applies anymore
-  ```]
+  ```)
 ]
 
 #section[

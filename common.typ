@@ -9,6 +9,7 @@
 }
 
 #let is-web = to-bool(sys.inputs.at("web", default: "true"))
+#let is-nano = to-bool(sys.inputs.at("nano", default: "false"))
 #let is-html() = { if sys.inputs.at("query", default:"false") == "true" {
   return false
 } else {
@@ -16,6 +17,9 @@
 } }
 
 #let git_rev = sys.inputs.at("git_rev", default: "")
+#let short_git_rev = if git_rev != "" {
+  git_rev.slice(0, count:8)
+} else { "" }
 #let git_commit_date = sys.inputs.at("git_commit_date", default: "")
 
 #let res-path() = {
@@ -49,17 +53,9 @@
   }
 }
 
-#let html-p(txt) = {
-  context if is-html() {
-    html.elem("p", txt)
-  } else {
-    text(txt)
-  }
-}
-
 #let sized-p(size, txt) = {
   context if is-html() {
-    html.elem("p", attrs: (style: "font-size: " + str(size.abs.pt()) + "pt"), txt)
+    html.elem("span", attrs: (style: "font-size: " + str(size.abs.pt()) + "pt"), txt)
   } else {
     text(size, txt)
   }
@@ -79,6 +75,11 @@
   } else {
     content
   }
+}
+
+#let html-code(inner) = {
+  html-opt-elem("code", (:),
+    inner)
 }
 
 #let html-span(attrs, content) = {
@@ -304,4 +305,8 @@ document.addEventListener('scroll', (event) => {
 
 #let person(p) = {
   flink(p.url, p.nick)
+}
+
+#let blocking-code(raw) = {
+  context html-frame(raw)
 }

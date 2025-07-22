@@ -1,6 +1,7 @@
 #import "../common.typ": *
 #import "../simple-page-layout.typ": *
 #import "../core-page-style.typ": *
+#import "../components/header.typ": rev-and-authors
 
 #simple-page(
   gen-table-of-contents: true,
@@ -11,7 +12,7 @@
   #title[The making of the favicon]
 
   #sized-p(small-font-size)[
-    Written by alex_s168
+    #rev-and-authors((people.alex,))
   ]
 ]
 

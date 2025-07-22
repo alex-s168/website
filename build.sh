@@ -5,17 +5,15 @@ mkdir build
 
 ln -s $(realpath res) build/res
 
-git_rev=$(git rev-parse --short=12 HEAD)
-git_commit_date=$(date -d @$(git log -1 --format=%at) +'%d. %B %Y %H:%M')
-
-compile ()  {
-    typst compile --root . --features html --input git_rev=$git_rev --input git_commit_date="$git_commit_date" -j 6 $@
-}
-
 page () {
-    compile --format pdf --input web=false "pages/$1" "build/$1.min.pdf"
-    compile --format html --input web=true "pages/$1" "build/$1.desktop.html"
-    compile --format html --input web=false "pages/$1" "build/$1.min.html"
+    last_modified=$(git log -1 --format="%ad" --date="format:%d. %B %Y %H:%M" -- "pages/$1")
+    full_commit_hash=$(git log -1 --format="%H" -- "pages/$1")
+    git_inp=(--input "git_rev=$full_commit_hash" --input "git_commit_date=$last_modified")
+
+    typst compile --root . --features html -j 6 "${git_inp[@]}" --format pdf --input web=false "pages/$1" "build/$1.min.pdf"
+    typst compile --root . --features html -j 6 "${git_inp[@]}" --format html --input web=true "pages/$1" "build/$1.desktop.html"
+    typst compile --root . --features html -j 6 "${git_inp[@]}" --format html --input web=false "pages/$1" "build/$1.min.html"
+    typst compile --root . --features html -j 6 "${git_inp[@]}" --format html --input web=false --input nano=true "pages/$1" "build/$1.nano.html"
 }
 
 page "article-make-regex-engine-1.typ"

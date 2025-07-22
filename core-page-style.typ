@@ -28,14 +28,30 @@
 
 #set text(font: "DejaVu Sans Mono", size: default-font-size)
 
-#show raw: it => box(
-  stroke: black,
-  radius: 2pt,
-  inset: if is-html() { 1.4pt } else { 4pt },
-  outset: 0pt,
-  baseline: 3.1pt,
-  text(it)
-)
+#show raw: it => if type(it.lang) == str and it.lang != "" and is-nano == false {
+  // TODO: after typst fix html exporter breaking line :sob:
+  // context html-frame(context 
+
+  box(
+    stroke: black,
+    radius: 2pt,
+    inset: if is-html() { 1.4pt } else { 5pt },
+    outset: 0pt,
+    baseline: 3.1pt,
+    text(it)
+  )
+} else if is-nano == true {
+  html-code(text(it))
+} else {
+  box(
+    stroke: black,
+    radius: 2pt,
+    inset: if is-html() { 1.4pt } else { 5pt },
+    outset: 0pt,
+    baseline: 3.1pt,
+    text(it)
+  )
+}
 
 #show box: it => {
   context if is-html() {
@@ -118,6 +134,12 @@ html.elem("style", "
 
   .current {
     font-weight: bold;
+  }
+
+  pre {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    display: inline;
   }
 ")
 }
