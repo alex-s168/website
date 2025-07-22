@@ -63,7 +63,7 @@
 
 #show underline: it => {
   context if is-html() {
-    html.elem("u", it.body)
+    html.elem("span", attrs: (style: "text-decoration: underline;"), it.body)
   } else {
     it
   }
