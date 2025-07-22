@@ -52,6 +52,7 @@
      (level:2, body: [ #link("https://github.com/vxcc-backend/vxcc-new")[ vxcc ]: Advanced multi-level compiler ]),
      (level:2, body: [ #link("https://github.com/alex-s168/uiuac")[ uiuac ]: (discontinued) Optimizing compiler for the #link("https://uiua.org")[Uiua programming language] ]),
      (level:2, body: [ #link("https://github.com/Lambda-Mountain-Compiler-Backend/lambda-mountain")[ LSTS's standard library ] ]),
+     (level:2, body: [ FP programming language compiler mostly using #link("https://en.wikipedia.org/wiki/Interaction_nets")[interaction nets] ]),
      (level:2, body: [ #link("https://github.com/h6-lang/h6")[ h6 ]: Minimal stack-based programming language ]),
      (level:2, body: [ #link("https://github.com/alex-s168/lil-rs")[ lil-rs ]: Rust implementation of #link("http://beyondloom.com/decker/lil.html")[lil] ]),
 
@@ -71,4 +72,25 @@
 
   #link("https://github.com/alex-s168/website")[Website source code]
 
+  #br()#br()
+  The latest version of my badge will always be at:\
+  #raw(people.alex.badge)
+
+  #context if is-web and is-html() { // excludes min.html builds too
+    let scale = 1.3
+    for id in people.keys() {
+      let person = people.at(id)
+      html.elem("a", attrs:(href:person.url, target:"_blank"))[
+        #html.elem("img", attrs:(
+          src: res-path()+"badges/"+id,
+          alt: "link to " + person.nick,
+          attributionsrc: person.badge,
+          fetchpriority: "low",
+          style: "padding-left:10px; padding-right:14px",
+          width: str(88*scale),
+          height: str(31*scale),
+        ))
+      ]
+    }
+  }
 ]

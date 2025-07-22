@@ -9,7 +9,11 @@
 }
 
 #let is-web = to-bool(sys.inputs.at("web", default: "true"))
-#let is-html() = { return target() == "html" }
+#let is-html() = { if sys.inputs.at("query", default:"false") == "true" {
+  return false
+} else {
+  return target() == "html"
+} }
 
 #let git_rev = sys.inputs.at("git_rev", default: "")
 #let git_commit_date = sys.inputs.at("git_commit_date", default: "")
@@ -281,13 +285,22 @@ document.addEventListener('scroll', (event) => {
 #let people = (
   alex: (
     nick: "alex_s168",
-    url: "https://alex.vxcc.dev"
+    url: "https://alex.vxcc.dev",
+    badge: "https://alex.vxcc.dev/res/badge.png",
   ),
   ote: (
     nick: "otesunki",
-    url: "https://512b.dev/ote/"
+    url: "https://512b.dev/ote/",
+    badge: "https://512b.dev/assets/lagtrain.gif"
+  ),
+  syn: (
+    nick: "syn",
+    url: "https://512b.dev/syn/",
+    badge: "https://512b.dev/syn/badge.png",
   ),
 )
+
+#metadata(json.encode(people)) <meta-people>
 
 #let person(p) = {
   flink(p.url, p.nick)
