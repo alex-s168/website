@@ -1,9 +1,9 @@
-import os.path
+import os
 
 gen = """
 rule regen
-  command     = python config.py
-  generator   = 1
+  command = python config.py
+  generator = 1
 
 rule typst
   depfile = $out.d
@@ -19,10 +19,17 @@ rule curl
   command = curl $url > $out
 
 rule cp
-  command = cp $in $out
+  command = cp $flags $in $out
+
+rule cpdir
+  command = rm -rf $out && cp -rf $in $outdir
 
 rule runclean
-  command = ninja -t clean && rm -rf build
+  command = rm -rf build && ninja -t clean
+
+rule ttf2woff
+  command = fonttools ttLib.woff2 compress $in -o $out
+
 
 build build/badges.txt: badges_list common.typ
 
@@ -37,7 +44,10 @@ pages = [
     "index.typ",
     "compiler-pattern-matching.typ",
     "article-favicon.typ",
+    "article-gpu-arch-1.typ",
 ]
+
+fonts = [x for x in os.listdir("./res/fonts/")]
 
 variants = [
     {
@@ -82,22 +92,43 @@ if os.path.isfile("build/badges.txt"):
         badge = badge.split("\t")
         user = badge[0]
         url = badge[1]
-        tg = "res/badges/" + user
+        tg = "build/res/badges/" + user
         web_targets.append(tg)
         gen += "\n"
         gen += "build "+tg+": "
         if user == "alex":
-            gen += "cp res/badge.png\n"
+            gen += "cp res/badge.png | build/res/_.txt\n"
         else:
-            gen += "curl\n"
+            gen += "curl | build/res/_.txt\n"
             gen += "  url = "+url+"\n"
+
+for font in fonts:
+    font = font.replace(".ttf", "")
+    tg = f"build/res/{font}.woff2"
+    web_targets.append(tg)
+    gen += "\n"
+    gen += f"build {tg} : ttf2woff res/fonts/{font}.ttf | build/res/_.txt\n"
 
 gen += "\n"
 gen += "build build/index.html : cp build/index.typ.desktop.html\n"
 web_targets.append("build/index.html")
 
-gen += "\n"
-gen += "default " + " ".join(web_targets) + "\n"
+gen += """
+build build/res/_.txt : cpdir res | res/_.txt
+  outdir = build
+"""
+web_targets.append("build/res/_.txt")
+
+gen += """
+build web: phony """+ " ".join(web_targets) +"""
+
+rule pub_cmd
+  command = rsync -avz build root@195.26.251.204:/srv/http/alex
+  pool = console
+build pub: pub_cmd | web
+
+default web
+"""
 
 with open("build.ninja", "w") as f:
     f.write(gen)
