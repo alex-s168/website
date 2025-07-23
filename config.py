@@ -132,7 +132,7 @@ gen += """
 build web: phony """+ " ".join(web_targets) +"""
 
 rule pub_cmd
-  command = rsync -avz build root@195.26.251.204:/srv/http/alex
+  command = rsync -avz build/* root@195.26.251.204:/srv/http/alex
   pool = console
 build pub: pub_cmd web
 
