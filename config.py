@@ -19,7 +19,10 @@ rule typst
   command = eval "typst compile --root . --features html -j 6 $flags $in $out --make-deps $out.d"
 
 rule git_inp
-  command = git log -1 --format="--input git_rev=%H --input git_commit_date=\\\"%ad\\\"" --date="format:%d. %B %Y %H:%M" -- $in > $out
+  command = git log -1 --format="--input git_rev=%H --input git_commit_date=\\\"%ad\\\"" --date="format:%d. %B %Y %H:%M" -- $in > $out.temp && \
+            cmp -s $out.temp $out || mv $out.temp $out; \
+            rm -f $out.temp
+  restat = 1
 
 rule badges_list
   command = typst query $in "<meta-people>" --root . --input query=true --field value --one | jq -r . | jq -r 'to_entries[] | [.key,.value.badge] | @tsv' > $out
