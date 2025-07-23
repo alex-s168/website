@@ -81,9 +81,8 @@
 html.elem("style", "
   @font-face {
     font-family: 'DejaVu Sans Mono';
-    src: url('res/DejaVuSansMono-Bold.woff2') format('woff2'),
-        url('res/DejaVuSansMono-Bold.woff') format('woff'),
-        local('DejaVu Sans Mono'),
+    src:local('DejaVu Sans Mono'),
+        url('res/DejaVuSansMono-Bold.woff2') format('woff2'),
         local('Courier New'),
         local(Courier),
         local(monospace);
@@ -94,12 +93,31 @@ html.elem("style", "
 
   @font-face {
     font-family: 'DejaVu Sans Mono';
-    src: url('res/DejaVuSansMono.woff2') format('woff2'),
-        url('res/DejaVuSansMono.woff') format('woff'),
-        local('DejaVu Sans Mono'),
+    src:local('DejaVu Sans Mono'),
+        url('res/DejaVuSansMono.woff2') format('woff2'),
         local('Courier New'),
         local(Courier),
         local(monospace);
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'DejaVu Sans';
+    src:local('DejaVu Sans'),
+        url('res/DejaVuSans-Bold.woff2') format('woff2'),
+        local('Courier New');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'DejaVu Sans';
+    src:local('DejaVu Sans'),
+        url('res/DejaVuSans.woff2') format('woff2'),
+        local('Courier New');
     font-weight: normal;
     font-style: normal;
     font-display: swap;

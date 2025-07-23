@@ -178,7 +178,7 @@
 
   #flink("https://egraphs-good.github.io/")[egg] is a IR pattern matching and transformation library
   that uses #inline-block(flink("https://en.wikipedia.org/wiki/E-graph")[E-Graphs]) to
-  magically solves (almost) all problems regarding IR pattern matching.
+  magically solve (almost) all problems regarding IR pattern matching.
 
   Even though egg solves most problems, I still recommend using a pattern matching dialect, especially in multi-level compilers,
   to be more flexible, and have more future-proof pattern matching, if for example there suddenly is a better alternative to egg,

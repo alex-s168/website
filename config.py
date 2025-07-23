@@ -1,9 +1,18 @@
 import os
 
 gen = """
+build always: phony
+
 rule regen
   command = python config.py
   generator = 1
+
+rule update_git_rev
+  command = git rev-parse HEAD > build/git_rev.txt.tmp && \
+            cmp -s build/git_rev.txt.tmp build/git_rev.txt || mv build/git_rev.txt.tmp build/git_rev.txt; \
+            rm -f build/git_rev.txt.tmp
+  restat = 1
+build build/git_rev.txt: update_git_rev | always
 
 rule typst
   depfile = $out.d
@@ -73,7 +82,7 @@ web_targets = []
 for page in pages:
     gr = "build/" + page + ".git_rev.txt"
     gen += "\n"
-    gen += "build "+gr+" : git_inp pages/" + page
+    gen += "build "+gr+" : git_inp pages/" + page + " | build/git_rev.txt"
     for var in variants:
         tg = "build/" + page + var["suffix"]
         web_targets.append(tg)
