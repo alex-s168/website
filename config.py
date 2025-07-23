@@ -33,7 +33,7 @@ rule ttf2woff
 
 build build/badges.txt: badges_list common.typ
 
-build build.ninja: regen config.py build/badges.txt
+build build.ninja: regen | config.py build/badges.txt res/fonts
 
 build clean : runclean
 """
@@ -125,7 +125,7 @@ build web: phony """+ " ".join(web_targets) +"""
 rule pub_cmd
   command = rsync -avz build root@195.26.251.204:/srv/http/alex
   pool = console
-build pub: pub_cmd | web
+build pub: pub_cmd web
 
 default web
 """
