@@ -7,9 +7,9 @@
   } else { content }]
 }
 
-#let gen-min-pdf-link(content) = {
+#let variant-link(content, variant) = {
   [#context if is-html() {
-    html.elem("a", attrs:(href:"#",onclick:"gotoMinPdf();"), content)
+    html.elem("a", attrs:(href:"#",onclick:"gotoVariant(\""+variant+"\");"), content)
   } else { content }]
 }
 
@@ -36,13 +36,18 @@
       
       html-style(class:"sidebar", "", column-fixed(
         [#if gen-table-of-contents { [#table-of-contents()] }],
-        [#context if min-pdf-link and is-html() {
-          gen-min-pdf-link("Minimal PDF Version")
-        }],
+
         [#if gen-index-ref {[
            #context br()
            #context html-href("index.html")[#html-bold[Website Home]]
+           #context br()
         ]}],
+        [#context if min-pdf-link and is-html() [
+          Renderings of this page:
+          - #variant-link("Minimal PDF (printable)", ".min.pdf")
+          - #variant-link("less bloated HTML", ".min.html")
+          - #variant-link("minimal HTML", ".nano.html")
+        ]],
 
         [#context if is-html() {
           html.elem("style", "
@@ -90,14 +95,16 @@
     content
   }
 
-  #html-script("
-    function gotoMinPdf() {
-      window.location.href = window.location.href.replace(/\.\w+.html/g, '.min.pdf');
-    }
+  #if not is-nano {
+    html-script("
+      function gotoVariant(variant) {
+        window.location.href = window.location.href.replace(/\.\w+.html/g, variant);
+      }
 
-    window.addEventListener('beforeprint', (event) => {
-      gotoMinPdf();
-    });
-  ")
+      window.addEventListener('beforeprint', (event) => {
+        gotoVariant('.min.pdf');
+      });
+    ")
+  }
   ]
 }

@@ -1,7 +1,7 @@
 #import "../common.typ": *
 #import "../simple-page-layout.typ": *
 #import "../core-page-style.typ": *
-#import "../components/header.typ": rev-and-authors
+#import "../components/header.typ": *
 
 #simple-page(
   gen-table-of-contents: true,
@@ -16,9 +16,7 @@
   ]
 ]
 
-#if is-web {section[
-  Note that the #gen-min-pdf-link[PDF Version] of this page might look a bit better styling wise.
-]}
+#pdf-readability()
 
 #section[
   = Introduction
@@ -317,13 +315,7 @@
 
   \
   As a simple, *non realistic* example, let's imagine a CPU (core) that has one bit operations execution unit,
-  and two ALU execution units:
-  #context html-frame(table(
-    columns: 3,
-    inset: 7pt,
-    [ Bit Ops ],
-    [ ALU ], [ ALU ],
-  ))
+  and two ALU execution units / ports. \
   This means that the CPU can execute two instructions in the ALU unit and one instruction in the bit ops unit at the same time.
 ]
 

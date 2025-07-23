@@ -1,6 +1,7 @@
 #import "../common.typ": *
 #import "../simple-page-layout.typ": *
 #import "../components/pcb-view.typ": *
+#import "../components/header.typ": *
 
 #let pcb-size-percent = 80
 #let qpcb(file) = {
@@ -18,9 +19,9 @@
   #title[ etc-nand ]
 ]
 
-#if is-web {section[
-  Note that the #gen-min-pdf-link[PDF Version] of this page might look a bit better styling wise.
+// #pdf-readability()
 
+#if is-web {section[
   You can click the PCB images to switch to the other side.
 ]}
 

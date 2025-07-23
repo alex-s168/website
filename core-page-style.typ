@@ -10,11 +10,14 @@
     #html-head
 
     #html.elem("meta", attrs:(charset:"utf-8"))
-    #html.elem("meta", attrs:(name:"viewport", content:"width=device-width, initial-scale=1"))
 
-    #let ico = res-path()+"favicon.png"
-    #html.elem("link", attrs:(rel:"icon", sizes:"512x512", href:ico))
-    #html.elem("link", attrs:(rel:"image_src", type:"image/png", href:ico))
+    #if not is-nano [
+      #html.elem("meta", attrs:(name:"viewport", content:"width=device-width, initial-scale=1"))
+
+      #let ico = res-path()+"favicon.png"
+      #html.elem("link", attrs:(rel:"icon", sizes:"512x512", href:ico))
+      #html.elem("link", attrs:(rel:"image_src", type:"image/png", href:ico))
+    ]
   ])
 }
 #context html-opt-elem("body", (:))[
@@ -70,14 +73,14 @@
   }
 }
 
-#show heading: it => underline[#it #v(3pt)]
+#show heading: it => if is-nano { it } else { underline[#it #v(3pt)] }
 
 #set underline(stroke: 1pt, offset: 2pt)
 
-#show footnote: it => if is-web { [] } else { it }
-#show footnote.entry: it => if is-web { [] } else { it }
+#show footnote: it => if is-web or is-nano { [] } else { it }
+#show footnote.entry: it => if is-web or is-nano { [] } else { it }
 
-#context if is-html() {
+#context if is-html() and not is-nano {
 html.elem("style", "
   @font-face {
     font-family: 'DejaVu Sans Mono';

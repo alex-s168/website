@@ -308,5 +308,9 @@ document.addEventListener('scroll', (event) => {
 }
 
 #let blocking-code(raw) = {
-  context html-frame(raw)
+  if is-nano {
+    raw
+  } else {
+    context html-frame(raw)
+  }
 }
