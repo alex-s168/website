@@ -85,23 +85,24 @@ html.elem("style", "
   @font-face {
     font-family: 'DejaVu Sans Mono';
     src:local('DejaVu Sans Mono'),
-        url('res/DejaVuSansMono-Bold.woff2') format('woff2'),
-        local('Courier New'),
-        local(Courier),
-        local(monospace);
-    font-weight: bold;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  @font-face {
-    font-family: 'DejaVu Sans Mono';
-    src:local('DejaVu Sans Mono'),
         url('res/DejaVuSansMono.woff2') format('woff2'),
         local('Courier New'),
         local(Courier),
         local(monospace);
     font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /*
+  @font-face {
+    font-family: 'DejaVu Sans Mono';
+    src:local('DejaVu Sans Mono'),
+        url('res/DejaVuSansMono-Bold.woff2') format('woff2'),
+        local('Courier New'),
+        local(Courier),
+        local(monospace);
+    font-weight: bold;
     font-style: normal;
     font-display: swap;
   }
@@ -124,7 +125,7 @@ html.elem("style", "
     font-weight: normal;
     font-style: normal;
     font-display: swap;
-  }
+  }*/
 
   body {
     font-family: DejaVu Sans Mono;

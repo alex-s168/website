@@ -65,6 +65,12 @@ build build/coffee_server : cargo_release_bin coffee
 
 rule expect_img_size
   command = eval "[ $$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 $in) = $size ]" && touch $out
+
+rule ffmpeg_compress
+  command = ffmpeg -y -i $in -compression_level 100 $out -hide_banner -loglevel error
+
+rule pngquant
+  command = pngquant $in -o $out --force --quality $quality
 """
 
 web_targets.append("build/deploy/coffee.js")
@@ -106,6 +112,12 @@ for page in pages:
             deploy_tg = f"build/deploy/{page}"+var["suffix"]
             web_targets.append(deploy_tg)
             gen += f"build {deploy_tg} : minhtml {tg}\n"
+        else:
+            # TODO: pdf compressor thing?
+            gen += "\n"
+            deploy_tg = f"build/deploy/{page}"+var["suffix"]
+            web_targets.append(deploy_tg)
+            gen += f"build {deploy_tg} : cp {tg}\n"
 
 if os.path.isfile("build/badges.txt"):
     badges = None
@@ -146,13 +158,26 @@ gen += "\n"
 gen += "build build/deploy/index.html : cp build/deploy/index.typ.desktop.html\n"
 web_targets.append("build/deploy/index.html")
 
+manual_res = []
+
+manual_res.append("res/favicon.png")
+gen += "\n"
+gen +=f"build build/deploy/res/favicon.png : pngquant res/favicon.png\n"
+gen += "  quality = 1\n"
+
 for root, dirnames, filenames in os.walk("res"):
     for file in filenames:
         file = os.path.join(root,file)
+        if file in manual_res:
+            continue
         tg = f"build/deploy/{file}"  # file includes "res/"!
-        gen += "\n"
-        gen += f"build {tg} : cp {file}"
         web_targets.append(tg)
+        if any(file.endswith("."+x) for x in ["png", "jpg", "jpeg", "gif", "avif"]):
+            gen += "\n"
+            gen += f"build {tg} : ffmpeg_compress {file}\n"       
+        else:
+            gen += "\n"
+            gen += f"build {tg} : cp {file}\n"
 
 gen += """
 build web: phony """+ " ".join(web_targets) +"""
