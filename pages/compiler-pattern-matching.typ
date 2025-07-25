@@ -71,23 +71,23 @@
 
 #section[
   An example is Cranelift's ISLE DSL:
-  #blocking-code(```lisp
+  ```lisp
   ;; x ^ x == 0.
   (rule (simplify (bxor (ty_int ty) x x))
         (subsume (iconst_u ty 0)))
-  ```)
+  ```
 ]
 
 #section[
   Another example is tinygrad's pattern system:
-  #blocking-code(```python
+  ```python
   (UPat(Ops.AND, src=(
      UPat.var("x"),
      UPat(Ops.SHL, src=(
        UPat.const(1),
        UPat.var("b")))),
    lambda x,b: UOp(Ops.BIT_TEST, src=(x, b)))
-  ```)
+  ```
   Fun fact: tinygrad actually decompiles the python code inside the second element of the pair, and runs multiple optimization passes on that.
 ]
 
@@ -136,7 +136,7 @@
 #section[
   == Examples
   MLIR's `pdl` dialect can be used to replace `arith.addi` with `my.add` like this:
-  #blocking-code(```llvm
+  ```llvm
   pdl.pattern @replace_addi_with_my_add : benefit(1) {
     %arg0 = pdl.operand
     %arg1 = pdl.operand
@@ -147,7 +147,7 @@
       pdl.replace %op with %new_op
     }
   }
-  ```)
+  ```
 ]
 
 #section[
@@ -264,7 +264,7 @@
   The main problem is ordering the patterns.
 
   As an example, consider these three patterns:
-  #blocking-code(```lisp
+  ```lisp
   ;; A
   (add x:Const y) => (add y x)
 
@@ -273,19 +273,19 @@
 
   ;; C
   (add x 1) => (inc x)
-  ```)
+  ```
 ]
 
 #section[
   Now what should the compiler do when it sees this:
-  #blocking-code(```lisp
+  ```lisp
   (sub (add 5 1) 2)
-  ```)
+  ```
 ]
 
 #section[
   All three patterns would match:
-  #blocking-code(```lisp
+  ```lisp
   ;; apply A
   (sub (add 5 1) 2) => (sub (add 1 5) 2)
   ;; only B applies now
@@ -299,7 +299,7 @@
   ;; atlernatively apply C
   (sub (add 5 1) 2) => (sub (inc 5) 2)
   ;; nothing applies anymore
-  ```)
+  ```
 ]
 
 #section[

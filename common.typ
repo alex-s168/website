@@ -86,6 +86,10 @@
   html-opt-elem("span", attrs, content)
 }
 
+#let html-div(attrs, content) = {
+  html-opt-elem("div", attrs, content)
+}
+
 #let html-bold(content) = {
   context if is-html() {
     html.elem("b", content)
@@ -98,12 +102,16 @@
   html-span((class:class, style: style), content)
 }
 
+#let html-style-div(class:"", style, content) = {
+  html-div((class:class, style: style), content)
+}
+
 #let slink(target, link-text) = text(fill: blue)[
-  #underline[#link(target, link-text)]
+  #link(target, link-text)
 ]
 
 #let flink(target, link-text) = text(fill: blue)[
-  #underline[#link(target, link-text)]
+  #link(target, link-text)
   #footnote[#text(fill: blue)[#link(target)]]
 ]
 
@@ -239,12 +247,13 @@
   }]
 }
 
+// TODO: move to component
 #let table-of-contents() = {
   html-style(class:"table-of-contents", "", box(
-      stroke: black,
+      stroke: 1.2pt+black,
       radius: 2pt,
       inset: 3%,
-    [Table of contents\
+    [#underline[Table of contents]\
       #let idx = state("stupid-gen-page-state", 0);
 
       #context gen-tree-from-headings(query(heading),

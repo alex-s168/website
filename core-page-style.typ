@@ -31,29 +31,28 @@
 
 #set text(font: "DejaVu Sans Mono", size: default-font-size)
 
-#show raw: it => if type(it.lang) == str and it.lang != "" and is-nano == false {
-  // TODO: after typst fix html exporter breaking line :sob:
-  // context html-frame(context 
-
-  box(
-    stroke: black,
-    radius: 2pt,
-    inset: if is-html() { 1.4pt } else { 5pt },
-    outset: 0pt,
-    baseline: 3.1pt,
-    text(it)
-  )
-} else if is-nano == true {
+#show raw: it => if is-nano == true {
   html-code(text(it))
 } else {
-  box(
-    stroke: black,
-    radius: 2pt,
-    inset: if is-html() { 1.4pt } else { 5pt },
-    outset: 0pt,
-    baseline: 3.1pt,
-    text(it)
-  )
+  if it.block {
+    html-style-div("margin-top:4pt;",
+      block(
+        stroke: black,
+        radius: 2pt,
+        inset: if is-html() { 1.4pt } else { 5pt },
+        outset: 0pt,
+        it
+      ))
+  } else {
+    box(
+      stroke: black,
+      radius: 2pt,
+      inset: if is-html() { 1.4pt } else { 5pt },
+      outset: 0pt,
+      baseline: 3.1pt,
+      it
+    )
+  }
 }
 
 #show box: it => {
@@ -64,16 +63,15 @@
   }
 }
 
-#show underline: it => {
+#show block: it => {
   context if is-html() {
-    // TODO: NOOO
-    html.elem("u", it.body)
+    html.elem("div", attrs: (style: css-style(it)))[#it.body]
   } else {
     it
   }
 }
 
-#show heading: it => if is-nano { it } else { underline[#it #v(3pt)] }
+#show heading: it => if is-nano { it } else { underline(it + v(3pt)) }
 
 #set underline(stroke: 1pt, offset: 2pt)
 
@@ -81,6 +79,8 @@
 #show footnote.entry: it => if is-web or is-nano { [] } else { it }
 
 #context if is-html() and not is-nano {
+let link-color = "3f51b5";
+
 html.elem("style", "
   @font-face {
     font-family: 'DejaVu Sans Mono';
@@ -163,6 +163,16 @@ html.elem("style", "
     margin-top: 0px;
     margin-bottom: 0px;
     display: inline;
+  }
+
+  a {
+    color: #"+link-color+";
+    text-decoration: none;
+  }
+
+  a:visited {
+    color: #"+link-color+";
+    text-decoration: none;
   }
 ")
 }
