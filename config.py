@@ -62,6 +62,9 @@ rule cargo_release_bin
 
 build build/coffee_server : cargo_release_bin coffee
   file = coffee
+
+rule expect_img_size
+  command = eval "[ $$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 $in) = $size ]" && touch $out
 """
 
 web_targets.append("build/deploy/coffee.js")
@@ -115,15 +118,22 @@ if os.path.isfile("build/badges.txt"):
         badge = badge.split("\t")
         user = badge[0]
         url = badge[1]
-        tg = "build/deploy/res/badges/" + user
+        tg = f"build/deploy/res/badges/{user}"
         web_targets.append(tg)
+
+        val = f"build/validate/deploy/res/badges/{user}"
+
         gen += "\n"
         gen += "build "+tg+": "
-        if user == "alex":
-            gen += "cp res/badge.png\n"
+        if user == f"alex":
+            gen += "cp res/badge.png |@ {val}\n"
         else:
-            gen += "curl\n"
+            gen += f"curl |@ {val}\n"
             gen += "  url = "+url+"\n"
+
+        gen += "\n"
+        gen += f"build {val} : expect_img_size {tg}\n"
+        gen += f"  size = 88x31"
 
 for font in fonts:
     font = font.replace(".ttf", "")
