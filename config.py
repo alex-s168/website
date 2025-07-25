@@ -54,7 +54,7 @@ rule minhtml
 
 build build.ninja: regen | config.py build/badges.txt res pages
 
-build build/deploy/coffee.js : python_capture coffee/gen_js.py
+build build/deploy/coffee.js : python_capture gen_coffee_js.py
 
 rule cargo_release_bin
   command = (cd $in && cargo build --release) && cp $in/target/release/$file $out
@@ -64,6 +64,7 @@ build build/coffee_server : cargo_release_bin coffee
   file = coffee
 """
 
+web_targets.append("build/deploy/coffee.js")
 web_targets.append("build/coffee_server")
 
 pages = [x for x in os.listdir("./pages/")]

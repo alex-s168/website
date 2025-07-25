@@ -17,14 +17,14 @@ const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
 if(tz==null) return null;
 const c=\""""+out+"""\".split("|");
 for(let i=0;i<c.length;i+=2){
-if(c[i]===timezone){
+if(c[i]===tz){
 return c[i+1];
 }}
 return null;
 }
 
 async function byCountry(country) {
-const url = `http://127.0.0.1:3000/price/${encodeURIComponent(country)}`;
+const url = `https://coffee-price.vxcc.dev/price/${encodeURIComponent(country)}`;
 
 try {
 const response = await fetch(url);

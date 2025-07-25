@@ -105,6 +105,8 @@
         gotoVariant('.min.pdf');
       });
     ")
+
+    html.elem("script", attrs:("src":"coffee.js","async":""))
   }
   ]
 }
