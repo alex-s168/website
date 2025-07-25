@@ -1,5 +1,7 @@
 import os
 
+web_targets = []
+
 gen = """
 build always: phony
 
@@ -26,6 +28,7 @@ rule git_inp
 
 rule badges_list
   command = typst query $in "<meta-people>" --root . --input query=true --field value --one | jq -r . | jq -r 'to_entries[] | [.key,.value.badge] | @tsv' > $out
+build build/badges.txt: badges_list common.typ
 
 rule curl
   command = curl $url > $out
@@ -38,28 +41,33 @@ rule cpdir
 
 rule runclean
   command = rm -rf build && ninja -t clean
+build clean : runclean
 
 rule ttf2woff
   command = fonttools ttLib.woff2 compress $in -o $out
 
+rule python_capture
+  command = python $in > $out
 
-build build/badges.txt: badges_list common.typ
+rule minhtml
+  command = minhtml --minify-js --minify-css $in -o $out
 
-build build.ninja: regen | config.py build/badges.txt res/fonts
+build build.ninja: regen | config.py build/badges.txt res pages
 
-build clean : runclean
+build build/deploy/coffee.js : python_capture coffee/gen_js.py
+
+rule cargo_release_bin
+  command = (cd $in && cargo build --release) && cp $in/target/release/$file $out
+  pool = console
+
+build build/coffee_server : cargo_release_bin coffee
+  file = coffee
 """
 
-pages = [
-    "article-make-regex-engine-1.typ",
-    "project-etc-nand.typ",
-    "index.typ",
-    "compiler-pattern-matching.typ",
-    "article-favicon.typ",
-    "article-gpu-arch-1.typ",
-]
+web_targets.append("build/coffee_server")
 
-fonts = [x for x in os.listdir("./res/fonts/")]
+pages = [x for x in os.listdir("./pages/")]
+fonts = [x for x in os.listdir("./fonts/")]
 
 variants = [
     {
@@ -80,18 +88,20 @@ variants = [
     },
 ]
 
-web_targets = []
-
 for page in pages:
     gr = "build/" + page + ".git_rev.txt"
     gen += "\n"
     gen += "build "+gr+" : git_inp pages/" + page + " | build/git_rev.txt"
     for var in variants:
         tg = "build/" + page + var["suffix"]
-        web_targets.append(tg)
         gen += "\n"
         gen += "build "+tg+" : typst " + "pages/" + page + " | "+gr+"\n"
         gen += "  flags = " + var["args"] + " $$(cat "+gr+")\n"
+        if tg.endswith(".html"):
+            gen += "\n"
+            deploy_tg = f"build/deploy/{page}"+var["suffix"]
+            web_targets.append(deploy_tg)
+            gen += f"build {deploy_tg} : minhtml {tg}\n"
 
 if os.path.isfile("build/badges.txt"):
     badges = None
@@ -104,38 +114,40 @@ if os.path.isfile("build/badges.txt"):
         badge = badge.split("\t")
         user = badge[0]
         url = badge[1]
-        tg = "build/res/badges/" + user
+        tg = "build/deploy/res/badges/" + user
         web_targets.append(tg)
         gen += "\n"
         gen += "build "+tg+": "
         if user == "alex":
-            gen += "cp res/badge.png | build/res/_.txt\n"
+            gen += "cp res/badge.png\n"
         else:
-            gen += "curl | build/res/_.txt\n"
+            gen += "curl\n"
             gen += "  url = "+url+"\n"
 
 for font in fonts:
     font = font.replace(".ttf", "")
-    tg = f"build/res/{font}.woff2"
+    tg = f"build/deploy/res/{font}.woff2"
     web_targets.append(tg)
     gen += "\n"
-    gen += f"build {tg} : ttf2woff res/fonts/{font}.ttf | build/res/_.txt\n"
+    gen += f"build {tg} : ttf2woff fonts/{font}.ttf\n"
 
 gen += "\n"
-gen += "build build/index.html : cp build/index.typ.desktop.html\n"
-web_targets.append("build/index.html")
+gen += "build build/deploy/index.html : cp build/deploy/index.typ.desktop.html\n"
+web_targets.append("build/deploy/index.html")
 
-gen += """
-build build/res/_.txt : cpdir res | res/_.txt
-  outdir = build
-"""
-web_targets.append("build/res/_.txt")
+for root, dirnames, filenames in os.walk("res"):
+    for file in filenames:
+        file = os.path.join(root,file)
+        tg = f"build/deploy/{file}"  # file includes "res/"!
+        gen += "\n"
+        gen += f"build {tg} : cp {file}"
+        web_targets.append(tg)
 
 gen += """
 build web: phony """+ " ".join(web_targets) +"""
 
 rule pub_cmd
-  command = rsync -avz build/* root@195.26.251.204:/srv/http/alex
+  command = rsync -avz build/deploy/* root@195.26.251.204:/srv/http/alex
   pool = console
 build pub: pub_cmd web
 
