@@ -161,6 +161,7 @@ web_targets.append("build/deploy/index.html")
 manual_res = []
 
 manual_res.append("res/favicon.png")
+web_targets.append("build/deploy/res/favicon.png")
 gen += "\n"
 gen +=f"build build/deploy/res/favicon.png : pngquant res/favicon.png\n"
 gen += "  quality = 1\n"
