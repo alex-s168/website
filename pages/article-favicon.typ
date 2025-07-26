@@ -96,11 +96,11 @@
 
   \
   I only told her (translated):
-  #context html-frame[```
+  ```
   Can you please color this?
   It's supposed to be a circuit, and it will be a small logo for a website.
   The website is mainly black and white, but this (context: persian blue) blue would work too.
-  ```]
+  ```
 
   And less than half a minute later, she came up with this:
   #context wimage(res-path()+"article-favicon/step4_1.png", width:w)
