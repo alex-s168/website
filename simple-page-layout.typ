@@ -44,8 +44,8 @@
         ]}],
         [#context if min-pdf-link and is-html() [
           Renderings of this page:
-          - #variant-link("Minimal PDF (printable)", ".min.pdf")
-          - #variant-link("less bloated HTML", ".min.html")
+          - #variant-link("minimal PDF (printable)", ".min.pdf")
+          // TODO: fix and re-add - #variant-link("less bloated HTML", ".min.html")
           - #variant-link("minimal HTML", ".nano.html")
         ]],
 

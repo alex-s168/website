@@ -36,10 +36,10 @@
 } else {
   if it.block {
     html-style-div("margin-top:4pt;",
-      block(
+      box(
         stroke: black,
         radius: 2pt,
-        inset: if is-html() { 1.4pt } else { 5pt },
+        inset: if is-html() { 1.6pt } else { 5pt },
         outset: 0pt,
         it
       ))
@@ -47,7 +47,7 @@
     box(
       stroke: black,
       radius: 2pt,
-      inset: if is-html() { 1.4pt } else { 5pt },
+      inset: if is-html() { 1.6pt } else { 5pt },
       outset: 0pt,
       baseline: 3.1pt,
       it
@@ -57,7 +57,7 @@
 
 #show box: it => {
   context if is-html() {
-    html.elem("span", attrs: (style: css-style(it)))[#it.body]
+    html.elem("span", attrs: (style: css-style(it)+"display:inline-block"))[#it.body]
   } else {
     it
   }

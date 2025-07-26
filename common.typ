@@ -183,9 +183,9 @@
   else { fn(option) }
 }
 
-#let stroke2css(stroke) = {
+#let stroke2css(stroke, default:"none") = {
   if type(stroke) == dictionary {
-    return "none"
+    return default
   }
   let th = len2css(stroke.thickness, default: "1pt")
   return th + " solid black" // TODO: paint
@@ -193,12 +193,11 @@
 
 #let css-style(it) = {
   return "
-        display: inline-block;
-        border: "+stroke2css(it.stroke)+";
-        border-radius: "+len2css(it.radius, default: "0px")+";
+        " + option-map(stroke2css(it.stroke, default:none), "", x => "border:"+x+";") + "
+        " + option-map(len2css(it.radius, default:none), "", x => "border-radius:"+x+";") + "
         " + option-map(len2css(it.width, default:none), "", x => "width:"+x+";") +"
         " + option-map(len2css(it.height, default:none), "", x => "height:"+x+";") +"
-        padding: " + len2css(it.inset)
+        " + option-map(len2css(it.inset, default:none), "", x => "padding:"+x+";")
 }
 
 #let wimage(path, width:100%, alt:"image") = {
@@ -249,7 +248,7 @@
 
 // TODO: move to component
 #let table-of-contents() = {
-  html-style(class:"table-of-contents", "", box(
+  html-style(class:"table-of-contents", "", block(
       stroke: 1.2pt+black,
       radius: 2pt,
       inset: 3%,
