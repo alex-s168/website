@@ -34,8 +34,8 @@
 ]
 
 #section[
-  == Comparision with CPUs
-  GPUs focus on operating on a lot of data at once (triangles, vertecies, pixels, ...),
+  == Comparison with CPUs
+  GPUs focus on operating on a lot of data at once (triangles, vertices, pixels, ...),
   while CPUs focus on high performance on a single core, and low compute delay.
 ]
 
@@ -54,7 +54,7 @@
   == Waves
   A wave is a SIMD processing unit consisting of typically 32 "lanes" (sometimes called threads).
 
-  Each wave in a CU has seperate control flow, and doesn't have to be related.
+  Each wave in a CU has separate control flow, and doesn't have to be related.
 
   Instructions that waves support:
   - arithmetic operations
@@ -86,7 +86,7 @@
 
 #section[
   === Why are the banks interlaved?
-  When the whole wave wants to read a contiguos array of `f32`, so when each wave performs `some_f32_array[lane_id()]`,
+  When the whole wave wants to read a contiguous array of `f32`, so when each wave performs `some_f32_array[lane_id()]`,
   all 32 banks can be used at the same time.
 ]
 
@@ -147,7 +147,7 @@
   - no fancy out of order or superscalar execution
   - support standard 32 bit floating point, without exceptions.
 
-  Note that we won't specifiy the exact instruction encoding.
+  Note that we won't specify the exact instruction encoding.
 ]
 
 #section[

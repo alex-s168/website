@@ -32,7 +32,7 @@
   #context wimage(res-path()+"favicon.png", width:w)
 ]
 
-#let ic_url = "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.sciencedirect.com/science/article/pii/S0890540197926432/pdf%3Fmd5%3D30965cec6dd7605a865bbec4076f65e4%26pid%3D1-s2.0-S0890540197926432-main.pdf&ved=2ahUKEwjc2NHahqaOAxXFGxAIHRgsIp0QFnoECBMQAQ&usg=AOvVaw0yzy07VkWVoJu4XSqaOqj3"
+#let ic_url = "https://www.sciencedirect.com/science/article/pii/S0890540197926432"
 
 #section[
   This represents an #flink(ic_url)[interaction combinator] tree, that can be interpreted as a
