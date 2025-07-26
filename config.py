@@ -22,16 +22,18 @@ rule typst
 
 rule git_inp
   command = git log -1 --format="--input git_rev=%H --input git_commit_date=\\\"%ad\\\"" --date="format:%d. %B %Y %H:%M" -- $in > $out.temp && \
-            cmp -s $out.temp $out || mv $out.temp $out; \
-            rm -f $out.temp
+              cmp -s $out.temp $out || mv $out.temp $out; \
+            git log -1 --format="%cI" -- $in > $out.iso.temp && \
+              cmp -s $out.iso.temp $out || mv $out.iso.temp $out.iso; \
+            rm -f $out.temp $out.iso.temp
   restat = 1
 
 rule badges_list
-  command = typst query $in "<meta-people>" --root . --input query=true --field value --one | jq -r . | jq -r 'to_entries[] | [.key,.value.badge] | @tsv' > $out
+  command = typst query $in "<meta-people>" --root . --input query=true --field value --one | jq -r 'to_entries[] | [.key,.value.badge] | @tsv' > $out
 build build/badges.txt: badges_list common.typ
 
 rule curl
-  command = curl $url > $out
+  command = curl $curlflags $url > $out
 
 rule cp
   command = cp $flags $in $out
@@ -44,7 +46,10 @@ rule runclean
 build clean : runclean
 
 rule ttf2woff
-  command = fonttools ttLib.woff2 compress $in -o $out
+  command = fonttools ttLib.woff2 compress $in -o $out 2>/dev/null
+
+rule python
+  command = python $in
 
 rule python_capture
   command = python $in > $out
@@ -54,17 +59,15 @@ rule minhtml
 
 build build.ninja: regen | config.py build/badges.txt res pages
 
-build build/deploy/coffee.js : python_capture gen_coffee_js.py
-
 rule cargo_release_bin
   command = (cd $in && cargo build --release) && cp $in/target/release/$file $out
   pool = console
 
-build build/coffee_server : cargo_release_bin coffee
-  file = coffee
-
 rule expect_img_size
   command = eval "[ $$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 $in) = $size ]" && touch $out
+
+rule touch
+  command = touch $out
 
 rule ffmpeg_compress
   command = ffmpeg -y -i $in -compression_level 100 $out -hide_banner -loglevel error
@@ -73,11 +76,27 @@ rule pngquant
   command = pngquant $in -o $out --force --quality $quality
 """
 
+gen += """
+build build/deploy/coffee.js : python_capture gen_coffee_js.py
+
+build build/coffee_server : cargo_release_bin coffee
+  file = coffee
+"""
 web_targets.append("build/deploy/coffee.js")
 web_targets.append("build/coffee_server")
 
 pages = [x for x in os.listdir("./pages/")]
-fonts = [x for x in os.listdir("./fonts/")]
+
+gen += """
+build build/pages.typ build/pages.json : python pages.gen.py | pages.in.typ
+
+build gen_typst: phony build/pages.typ | """+ " ".join(f"build/{x}.git_rev.txt.iso" for x in pages) +"""
+"""
+
+gen += """
+build build/deploy/atom.xml : python gen_feed.py | build/pages.json """ + " ".join(f"build/{x}.nano.html" for x in pages) + """
+"""
+web_targets.append("build/deploy/atom.xml")
 
 variants = [
     {
@@ -101,11 +120,11 @@ variants = [
 for page in pages:
     gr = "build/" + page + ".git_rev.txt"
     gen += "\n"
-    gen += "build "+gr+" : git_inp pages/" + page + " | build/git_rev.txt"
+    gen += "build "+gr+" | "+gr+".iso : git_inp pages/" + page + " | build/git_rev.txt\n"
     for var in variants:
         tg = "build/" + page + var["suffix"]
         gen += "\n"
-        gen += "build "+tg+" : typst " + "pages/" + page + " | "+gr+"\n"
+        gen += "build "+tg+" : typst " + "pages/" + page + " | "+gr+" || gen_typst\n"
         gen += "  flags = " + var["args"] + " $$(cat "+gr+")\n"
         if tg.endswith(".html"):
             gen += "\n"
@@ -142,11 +161,13 @@ if os.path.isfile("build/badges.txt"):
         else:
             gen += f"curl |@ {val}\n"
             gen += "  url = "+url+"\n"
+            gen += "  curlflags = -k"
 
         gen += "\n"
         gen += f"build {val} : expect_img_size {tg}\n"
         gen += f"  size = 88x31"
 
+fonts = [x for x in os.listdir("./fonts/")]
 for font in fonts:
     font = font.replace(".ttf", "")
     tg = f"build/deploy/res/{font}.woff2"

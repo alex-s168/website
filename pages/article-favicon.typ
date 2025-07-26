@@ -1,18 +1,27 @@
 #import "../common.typ": *
 #import "../simple-page-layout.typ": *
 #import "../core-page-style.typ": *
-#import "../components/header.typ": rev-and-authors
+#import "../components/header.typ": *
+
+#let article = (
+  authors: (people.alex,),
+  title: "The making of the favicon",
+  html-title: "The making of the favicon",
+  summary: "It turns out that websites need a favicon, and making one is hard..."
+)
+
+#metadata(article) <feed-ent>
 
 #simple-page(
   gen-table-of-contents: true,
-  [The making of the favicon]
+  article.html-title
 )[
 
 #section[
-  #title[The making of the favicon]
+  #title(article.title)
 
   #sized-p(small-font-size)[
-    #rev-and-authors((people.alex,))
+    #rev-and-authors(article.authors)
   ]
 ]
 

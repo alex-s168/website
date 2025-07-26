@@ -3,16 +3,25 @@
 #import "../core-page-style.typ": *
 #import "../components/header.typ": *
 
+#let article = (
+  authors: (people.alex,),
+  title: "Designing a GPU architecture: Waves",
+  html-title: "Designing a GPU architecture: Waves",
+  summary: "Exploring GPU architecture and designing our own. Part 1: wavefronts / warps"
+)
+
+#metadata(article) <feed-ent>
+
 #simple-page(
   gen-table-of-contents: true,
-  [Designing a GPU architecture: Waves]
+  article.html-title
 )[
 
 #section[
-  #title[Designing a GPU Architecture: Waves]
+  #title(article.title)
 
   #sized-p(small-font-size)[
-    #rev-and-authors((people.alex,))
+    #rev-and-authors(article.authors)
   ]
 ]
 

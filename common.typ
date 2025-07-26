@@ -294,8 +294,10 @@ document.addEventListener('scroll', (event) => {
 #let people = (
   alex: (
     nick: "alex_s168",
+    name: "Alexander Nutz",
     url: "https://alex.vxcc.dev",
     badge: "https://alex.vxcc.dev/res/badge.png",
+    mail: "nutz.alexander@vxcc.dev",
   ),
   ote: (
     nick: "otesunki",
@@ -309,7 +311,7 @@ document.addEventListener('scroll', (event) => {
   ),
 )
 
-#metadata(json.encode(people)) <meta-people>
+#metadata(people) <meta-people>
 
 #let person(p) = {
   flink(p.url, p.nick)

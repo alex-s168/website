@@ -3,16 +3,25 @@
 #import "../core-page-style.typ": *
 #import "../components/header.typ": *
 
+#let article = (
+  authors: (people.alex,),
+  title: "Approaches to pattern matching in compilers",
+  html-title: "Approaches to Compiler Pattern Matching",
+  summary: "If you are working an more advanced compilers, you probably had to work with pattern matching already. In this article, we will explore different approaches.",
+)
+
+#metadata(article) <feed-ent>
+
 #simple-page(
   gen-table-of-contents: true,
-  [Approaches to Pattern Matching - Alexander Nutz]
+  article.html-title
 )[
 
 #section[
-  #title[Approaches to pattern matching in compilers]
+  #title(article.title)
 
   #sized-p(small-font-size)[
-    #rev-and-authors((people.alex,))
+    #rev-and-authors(article.authors)
   ]
 ]
 
@@ -314,7 +323,7 @@
   Modern processor architecture features like superscalar execution make this even more complicated.
 
   \
-  As a simple, *non realistic* example, let's imagine a CPU (core) that has one bit operations execution unit,
+  As a simple, *unrealistic* example, let's imagine a CPU (core) that has one bit operations execution unit,
   and two ALU execution units / ports. \
   This means that the CPU can execute two instructions in the ALU unit and one instruction in the bit ops unit at the same time.
 ]

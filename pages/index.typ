@@ -1,6 +1,7 @@
 #import "../common.typ": *
 #import "../simple-page-layout.typ": *
 #import "../core-page-style.typ": *
+#import "../build/pages.typ": articles
 
 #let tree-list(..elements) = {
   gen-tree-from-headings(elemfn: (content, x) => [
@@ -24,14 +25,12 @@
   #title[alex_s168]
   #br()
 
-  Articles
+  Articles (#html-href("atom.xml")[Atom feed])
   #br()
-  #tree-list(
-    (level:1, body: [ Making a simple RegEx engine ]),
-     (level:2, body: html-href("article-make-regex-engine-1.typ.desktop.html")[ Part 1: Introduction to RegEx ]),
-    (level:1, body: html-href("compiler-pattern-matching.typ.desktop.html")[ Approaches to pattern matching in compilers ]),
-    (level:1, body: html-href("article-favicon.typ.desktop.html")[ Making of the favicon ]),
-  )
+  #tree-list(..articles.filter(x => x.in-homepage).map(x => (
+    level: 1,
+    body: html-href(x.url, x.title)
+  )))
   #br()
 
   Socials

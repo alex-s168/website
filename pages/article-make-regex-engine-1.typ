@@ -3,18 +3,26 @@
 #import "../core-page-style.typ": *
 #import "../components/header.typ": *
 
+#let article = (
+  authors: (people.alex,),
+  title: "Making a simple RegEx engine:
+Part 1: Introduction to RegEx",
+  html-title: "Introduction to RegEx",
+  summary: "Do you also think that all RegEx engines kinda suck and you want to make your own? probably not"
+)
+
+#metadata(article) <feed-ent>
+
 #simple-page(
   gen-table-of-contents: true,
-  [Introduction to RegEx]
+  article.html-title
 )[
 
 #section[
-  #title[Making a simple RegEx engine]
-
-  #title[Part 1: Introduction to RegEx]
+  #title(article.title)
 
   #sized-p(small-font-size)[
-    #rev-and-authors((people.alex,))
+    #rev-and-authors(article.authors)
   ]
 ]
 
