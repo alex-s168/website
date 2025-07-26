@@ -17,6 +17,7 @@
       #let ico = res-path()+"favicon.png"
       #html.elem("link", attrs:(rel:"icon", sizes:"512x512", href:ico))
       #html.elem("link", attrs:(rel:"image_src", type:"image/png", href:ico))
+      #html.elem("link", attrs:(type:"application/atom+xml", rel:"alternate", title:"alexs168's blog", href:"atom.xml"))
     ]
   ])
 }

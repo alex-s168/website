@@ -48,8 +48,10 @@
           // TODO: fix and re-add - #variant-link("less bloated HTML", ".min.html")
           - #variant-link("minimal HTML", ".nano.html")
         ]],
-        [#html-href("atom.xml")[Atom feed]
-         #context br()],
+        [#if gen-index-ref [
+         #html-href("atom.xml")[Atom feed]
+         #context br()
+        ]],
 
         [#context if is-html() {
           html.elem("style", "
