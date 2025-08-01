@@ -45,7 +45,8 @@
 
   Each compute unit has multiple SIMD units, also called "wave", "wavefront" or "warp".
   Compute units also have some fast local memory (tens of kilobytes),
-  main memory access queues, texture units, a scalar unit, and other features. (see future article)
+  main memory access queues, texture units, a scalar unit, and other features.
+  Subscribe to the #flink("atom.xml")[Atom feed] to get notified of future articles.
 
   The main memory (graphics memory) is typically outside of the GPU, and is slow, but high-bandwidth memory.
 ]
@@ -65,6 +66,15 @@
   Since only the whole wave can do control flow, and not each lane, all operations can be masked so that they only apply to specific lanes.
 
   => waves are really similar to SIMD on modern CPUs
+]
+
+#section[
+  In modern GPUs, instruction execution in waves is superscalar,
+  so there are multiple different execution units for executing different kinds of instructions,
+  and multiple instructions can be executed at once, if there are free execution units,
+  and they don't depend on each other.
+
+  We'll be exploring that in a future article.
 ]
 
 #section[
@@ -144,6 +154,7 @@
   - 48 vector registers of 16x32b per wave
   - one scalar unit per CU
   - 128 global memory ports
+  - 16 async task completion "signal" slots per wave
   - no fancy out of order or superscalar execution
   - support standard 32 bit floating point, without exceptions.
 
@@ -181,6 +192,7 @@
   - `Sreg`: the first element of a vector register, as scalar
   - `Sany`: a `Simm` or an `Sreg`
   - `dist`: `Vany`, or a `Sany` broadcasted to each element
+  - `sig`: one of the 16 completion signal slots
 ]
 
 #section[
@@ -210,19 +222,120 @@
 ]
 
 #section[
-  === Memory
-  - `fn local_load`
-  TODO
+  === Local memory
+  - load 32 bit value at each elem where mask is true:
+    `fn local_load32(out out: Vreg, in mask: M, in addr: Vreg)`
+  - store 32 bit value at each elem where mask is true:
+    `fn local_store32(in addr: Vreg, in mask: M, in val: Vany)`
+]
+
+#section[
+  === Global (async) memory
+  - start an async global load, and make the given signal correspond to the completion of the access:
+     load 32 bit value at each elem where mask is true:
+    `fn global_load32(out sig: sig, out out: Vreg, in mask: M, in addr: Vreg)`
+  - see above and `local_store32`
+    `fn global_store32(out sig: sig, in addr: Vreg, in mask: M, in val: Vany)`
+  - `fn sig_done1(out r: Sreg, in sig: sig)`
+  - `fn sig_done2(out r: Sreg, in sig1: sig, in sig2: sig)`
+  - `fn sig_wait(out r: Sreg, in sig: sig)`
+  - `fn sig_waitall2(out r: Sreg, in sig1: sig, in sig2: sig)`
+  - `fn sig_waitall3(out r: Sreg, in sig1: sig, in sig2: sig, in sig3: sig)`
+  - `fn sig_waitall4(out r: Sreg, in sig1: sig, in sig2: sig, in sig3: sig, in sig4: sig)`
+
+  As a future extension, we could add a instruction that waits for any of the
+  given signals to complete, and then jump to a specific location, depending on which of those completed.
 ]
 
 #section[
   === Control flow (whole wave)
-  TODO
+  - branch if scalar is zero:
+    `fn brz(in dest: Simm, in val: Sany)`
+  - branch if scalar is not zero:
+    `fn brnz(in dest: Simm, in val: Sany)`
+  - branch on the whole wave if each element has a true value for the mask:
+    `fn br_all(in dest: Simm, in cond: M)`
+  - branch on the whole wave if any element has a true value for the mask:
+    `fn br_any(in dest: Simm, in cond: M)`
 ]
 
 #section[
   = Hand-compiling code
-  TODO
+  Now that we decided on a simple compute-only GPU architecture,
+  we can try hand-compiling an OpenCL program.
+
+  I asked an LLM to produce a N*N matmul example (comments written manually):
+  ```c
+  // convenient number for our specifc hardware
+  #define TILE_SIZE 8
+
+  // this kernel will be launched with dimensions:
+  //   global[2] = { 128,128 } = { N, N };
+  //   local[2]  = { 8,8 } = { TILE_SIZE, TILE_SIZE };
+  __kernel void matmul_tiled(
+    __global float* A,
+    __global float* B,
+    __global float* C,
+    const int N)
+  {
+    int row = get_global_id(1); // y
+    int col = get_global_id(0); // x
+
+    __local float Asub[TILE_SIZE][TILE_SIZE];
+    __local float Bsub[TILE_SIZE][TILE_SIZE];
+
+    float sum = 0.0f;
+
+    for (int t = 0; t < N / TILE_SIZE; ++t) {
+      // load tiles into local
+      int tiledRow = row;
+      int tiledCol = t * TILE_SIZE + get_local_id(0);
+      if (tiledRow < N && tiledCol < N)
+        Asub[get_local_id(1)][get_local_id(0)] = A[tiledRow * N + tiledCol];
+      else
+        Asub[get_local_id(1)][get_local_id(0)] = 0.0f;
+
+      tiledRow = t * TILE_SIZE + get_local_id(1);
+      tiledCol = col;
+      if (tiledRow < N && tiledCol < N)
+          Bsub[get_local_id(1)][get_local_id(0)] = B[tiledRow * N + tiledCol];
+      else
+          Bsub[get_local_id(1)][get_local_id(0)] = 0.0f;
+
+      // sync local access across local grp
+      barrier(CLK_LOCAL_MEM_FENCE);
+
+      for (int k = 0; k < TILE_SIZE; ++k)
+          sum += Asub[get_local_id(1)][k] * Bsub[k][get_local_id(0)];
+
+      // sync local access across local grp
+      barrier(CLK_LOCAL_MEM_FENCE);
+    }
+
+    if (row < N && col < N)
+      C[row * N + col] = sum;
+  }
+  ```
+]
+
+#section[
+  First, we have to decide on how we want to map the kernel to the hardware.
+
+  Since the local dimension of the kernel is 8*8, which is 64,
+  we can map each local group to one CU, by mapping 32 kernels to one wave,
+  and using both waves available on one CU for the local group.
+
+  Our global dimension is 128*128, which means that we would need 256 compute units.
+  But since we probably don't have 256 compute units,
+  GPUs, including ours, will have a on-hardware task scheduler,
+  for scheduing tasks onto compute units.
+]
+
+#section[
+  = Outro
+  Modern GPUs are really complex, but designing a simple GPU is not that hard either.
+
+  Subscribe to the #flink("atom.xml")[Atom feed] to get notified of future articles.
 ]
 
 ]
