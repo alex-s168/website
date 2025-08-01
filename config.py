@@ -1,4 +1,25 @@
 import os
+import subprocess
+
+testcmd=subprocess.run(["python", "test_py_mods.py"], capture_output=True)
+print(testcmd.stderr.decode("utf-8").strip())
+assert testcmd.returncode == 0
+
+have_ffprobe=False
+try:
+    have_ffprobe = subprocess.run(["ffprobe", "--version"], capture_output=True)
+    have_ffprobe = testcmd.returncode == 0
+except:pass
+if not have_ffprobe:
+    print("warn: ffprobe not installed")
+
+have_pngquant=False
+try:
+    have_pngquant = subprocess.run(["pngquant", "--version"], capture_output=True)
+    have_pngquant = have_pngquant.returncode == 0
+except:pass
+if not have_pngquant:
+    print("warn: pngquant not installed")
 
 web_targets = []
 
@@ -63,18 +84,37 @@ rule cargo_release_bin
   command = (cd $in && cargo build --release) && cp $in/target/release/$file $out
   pool = console
 
+rule touch
+  command = touch $out
+"""
+
+if have_ffprobe:
+  gen += """
 rule expect_img_size
   command = eval "[ $$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 $in) = $size ]" && touch $out
 
-rule touch
+rule ffmpeg_compress
+  command = ffmpeg -y -i $in -compression_level 100 $out -hide_banner -loglevel error
+  """
+else:
+  gen += """
+rule expect_img_size
   command = touch $out
 
 rule ffmpeg_compress
-  command = ffmpeg -y -i $in -compression_level 100 $out -hide_banner -loglevel error
+  command = cp $in $out
+  """
 
+if have_pngquant:
+  gen += """
 rule pngquant
   command = pngquant $in -o $out --force --quality $quality
-"""
+  """
+else:
+  gen += """
+rule pngquant
+  command = cp $in $out
+  """
 
 gen += """
 build build/deploy/coffee.js : python_capture gen_coffee_js.py
@@ -88,7 +128,7 @@ web_targets.append("build/coffee_server")
 pages = [x for x in os.listdir("./pages/")]
 
 gen += """
-build build/pages.typ build/pages.json : python pages.gen.py | pages.in.typ
+build build/pages.typ build/pages.json : python pages.gen.py | pages.in.typ """+ " ".join(f"build/{x}.git_rev.txt.iso" for x in pages) +"""
 
 build gen_typst: phony build/pages.typ | """+ " ".join(f"build/{x}.git_rev.txt.iso" for x in pages) +"""
 """
