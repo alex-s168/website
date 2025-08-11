@@ -99,7 +99,7 @@
     content
   }
 
-  #if not is-nano {
+  #context if (not is-nano) and is-html() {
     html-script("
       function gotoVariant(variant) {
         window.location.href = window.location.href.replace(/\.\w+.html/g, variant);

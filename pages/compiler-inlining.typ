@@ -145,7 +145,7 @@
 ]
 
 #section[
-  = Function *out*lining
+  = Function outlining
   A related optimization is "outlining". It's the opposite to inlining.
   It moves duplicate code into a function, to reduce code size, and sometimes increase performance (because of instruction caching)
 
