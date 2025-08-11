@@ -11,6 +11,11 @@
     homepage: false,
   ),
   (
+    page: "compiler-inlining.typ",
+    feed: true,
+    homepage: true,
+  ),
+  (
     page: "compiler-pattern-matching.typ",
     feed: true,
     homepage: true,

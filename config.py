@@ -1,25 +1,29 @@
 import os
 import subprocess
 
+recommend_pub = True
+
 testcmd=subprocess.run(["python", "test_py_mods.py"], capture_output=True)
 print(testcmd.stderr.decode("utf-8").strip())
 assert testcmd.returncode == 0
 
 have_ffprobe=False
 try:
-    have_ffprobe = subprocess.run(["ffprobe", "--version"], capture_output=True)
-    have_ffprobe = testcmd.returncode == 0
+  have_ffprobe = subprocess.run(["ffprobe", "--version"], capture_output=True)
+  have_ffprobe = testcmd.returncode == 0
 except:pass
 if not have_ffprobe:
-    print("warn: ffprobe not installed")
+  recommend_pub = False
+  print("warn: ffprobe not installed")
 
 have_pngquant=False
 try:
-    have_pngquant = subprocess.run(["pngquant", "--version"], capture_output=True)
-    have_pngquant = have_pngquant.returncode == 0
+  have_pngquant = subprocess.run(["pngquant", "--version"], capture_output=True)
+  have_pngquant = have_pngquant.returncode == 0
 except:pass
 if not have_pngquant:
-    print("warn: pngquant not installed")
+  recommend_pub = False
+  print("warn: pngquant not installed")
 
 web_targets = []
 
@@ -243,12 +247,16 @@ for root, dirnames, filenames in os.walk("res"):
 
 gen += """
 build web: phony """+ " ".join(web_targets) +"""
+"""
 
+gen+="""
 rule pub_cmd
-  command = rsync -avz build/deploy/* root@195.26.251.204:/srv/http/alex
+  command = """ + ("" if recommend_pub else "echo WARN: not optimal website!!! &&") + """rsync -avz build/deploy/* root@195.26.251.204:/srv/http/alex
   pool = console
 build pub: pub_cmd web
+"""
 
+gen+="""
 default web
 """
 
