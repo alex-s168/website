@@ -179,26 +179,15 @@
 ]
 
 #section[
-  == egg
-  Some people might say: "bUt Im JuSt GoInG tO uSe EgG, i DoNt NeEd A pAtTeRn MaTcHiNg DiAlEcT"
-  (specifically #person(people.ote) said something like that)
+  == E-Graphs
+  #inline-block(flink("https://en.wikipedia.org/wiki/E-graph")[E-Graphs]) are magical datastructures
+  that can be used to efficiently encode all possible transformations, and then select the best transformation.
 
-  #flink("https://egraphs-good.github.io/")[egg] is a IR pattern matching and transformation library
-  that uses #inline-block(flink("https://en.wikipedia.org/wiki/E-graph")[E-Graphs]) to
-  magically solve (almost) all problems regarding IR pattern matching.
+  An example implementation is #flink("https://egraphs-good.github.io/")[egg]
 
-  Even though egg solves most problems, I still recommend using a pattern matching dialect, especially in multi-level compilers,
-  to be more flexible, and have more future-proof pattern matching, if for example there suddenly is a better alternative to egg,
+  Even though E-Graphs solve most problems, I still recommend using a pattern matching dialect, especially in multi-level compilers,
+  to be more flexible, and have more future-proof pattern matching,
   or you decide that you want to match some complex patterns manually.
-]
-
-#section[
-  A problem with using egg in combination with pattern matching dialects is that it might be harder
-  to write the code to convert the pattern matching dialect to egg patterns.
-
-  Additionally, some more complex transformations (not the matches) can't always be directly converted to egg transformations
-  (depending on the feature set provided by the transformation dialect),
-  but that can be solved by using a custom ```rust egg::Applier```
 ]
 
 #section[
