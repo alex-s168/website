@@ -44,16 +44,15 @@
   )
   #br()
 
-  Working on
+  Noteable projects
   #br()
   #tree-list(
     (level:1, body: [ Programming languages and compilers ]),
-     (level:2, body: [ #link("https://github.com/vxcc-backend/vxcc-new")[ vxcc ]: Advanced multi-level compiler ]),
+     (level:2, body: [ #link("https://github.com/vxcc-backend/vxcc-new")[ vxcc ]: WiP multi-level compiler ]),
      (level:2, body: [ #link("https://github.com/alex-s168/uiuac")[ uiuac ]: (discontinued) Optimizing compiler for the #link("https://uiua.org")[Uiua programming language] ]),
      (level:2, body: [ #link("https://github.com/Lambda-Mountain-Compiler-Backend/lambda-mountain")[ LSTS's standard library ] ]),
      (level:2, body: [ FP programming language compiler mostly using #link("https://en.wikipedia.org/wiki/Interaction_nets")[interaction nets] ]),
-     (level:2, body: [ #link("https://github.com/h6-lang/h6")[ h6 ]: Minimal stack-based programming language ]),
-     (level:2, body: [ #link("https://github.com/alex-s168/lil-rs")[ lil-rs ]: Rust implementation of #link("http://beyondloom.com/decker/lil.html")[lil] ]),
+     (level:2, body: [ #link("https://github.com/alex-s168/lil-rs")[ lil-rs ]: WiP implementation of #link("http://beyondloom.com/decker/lil.html")[lil] ]),
 
     (level:1, body: [ Misc. ]),
      (level:2, body: [ #link("https://github.com/alex-s168/tpre")[ tpre ]: Fast and minimal RegEx engine ]),
@@ -64,6 +63,22 @@
 
     (level:1, body: [ FPGA designs ]),
      (level:2, body: [ RMII MAC in #link("https://www.chisel-lang.org/")[ Chisel ] ]),
+     (level:2, body: [ Configurable AES accelerator in #link("https://www.chisel-lang.org/")[ Chisel ] ]),
+  )
+
+  #br()
+  Skills
+  #br()
+  #tree-list(
+    (level:1, body: [ Programming languages ]),
+     (level:2, body: [ C++ and C ]),
+     (level:2, body: [ Rust ]),
+     (level:2, body: [ #link("https://uiua.org")[Uiua] ]),
+     (level:2, body: [ Python, Lua, ... ]),
+
+    (level:1, body: [ Writing compiler frontends but mostly backends ]),
+    (level:1, body: [ Hardware design with #link("https://www.chisel-lang.org/")[ Chisel ] and Verilog ]),
+    (level:1, body: [ Internals of MLIR ]),
   )
 
   #br()#br()
