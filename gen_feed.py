@@ -26,7 +26,7 @@ for article in articles:
 fg.author([v for _,v in all_authors.items()])
 
 fg.id("https://alex.vxcc.dev")
-fg.title("alex168's block")
+fg.title("alex168's blog")
 fg.subtitle("alex_s168's blog")
 fg.icon("https://vxcc.dev/alex/res/favicon.png")
 fg.language("en-US")
