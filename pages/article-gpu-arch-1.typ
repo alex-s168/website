@@ -280,6 +280,8 @@
   {
     int row = get_global_id(1); // y
     int col = get_global_id(0); // x
+    int local_row = get_local_id(1); // y
+    int local_col = get_local_id(0); // x
 
     __local float Asub[TILE_SIZE][TILE_SIZE];
     __local float Bsub[TILE_SIZE][TILE_SIZE];
@@ -289,24 +291,28 @@
     for (int t = 0; t < N / TILE_SIZE; ++t) {
       // load tiles into local
       int tiledRow = row;
-      int tiledCol = t * TILE_SIZE + get_local_id(0);
+      int tiledCol = t * TILE_SIZE + local_col;
+      float av;
       if (tiledRow < N && tiledCol < N)
-        Asub[get_local_id(1)][get_local_id(0)] = A[tiledRow * N + tiledCol];
+        av = A[tiledRow * N + tiledCol];
       else
-        Asub[get_local_id(1)][get_local_id(0)] = 0.0f;
+        av = 0.0f;
+      Asub[local_row][local_col] = av;
 
-      tiledRow = t * TILE_SIZE + get_local_id(1);
+      tiledRow = t * TILE_SIZE + local_row;
       tiledCol = col;
+      float bv;
       if (tiledRow < N && tiledCol < N)
-          Bsub[get_local_id(1)][get_local_id(0)] = B[tiledRow * N + tiledCol];
+          bv; = B[tiledRow * N + tiledCol];
       else
-          Bsub[get_local_id(1)][get_local_id(0)] = 0.0f;
+          bv = 0.0f;
+      Bsub[local_row][local_col]= bv;
 
       // sync local access across local grp
       barrier(CLK_LOCAL_MEM_FENCE);
 
       for (int k = 0; k < TILE_SIZE; ++k)
-          sum += Asub[get_local_id(1)][k] * Bsub[k][get_local_id(0)];
+          sum += Asub[local_row][k] * Bsub[k][local_col];
 
       // sync local access across local grp
       barrier(CLK_LOCAL_MEM_FENCE);

@@ -87,9 +87,11 @@
   #link("https://github.com/alex-s168/website")[Website source code]
 
   #br()#br()
-  The latest version of my badge will always be at:\
+  Latest version of my badge:\
   #raw(people.alex.badge)
 
+  #br()
+  Check out these websites:
   #context if is-web and is-html() { // excludes min.html builds too
     let scale = 1.3
     for id in people.keys() {
