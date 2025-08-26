@@ -91,7 +91,7 @@
   #raw(people.alex.badge)
 
   #br()
-  Check out these websites:
+  Check out these websites:\
   #context if is-web and is-html() { // excludes min.html builds too
     let scale = 1.3
     for id in people.keys() {
