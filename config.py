@@ -253,7 +253,7 @@ pub_cmd = [
 "( [ -d build-up ] && cd build-up && git fetch origin && git checkout main && git reset --hard origin/main "
                   "|| git clone https://gitea.vxcc.dev/alexander.nutz/website-build.git build-up )",
 "cd build-up",
-"rsync -av --delete --exclude '.git' build/deploy/ ../build-up/",
+"rsync -av --delete --exclude '.git' ../build/deploy/ .",
 "git add .",
 "git commit -m up",
 "git push -u origin main",
