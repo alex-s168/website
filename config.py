@@ -249,9 +249,19 @@ gen += """
 build web: phony """+ " ".join(web_targets) +"""
 """
 
+pub_cmd = [
+"( [ -d build-up ] && cd build-up && git fetch origin && git checkout main && git reset --hard origin/main "
+                  "|| git clone https://gitea.vxcc.dev/alexander.nutz/website-build.git build-up )",
+"cd build-up",
+"rsync -av --delete --exclude '.git' build/deploy/ ../build-up/",
+"git add .",
+"git commit -m up",
+"git push -u origin main",
+]
+
 gen+="""
 rule pub_cmd
-  command = """ + ("" if recommend_pub else "echo WARN: not optimal website!!! &&") + """rsync -avz build/deploy/* root@195.26.251.204:/srv/http/alex
+  command = """ + ("" if recommend_pub else "echo WARN: not optimal website!!! && ") + " && ".join(pub_cmd) + """
   pool = console
 build pub: pub_cmd web
 """
