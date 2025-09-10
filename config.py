@@ -191,6 +191,8 @@ if os.path.isfile("build/badges.txt"):
         if len(badge) == 0:
             continue
         badge = badge.split("\t")
+        if len(badge) < 2:
+            continue
         user = badge[0]
         url = badge[1]
         tg = f"build/deploy/res/badges/{user}"

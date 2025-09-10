@@ -309,6 +309,14 @@ document.addEventListener('scroll', (event) => {
     url: "https://512b.dev/syn/",
     badge: "https://512b.dev/syn/badge.png",
   ),
+  hsp: (
+    nick: "hemisputnik",
+    url: "https://512b.dev/hsp/"
+  ),
+  barracudalake: (
+    nick: "barracudalake",
+    url: "https://barralake.de/"
+  )
 )
 
 #metadata(people) <meta-people>

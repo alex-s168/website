@@ -22,7 +22,7 @@
 )[
 
   #br()
-  #title[alex_s168]
+  #title[Alexander Nutz]
   #br()
 
   Articles (#html-href("atom.xml")[Atom feed])
@@ -70,12 +70,6 @@
   Skills
   #br()
   #tree-list(
-    (level:1, body: [ Programming languages ]),
-     (level:2, body: [ C++ and C ]),
-     (level:2, body: [ Rust ]),
-     (level:2, body: [ #link("https://uiua.org")[Uiua] ]),
-     (level:2, body: [ Python, Lua, ... ]),
-
     (level:1, body: [ Writing compiler frontends but mostly backends ]),
     (level:1, body: [ Hardware design with #link("https://www.chisel-lang.org/")[ Chisel ] and Verilog ]),
     (level:1, body: [ Internals of MLIR ]),
@@ -96,6 +90,7 @@
     let scale = 1.3
     for id in people.keys() {
       let person = people.at(id)
+      if person.at("badge", default:none) != none {
       html.elem("a", attrs:(href:person.url, target:"_blank"))[
         #html.elem("img", attrs:(
           src: res-path()+"badges/"+id,
@@ -107,6 +102,17 @@
           height: str(31*scale),
         ))
       ]
+      }
     }
   }
+  - #person(people.barracudalake)
+  - #person(people.hsp)
+  - #link("https://compiler.club/")[compiler.club]
+
+  #br()#br()#br()
+  Impressum:\
+  Alexander Nutz\
+  Gloggnitz, Austria
+
+  #br()#br()#br()
 ]
