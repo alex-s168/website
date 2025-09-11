@@ -38,9 +38,10 @@
   #tree-list(
     (level:1, body: link("https://github.com/alex-s168")[ GitHub ]),
     (level:1, body: [Discord: alex_s168]),
-    (level:1, body: link("mailto:alexandernutz68@gmail.com")[ E-Mail ]),
+    (level:1, body: link("mailto:alexander.nutz@vxcc.dev")[ E-Mail ]),
     (level:1, body: link("https://njump.me/npub17semnd065ahhsajlylkyd3lahcykpuw45rhj7cge3uqdfq24y84st0g4gr")[ nostr ]),
     (level:1, body: link("https://codeberg.org/alex-s168")[ Codeberg ]),
+    (level:1, body: link("https://gitea.vxcc.dev")[ vxcc.dev Gitea ])
   )
   #br()
 
@@ -63,7 +64,7 @@
 
     (level:1, body: [ FPGA designs ]),
      (level:2, body: [ RMII MAC in #link("https://www.chisel-lang.org/")[ Chisel ] ]),
-     (level:2, body: [ Configurable AES accelerator in #link("https://www.chisel-lang.org/")[ Chisel ] ]),
+     (level:2, body: [ Cryptography accelerators ]),
   )
 
   #br()
