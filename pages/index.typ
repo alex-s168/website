@@ -106,6 +106,8 @@
       }
     }
   }
+
+  and:
   - #person(people.barracudalake)
   - #person(people.hsp)
   - #link("https://compiler.club/")[compiler.club]

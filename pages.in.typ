@@ -27,8 +27,9 @@
   ),
   (
     page: "article-make-regex-engine-1.typ",
-    feed: true,
-    homepage: true,
+    // hidden for now because has issues, and uses too many svgs
+    feed: false,
+    homepage: false,
   ),
 )
 
