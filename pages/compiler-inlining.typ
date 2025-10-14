@@ -45,7 +45,7 @@
   @entry:
     // this is stupid, but I couldn't come up with a better example
     f32 %e = add %x, 0
-    f32 %out = add %e, %x
+    f32 %out = mul %e, %x
     ret %out
   }
 
@@ -83,9 +83,9 @@
   @entry:
     // more instructions than our inlining treshold:
     f32 %ase = add %a, 0
-    f32 %as = add %ase, %a
+    f32 %as = mul %ase, %a
     f32 %bse = add %b, 0
-    f32 %bs = add %bse, %b
+    f32 %bs = mul %bse, %b
     f32 %sum = add %as, %bs
     f32 %o = sqrt %sum
     ret %o
@@ -128,8 +128,8 @@
 
   function $callsite(f32 %a, f32 %b) {
   @entry:
-    f32 %as = add %a, %a
-    f32 %bs = add %b, %b
+    f32 %as = mul %a, %a
+    f32 %bs = mul %b, %b
     f32 %x = call $myfunc(%as, %bs)
     ...
   }
