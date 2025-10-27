@@ -130,6 +130,12 @@
 ]
 
 #section[
+  == Task Scheduler
+  Most GPUs have on-hardware task schedulers, which automatically schedule waves onto available compute units.
+  This is important for keeping compute units busy, and offloading the work from the CPU.
+]
+
+#section[
   = GPU Programming Terminology
   - "work item": typically maps to a SIMD lane
   - "kernel": the code for a work item
@@ -153,7 +159,7 @@
   - 1KiB local memory per lane => 64 KiB
   - 48 vector registers of 16x32b per wave
   - one scalar unit per CU
-  - 128 global memory ports
+  - 128 global memory ports per CU
   - 16 async task completion "signal" slots per wave
   - no fancy out of order or superscalar execution
   - support standard 32 bit floating point, without exceptions.
@@ -238,10 +244,10 @@
     `fn global_store32(out sig: sig, in addr: Vreg, in mask: M, in val: Vany)`
   - `fn sig_done1(out r: Sreg, in sig: sig)`
   - `fn sig_done2(out r: Sreg, in sig1: sig, in sig2: sig)`
-  - `fn sig_wait(out r: Sreg, in sig: sig)`
-  - `fn sig_waitall2(out r: Sreg, in sig1: sig, in sig2: sig)`
-  - `fn sig_waitall3(out r: Sreg, in sig1: sig, in sig2: sig, in sig3: sig)`
-  - `fn sig_waitall4(out r: Sreg, in sig1: sig, in sig2: sig, in sig3: sig, in sig4: sig)`
+  - `fn sig_wait(in sig: sig)`
+  - `fn sig_waitall2(in sig1: sig, in sig2: sig)`
+  - `fn sig_waitall3(in sig1: sig, in sig2: sig, in sig3: sig)`
+  - `fn sig_waitall4(in sig1: sig, in sig2: sig, in sig3: sig, in sig4: sig)`
 
   As a future extension, we could add a instruction that waits for any of the
   given signals to complete, and then jump to a specific location, depending on which of those completed.
@@ -333,8 +339,7 @@
 
   Our global dimension is 128*128, which means that we would need 256 compute units.
   But since we probably don't have 256 compute units,
-  GPUs, including ours, will have a on-hardware task scheduler,
-  for scheduing tasks onto compute units.
+  we can just use a on-hardware task scheduler.
 ]
 
 #section[
