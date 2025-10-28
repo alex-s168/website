@@ -157,7 +157,7 @@
   - 2 waves per CU
   - 32 lanes per wave.
   - 1KiB local memory per lane => 64 KiB
-  - 48 vector registers of 16x32b per wave
+  - 48 vector registers of 32x32b per wave
   - one scalar unit per CU
   - 128 global memory ports per CU
   - 16 async task completion "signal" slots per wave
