@@ -202,7 +202,7 @@ if os.path.isfile("build/badges.txt"):
 
         gen += "\n"
         gen += "build "+tg+": "
-        if user == f"alex":
+        if user == "alex":
             gen += "cp res/badge.png |@ {val}\n"
         else:
             gen += f"curl |@ {val}\n"
@@ -210,8 +210,13 @@ if os.path.isfile("build/badges.txt"):
             gen += "  curlflags = -k"
 
         gen += "\n"
-        gen += f"build {val} : expect_img_size {tg}\n"
-        gen += f"  size = 88x31"
+        gen += f"build {val} : "
+        if user == "barracudalake": # TODO
+          gen += f"expect_img_size {tg}\n"
+          gen += f"  size = 80x31"
+        else:
+          gen += f"expect_img_size {tg}\n"
+          gen += f"  size = 88x31"
 
 fonts = [x for x in os.listdir("./fonts/")]
 for font in fonts:

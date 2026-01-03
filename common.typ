@@ -112,7 +112,9 @@
 
 #let flink(target, link-text) = text(fill: blue)[
   #link(target, link-text)
-  #footnote[#text(fill: blue)[#link(target)]]
+  #context if not is-html() {
+    footnote[#text(fill: blue)[#link(target)]]
+  }
 ]
 
 #let section(b) = block(breakable: false, [
@@ -297,7 +299,7 @@ document.addEventListener('scroll', (event) => {
     name: "Alexander Nutz",
     url: "https://alex.vxcc.dev",
     badge: "https://alex.vxcc.dev/res/badge.png",
-    mail: "nutz.alexander@vxcc.dev",
+    mail: "alexander.nutz@vxcc.dev",
   ),
   ote: (
     nick: "otesunki",
@@ -311,11 +313,13 @@ document.addEventListener('scroll', (event) => {
   ),
   hsp: (
     nick: "hemisputnik",
-    url: "https://512b.dev/hsp/"
+    url: "https://512b.dev/hsp/",
+    badge: "https://512b.dev/hsp/assets/images/buttons/hsp.gif",
   ),
   barracudalake: (
     nick: "barracudalake",
-    url: "https://barralake.de/"
+    url: "https://barralake.de/",
+    badge: "https://static.barralake.de/banner.gif"
   )
 )
 

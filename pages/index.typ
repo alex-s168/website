@@ -26,7 +26,6 @@
   #br()
 
   Articles (#html-href("atom.xml")[Atom feed])
-  #br()
   #tree-list(..articles.filter(x => x.in-homepage).map(x => (
     level: 1,
     body: html-href(x.url, x.title)
@@ -34,19 +33,17 @@
   #br()
 
   Socials
-  #br()
   #tree-list(
     (level:1, body: link("https://github.com/alex-s168")[ GitHub ]),
     (level:1, body: [Discord: alex_s168]),
-    (level:1, body: link("mailto:alexander.nutz@vxcc.dev")[ E-Mail ]),
+    (level:1, body: link("mailto:"+people.alex.mail)[ E-Mail ]),
     (level:1, body: link("https://njump.me/npub17semnd065ahhsajlylkyd3lahcykpuw45rhj7cge3uqdfq24y84st0g4gr")[ nostr ]),
     (level:1, body: link("https://codeberg.org/alex-s168")[ Codeberg ]),
-    (level:1, body: link("https://gitea.vxcc.dev")[ vxcc.dev Gitea ])
+    (level:1, body: link("https://gitea.vxcc.dev")[ vxcc.dev Forgejo ])
   )
   #br()
 
   Noteable projects
-  #br()
   #tree-list(
     (level:1, body: [ Programming languages and compilers ]),
      (level:2, body: [ #link("https://github.com/vxcc-backend/vxcc-new")[ vxcc ]: WiP multi-level compiler ]),
@@ -66,26 +63,22 @@
      (level:2, body: [ RMII MAC in #link("https://www.chisel-lang.org/")[ Chisel ] ]),
      (level:2, body: [ Cryptography accelerators ]),
   )
+  #br()
 
-  #br()
-  Skills
-  #br()
+/*  Skills
   #tree-list(
     (level:1, body: [ Writing compiler frontends but mostly backends ]),
     (level:1, body: [ Hardware design with #link("https://www.chisel-lang.org/")[ Chisel ] and Verilog ]),
     (level:1, body: [ Internals of MLIR ]),
   )
+  #br()
+*/
 
-  #br()#br()
   This website is written almost entirely in #link("https://typst.app/docs")[typst].
 
   #link("https://github.com/alex-s168/website")[Website source code]
-
-  #br()#br()
-  Latest version of my badge:\
-  #raw(people.alex.badge)
-
   #br()
+
   Check out these websites:\
   #context if is-web and is-html() { // excludes min.html builds too
     let scale = 1.3
@@ -108,8 +101,6 @@
   }
 
   and:
-  - #person(people.barracudalake)
-  - #person(people.hsp)
   - #link("https://compiler.club/")[compiler.club]
 
   #br()#br()#br()

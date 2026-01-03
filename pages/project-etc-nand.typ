@@ -39,8 +39,8 @@
   Estimated gate count:
   - 2800 NAND gates
   - 320 tristate buffers
-
   #br()
+
   Estimated component counts:
   - 700x 74hc00 quad NAND gates
   - 40x 74HC54 octal tristate buffers
