@@ -320,7 +320,18 @@ document.addEventListener('scroll', (event) => {
     nick: "barracudalake",
     url: "https://barralake.de/",
     badge: "https://static.barralake.de/banner.gif"
-  )
+  ),
+  mj: (
+    nick: "mj",
+    url: "https://512b.dev/mjm/",
+    badge: "https://512b.dev/mjm/88x31.png",
+  ),
+  illuc: (
+    nick: "illuc",
+    url: "https://home.illuc.xyz/",
+    badge: "https://home.illuc.xyz/assets/8831.gif",
+    mail: "me@illuc.xyz"
+  ),
 )
 
 #metadata(people) <meta-people>

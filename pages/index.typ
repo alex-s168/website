@@ -23,7 +23,9 @@
 
   #br()
   #title[Alexander Nutz]
-  #br()
+
+  Low-level programming & electrical engineering
+  #br()#br()
 
   Articles (#html-href("atom.xml")[Atom feed])
   #tree-list(..articles.filter(x => x.in-homepage).map(x => (
@@ -34,47 +36,40 @@
 
   Socials
   #tree-list(
-    (level:1, body: link("https://github.com/alex-s168")[ GitHub ]),
     (level:1, body: [Discord: alex_s168]),
     (level:1, body: link("mailto:"+people.alex.mail)[ E-Mail ]),
-    (level:1, body: link("https://njump.me/npub17semnd065ahhsajlylkyd3lahcykpuw45rhj7cge3uqdfq24y84st0g4gr")[ nostr ]),
+    (level:1, body: link("https://github.com/alex-s168")[ GitHub ]),
     (level:1, body: link("https://codeberg.org/alex-s168")[ Codeberg ]),
-    (level:1, body: link("https://gitea.vxcc.dev")[ vxcc.dev Forgejo ])
+    (level:1, body: link("https://git.vxcc.dev")[ vxcc.dev Forgejo ]),
+    (level:1, body: link("https://njump.me/npub17semnd065ahhsajlylkyd3lahcykpuw45rhj7cge3uqdfq24y84st0g4gr")[ nostr ]),
   )
   #br()
 
-  Noteable projects
+  Noteable (mostly WIP) projects
   #tree-list(
     (level:1, body: [ Programming languages and compilers ]),
-     (level:2, body: [ #link("https://github.com/vxcc-backend/vxcc-new")[ vxcc ]: WiP multi-level compiler ]),
+     (level:2, body: [ #link("https://github.com/vxcc-backend/vxcc-new")[ vxcc ]: multi-level compiler ]),
      (level:2, body: [ #link("https://github.com/alex-s168/uiuac")[ uiuac ]: (discontinued) Optimizing compiler for the #link("https://uiua.org")[Uiua programming language] ]),
      (level:2, body: [ #link("https://github.com/Lambda-Mountain-Compiler-Backend/lambda-mountain")[ LSTS's standard library ] ]),
      (level:2, body: [ FP programming language compiler mostly using #link("https://en.wikipedia.org/wiki/Interaction_nets")[interaction nets] ]),
-     (level:2, body: [ #link("https://github.com/alex-s168/lil-rs")[ lil-rs ]: WiP implementation of #link("http://beyondloom.com/decker/lil.html")[lil] ]),
+     (level:2, body: [ #link("https://github.com/alex-s168/lil-rs")[ lil-rs ]: implementation of #link("http://beyondloom.com/decker/lil.html")[lil] ]),
 
     (level:1, body: [ Misc. ]),
      (level:2, body: [ #link("https://github.com/alex-s168/tpre")[ tpre ]: Fast and minimal RegEx engine ]),
      (level:2, body: [ nostr relay implementation ]),
 
-    (level:1, body: [ PCBs ]),
+    (level:1, body: [ Electronics ]),
+     (level:2, body: [ Differential pair transreceiver ]),
+     (level:2, body: [ Motor driver ]),
      (level:2, body: [ #link("project-etc-nand.typ.desktop.html")[ etc-nand ]: #link("https://github.com/ETC-A/etca-spec/")[ ETC.A ] CPU from NAND gates ]),
 
-    (level:1, body: [ FPGA designs ]),
+    (level:1, body: [ Chip designs ]),
      (level:2, body: [ RMII MAC in #link("https://www.chisel-lang.org/")[ Chisel ] ]),
-     (level:2, body: [ Cryptography accelerators ]),
+     (level:2, body: [ AES implementation ]),
   )
   #br()
 
-/*  Skills
-  #tree-list(
-    (level:1, body: [ Writing compiler frontends but mostly backends ]),
-    (level:1, body: [ Hardware design with #link("https://www.chisel-lang.org/")[ Chisel ] and Verilog ]),
-    (level:1, body: [ Internals of MLIR ]),
-  )
-  #br()
-*/
-
-  This website is written almost entirely in #link("https://typst.app/docs")[typst].
+  This website is written almost entirely in #link("https://typst.app/docs")[typst]!
 
   #link("https://github.com/alex-s168/website")[Website source code]
   #br()
@@ -104,9 +99,10 @@
   - #link("https://compiler.club/")[compiler.club]
 
   #br()#br()#br()
+
   Impressum:\
   Alexander Nutz\
-  Gloggnitz, Austria
+  Gloggnitz, Lower Austria
 
   #br()#br()#br()
 ]

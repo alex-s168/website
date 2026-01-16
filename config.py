@@ -203,7 +203,7 @@ if os.path.isfile("build/badges.txt"):
         gen += "\n"
         gen += "build "+tg+": "
         if user == "alex":
-            gen += "cp res/badge.png |@ {val}\n"
+            gen += f"cp res/badge.png |@ {val}\n"
         else:
             gen += f"curl |@ {val}\n"
             gen += "  url = "+url+"\n"
