@@ -33,8 +33,8 @@ async function byCountry(country) {
     const data = await response.json();
     return data.price;
   } catch (error) {
-    console.error("Failed to fetch price:", error);
-    return null;
+    console.error("Failed to fetch coffee price (assuming 1.6$):", error);
+    return 1.6;
   }
 }
 
@@ -51,11 +51,28 @@ async function usd_eur() {
   }
 }
 
+async function ada_usd() {
+  const url = `https://alex.vxcc.dev/coffee/ada_usd`;
+  try {
+    const response = await fetch(url);
+    if(!response.ok){throw new Error(`HTTP error ${response.status}`);}
+    const data = await response.json();
+    return data.price;
+  } catch (error) {
+    console.error("Failed to fetch usd<->eur conversion rate, guessing 1 ada = 0.4$:", error);
+    return 0.4;
+  }
+}
+
+
 const c = userCountry();
 if(c!=null){
   byCountry(c).then(price => {
     usd_eur().then(rate => {
       console.log("coffe price: " + price * rate + "€");
+    });
+    ada_usd().then(rate => {
+      console.log("coffe price: " + price * rate + " ada");
     });
   });
 }

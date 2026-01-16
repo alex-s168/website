@@ -1,4 +1,4 @@
-use axum::{Router, extract::Path, response::Json, routing::get};
+use axum::{extract::Path, response::Json, routing::get, Router};
 use reqwest::Client;
 use scraper::{Html, Selector};
 use serde::{Deserialize, Serialize};
@@ -19,6 +19,11 @@ struct ConvResponse {
     rates: ConvRates,
 }
 
+#[derive(Deserialize)]
+struct CardanoResponse {
+    Price: f64,
+}
+
 async fn usd_eur() -> Json<PriceResponse> {
     let response = Client::new()
         .get("https://api.frankfurter.dev/v1/latest?base=USD&symbols=EUR")
@@ -30,6 +35,19 @@ async fn usd_eur() -> Json<PriceResponse> {
         .expect("Failed to get text");
     let r: ConvResponse = serde_json::from_str(&response).expect("Can't parse json");
     return Json(PriceResponse { price: r.rates.EUR });
+}
+
+async fn ada_usd() -> Json<PriceResponse> {
+    let response = Client::new()
+        .get("https://api.diadata.org/v1/assetQuotation/Cardano/0x0000000000000000000000000000000000000000")
+        .send()
+        .await
+        .expect("Failed to fetch page")
+        .text()
+        .await
+        .expect("Failed to get text");
+    let r: CardanoResponse = serde_json::from_str(&response).expect("Can't parse json");
+    return Json(PriceResponse { price: r.Price });
 }
 
 async fn by_country(Path(country): Path<String>) -> Json<PriceResponse> {
@@ -74,7 +92,8 @@ async fn main() {
     // Build our router
     let app = Router::new()
         .route("/price/:country", get(by_country))
-        .route("/usd_eur", get(usd_eur));
+        .route("/usd_eur", get(usd_eur))
+        .route("/ada_usd", get(ada_usd));
 
     // Run server
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
