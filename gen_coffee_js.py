@@ -12,32 +12,51 @@ for item in response:
     for x in tz:
         out += f"{x}|{name}|"
 
-print("""function userCountry() {
-const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-if(tz==null) return null;
-const c=\""""+out+"""\".split("|");
-for(let i=0;i<c.length;i+=2){
-if(c[i]===tz){
-return c[i+1];
-}}
-return null;
+print("""
+function userCountry() {
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  if(tz==null) return null;
+  const c=\""""+out+"""\".split("|");
+  for(let i=0;i<c.length;i+=2){
+    if(c[i]===tz){
+      return c[i+1];
+    }
+  }
+  return null;
 }
 
 async function byCountry(country) {
-const url = `https://coffee-price.vxcc.dev/price/${encodeURIComponent(country)}`;
+  const url = `https://alex.vxcc.dev/coffee/price/${encodeURIComponent(country)}`;
+  try {
+    const response = await fetch(url);
+    if(!response.ok){throw new Error(`HTTP error ${response.status}`);}
+    const data = await response.json();
+    return data.price;
+  } catch (error) {
+    console.error("Failed to fetch price:", error);
+    return null;
+  }
+}
 
-try {
-const response = await fetch(url);
-if(!response.ok){throw new Error(`HTTP error ${response.status}`);}
-const data = await response.json();
-return data.price;
-} catch (error) {
-console.error("Failed to fetch price:", error);
-return null;
-}}
+async function usd_eur() {
+  const url = `https://alex.vxcc.dev/coffee/usd_eur`;
+  try {
+    const response = await fetch(url);
+    if(!response.ok){throw new Error(`HTTP error ${response.status}`);}
+    const data = await response.json();
+    return data.price;
+  } catch (error) {
+    console.error("Failed to fetch usd<->eur conversion rate, guessing 1$ = 0.86€:", error);
+    return 0.86;
+  }
+}
 
 const c = userCountry();
 if(c!=null){
-byCountry(c).then(price => console.log("coffe price: " + price));
+  byCountry(c).then(price => {
+    usd_eur().then(rate => {
+      console.log("coffe price: " + price * rate + "€");
+    });
+  });
 }
 """)

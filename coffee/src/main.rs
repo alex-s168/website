@@ -1,17 +1,35 @@
-use axum::{
-    extract::Path,
-    response::Json,
-    routing::get,
-    Router,
-};
+use axum::{Router, extract::Path, response::Json, routing::get};
 use reqwest::Client;
 use scraper::{Html, Selector};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::net::SocketAddr;
 
 #[derive(Serialize)]
 struct PriceResponse {
     price: f64,
+}
+
+#[derive(Deserialize)]
+struct ConvRates {
+    EUR: f64,
+}
+
+#[derive(Deserialize)]
+struct ConvResponse {
+    rates: ConvRates,
+}
+
+async fn usd_eur() -> Json<PriceResponse> {
+    let response = Client::new()
+        .get("https://api.frankfurter.dev/v1/latest?base=USD&symbols=EUR")
+        .send()
+        .await
+        .expect("Failed to fetch page")
+        .text()
+        .await
+        .expect("Failed to get text");
+    let r: ConvResponse = serde_json::from_str(&response).expect("Can't parse json");
+    return Json(PriceResponse { price: r.rates.EUR });
 }
 
 async fn by_country(Path(country): Path<String>) -> Json<PriceResponse> {
@@ -42,7 +60,9 @@ async fn by_country(Path(country): Path<String>) -> Json<PriceResponse> {
         .text()
         .collect::<String>();
 
-    let price: f64 = price_str.trim().trim_start_matches('$')
+    let price: f64 = price_str
+        .trim()
+        .trim_start_matches('$')
         .parse()
         .expect("Failed to parse price");
 
@@ -53,7 +73,8 @@ async fn by_country(Path(country): Path<String>) -> Json<PriceResponse> {
 async fn main() {
     // Build our router
     let app = Router::new()
-        .route("/price/:country", get(by_country));
+        .route("/price/:country", get(by_country))
+        .route("/usd_eur", get(usd_eur));
 
     // Run server
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
@@ -64,4 +85,3 @@ async fn main() {
         .await
         .unwrap();
 }
-
