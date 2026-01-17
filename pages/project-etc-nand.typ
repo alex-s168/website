@@ -2,6 +2,7 @@
 #import "../simple-page-layout.typ": *
 #import "../components/pcb-view.typ": *
 #import "../components/header.typ": *
+#import "../components/donate.typ": *
 
 #let pcb-size-percent = 80
 #let qpcb(file) = {
@@ -80,6 +81,13 @@
 #section[
   == 8 bit adder <add8>
   #context qpcb("add8")
+]
+
+#section[
+  If you'd like to support this project, consider donating (over Cardano): \
+  #donate-cardano(people.alex.cardano, mult:1)
+  #donate-cardano(people.alex.cardano, mult:7)
+  #donate-cardano(people.alex.cardano, mult:16)
 ]
 
 

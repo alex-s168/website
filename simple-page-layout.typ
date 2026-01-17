@@ -23,6 +23,15 @@
   let head = context if is-html() {
     [
       #html.elem("title", html-title)
+      #context if (not is-nano) and is-html() {
+        html.elem("script", attrs:("src":"coffee.js","async":""))
+        html-script("
+var on_coffee_update = [];
+function onCoffee(clbk) {
+  on_coffee_update.push(clbk);
+}
+        ")
+      }
     ]
   } else {[]}
 
@@ -109,8 +118,6 @@
         gotoVariant('.min.pdf');
       });
     ")
-
-    html.elem("script", attrs:("src":"coffee.js","async":""))
   }
   ]
 }

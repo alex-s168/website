@@ -300,11 +300,24 @@ document.addEventListener('scroll', (event) => {
     url: "https://alex.vxcc.dev",
     badge: "https://alex.vxcc.dev/res/badge.png",
     mail: "alexander.nutz@vxcc.dev",
+    cardano: "addr1qy9nhw7rcldtnlxpa2s9ue0fh6qyj32f84h3grryxtv83tczfcn66nzzye84dqe4s6gyre3qv8ev9zu2yfc0zxml259saxhelz",
+    git: (
+      "github.com": "alex-s168",
+      "codeberg.org": "alex-s168",
+      "git.vxcc.dev": "alexander.nutz",
+    ),
+    nostr: (
+      nip05: "alex@vxcc.dev",
+      pub: "npub17semnd065ahhsajlylkyd3lahcykpuw45rhj7cge3uqdfq24y84st0g4gr",
+    ),
   ),
   ote: (
     nick: "otesunki",
     url: "https://512b.dev/ote/",
-    badge: "https://512b.dev/assets/lagtrain.gif"
+    badge: "https://512b.dev/assets/lagtrain.gif",
+    git: (
+      "codeberg.org": "otesunki",
+    ),
   ),
   syn: (
     nick: "syn",
@@ -315,6 +328,9 @@ document.addEventListener('scroll', (event) => {
     nick: "hemisputnik",
     url: "https://512b.dev/hsp/",
     badge: "https://512b.dev/hsp/assets/images/buttons/hsp.gif",
+    git: (
+      "codeberg.org": "hemisputnik",
+    ),
   ),
   barracudalake: (
     nick: "barracudalake",
@@ -325,6 +341,9 @@ document.addEventListener('scroll', (event) => {
     nick: "mj",
     url: "https://512b.dev/mjm/",
     badge: "https://512b.dev/mjm/88x31.png",
+    git: (
+      "codeberg.org": "ufrag",
+    ),
   ),
   illuc: (
     nick: "illuc",
@@ -338,6 +357,10 @@ document.addEventListener('scroll', (event) => {
 
 #let person(p) = {
   flink(p.url, p.nick)
+}
+
+#let nostr-link(p) = {
+  flink("https://nostr.com/" + p.nostr.pub, p.nostr.at("nip05", default:p.nostr.pub))
 }
 
 #let blocking-code(raw) = {

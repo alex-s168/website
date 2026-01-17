@@ -2,12 +2,14 @@ import sys, json, subprocess
 
 def typst_encode_pre(e, ind="  "):
     if isinstance(e, dict):
+        encode_key = json.dumps
+
         if len(e.items()) == 0:
             return ["(:)"]
         elif len(e.items()) == 1:
             k,v = list(e.items())[0]
             v = typst_encode_pre(v, ind)
-            out = ["(" + k + ": " + v[0]]
+            out = ["(" + encode_key(k) + ": " + v[0]]
             out.extend(v[1:])
             out[-1] = out[-1] + ")"
             return out
@@ -19,7 +21,7 @@ def typst_encode_pre(e, ind="  "):
                     out[-1] = out[-1] + ","
                 first = False
                 v = typst_encode_pre(v, ind)
-                out.append(ind + k + ": " + v[0])
+                out.append(ind + encode_key(k) + ": " + v[0])
                 out.extend(ind+x for x in v[1:])
                 out[-1] = out[-1]
             out.append(")")

@@ -64,16 +64,30 @@ async function ada_usd() {
   }
 }
 
+let coffee = ({
+  country: null,
+  coffee_usd: 1.6,
+  usd_eur: 0.7,
+  ada_usd: 0.4,
+});
 
-const c = userCountry();
-if(c!=null){
-  byCountry(c).then(price => {
-    usd_eur().then(rate => {
-      console.log("coffe price: " + price * rate + "€");
-    });
-    ada_usd().then(rate => {
-      console.log("coffe price: " + price * rate + " ada");
-    });
+coffee.country = userCountry();
+if (coffee.country != null){
+  byCountry(coffee.country).then(price => {
+    coffee.coffee_usd = price;
+    on_coffee_update.forEach((x) => x(coffee));
   });
 }
+
+usd_eur().then(price => {
+  coffee.usd_eur = price;
+  on_coffee_update.forEach((x) => x(coffee));
+});
+
+ada_usd().then(price => {
+  coffee.ada_usd = price;
+  on_coffee_update.forEach((x) => x(coffee));
+});
+
+on_coffee_update.forEach((x) => x(coffee));
 """)
