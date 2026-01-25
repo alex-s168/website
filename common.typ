@@ -310,6 +310,19 @@ document.addEventListener('scroll', (event) => {
       nip05: "alex@vxcc.dev",
       pub: "npub17semnd065ahhsajlylkyd3lahcykpuw45rhj7cge3uqdfq24y84st0g4gr",
     ),
+    pgp: "-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+mDMESV+rKRYJKwYBBAHaRw8BAQdAnqCll9RSzZqdkNQ7wPflC5lxdrBjLfrUJL9d
+Sn6Kg6W0KEFsZXhhbmRlciBOdXR6IDxhbGV4YW5kZXIubnV0ekB2eGNjLmRldj6I
+fwQTFggAMQUCSV+rKQkQ3pe4LtbJUFEWIQSny6VCXd8Q/yPCYL/el7gu1slQUQIb
+AwIeAQMFAHgAAK3eAQDERcYpLxmYtPMf4uK5LJBFltrx6+/l0czZGJmALNVqLwD+
+L6LelLB7IflN/FQ+SIywQdy7j2Oz1MWCqddgsO7l8gy4OARJX6spEgorBgEEAZdV
+AQUBAQdAn87fzLRlZE0Jm9jjczozYy7YV0Ebqc7d3cDgAoTdXWEDAQgJiHsEGBYI
+AC4FAklfqykJEN6XuC7WyVBRFiEEp8ulQl3fEP8jwmC/3pe4LtbJUFECGwwDBQB4
+AAAJ+wEAv1BdsZnnNlQkO5Y16dSvugs55Re7E/ZM1PqZ8idrZowA+KcvonCro495
+WXaccbOn15KsPTz+LVU6XQQzQ3ePawQ=
+=g/Kn
+-----END PGP PUBLIC KEY BLOCK-----",
   ),
   ote: (
     nick: "otesunki",
@@ -318,6 +331,19 @@ document.addEventListener('scroll', (event) => {
     git: (
       "codeberg.org": "otesunki",
     ),
+    pgp: "-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+mDMEZokIaxYJKwYBBAHaRw8BAQdASKCVZE6xNDUbp6m0KqzG2xmxDzxMOx24iQaf
+zxtfWAO0HU90ZXN1bmtpIDxvdGVzdW5raUBnbWFpbC5jb20+iJkEExYKAEEWIQTQ
+hyCBybuaYfcCd83EP/jiTm91hAUCZokIawIbAwUJBaOagAULCQgHAgIiAgYVCgkI
+CwIEFgIDAQIeBwIXgAAKCRDEP/jiTm91hDCKAP42sI2F+mHZ/Rod07EFWDSIzupy
+MxK8Q89NFZSP+ui6JQD8DbeRDmCNHPAdidU/2g7kIdFD/2sXoK07qRyc6TyrDQC4
+OARmiQhrEgorBgEEAZdVAQUBAQdAAZZi/zB8YOaF/beesG3WR7ZHyPP94G1/yyjX
+p2NH0hgDAQgHiH4EGBYKACYWIQTQhyCBybuaYfcCd83EP/jiTm91hAUCZokIawIb
+DAUJBaOagAAKCRDEP/jiTm91hCxmAP42Ga8sEHJ2e+XUkfZGD+iFZfCB8do3wF7R
+SKLjfdPIAgEAhsmMKrGzSC2J4HcVcRbkGtFN/cZYxrSynBZhMqbwWg8=
+=UDI3
+-----END PGP PUBLIC KEY BLOCK-----",
   ),
   syn: (
     nick: "syn",

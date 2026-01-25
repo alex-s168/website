@@ -13,7 +13,6 @@
         document.querySelectorAll('.donate').forEach((a) => {
           let mult = parseInt(a.dataset.mult);
           let amnt = (coffee.coffee_usd / coffee.ada_usd) * mult;
-          console.log(mult);
           a.href = 'web+cardano:' + a.dataset.address + '?amount=' + amnt;
           a.innerHTML = 'Donate ' + Math.ceil(amnt * 10000) / 10000 + ' Ada';
         });

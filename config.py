@@ -232,6 +232,14 @@ web_targets.append("build/deploy/index.html")
 
 manual_res = []
 
+gen += """
+rule people_list
+  command = typst query $in "<meta-people>" --root . --input query=true --field value --one > $out
+build build/deploy/res/people.json : people_list common.typ
+"""
+manual_res.append("res/people.json")
+web_targets.append("build/deploy/res/people.json")
+
 manual_res.append("res/favicon.png")
 web_targets.append("build/deploy/res/favicon.png")
 gen += "\n"

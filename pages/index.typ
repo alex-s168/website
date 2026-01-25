@@ -42,6 +42,7 @@
     (level:1, body: link("https://codeberg.org/alex-s168")[ Codeberg ]),
     (level:1, body: link("https://git.vxcc.dev")[ vxcc.dev Forgejo ]),
     (level:1, body: link("https://njump.me/npub17semnd065ahhsajlylkyd3lahcykpuw45rhj7cge3uqdfq24y84st0g4gr")[ nostr ]),
+    (level:1, body: context link(res-path()+"pgp.txt")[PGP Key]),
   )
   #br()
 
