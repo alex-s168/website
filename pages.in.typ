@@ -11,6 +11,11 @@
     homepage: false,
   ),
   (
+    page: "article-truthear.typ",
+    feed: true,
+    homepage: true,
+  ),
+  (
     page: "compiler-inlining.typ",
     feed: true,
     homepage: true,
