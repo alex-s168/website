@@ -98,6 +98,7 @@
 
   and:
   - #link("https://compiler.club/")[compiler.club]
+  - #person(people.coppertiel)
 
   #br()#br()#br()
 

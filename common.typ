@@ -377,6 +377,10 @@ SKLjfdPIAgEAhsmMKrGzSC2J4HcVcRbkGtFN/cZYxrSynBZhMqbwWg8=
     badge: "https://home.illuc.xyz/assets/8831.gif",
     mail: "me@illuc.xyz"
   ),
+  coppertiel: (
+    nick: "coppertiel",
+    url: "https://1558.space/",
+  )
 )
 
 #metadata(people) <meta-people>
