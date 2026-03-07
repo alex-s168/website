@@ -275,9 +275,7 @@
 let tags = ['h2', 'h3', 'h4'].flatMap(x => Array.from(document.getElementsByTagName(x))).sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
 let pageHeight = document.documentElement.scrollHeight-window.innerHeight;
 document.addEventListener('scroll', (event) => {
-    let progress = -(document.documentElement.getBoundingClientRect().y / pageHeight);
-    let delta = progress * window.innerHeight;
-    let idx = tags.map(x => 0 > x.getBoundingClientRect().top - delta).lastIndexOf(true);
+    let idx = tags.map(x => 0 > x.getBoundingClientRect().top - 10).lastIndexOf(true);
     Array.from(document.getElementsByClassName('headingr')).map(x => x.classList.remove('current'));
     if (idx != -1) {
         document.getElementById('headingr-' + idx).classList.add('current');
