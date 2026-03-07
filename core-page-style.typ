@@ -157,7 +157,7 @@ html.elem("style", "
   }
 
   .current {
-    font-weight: bold;
+    text-shadow: 0px 0px 1px #000035;
   }
 
   pre {
