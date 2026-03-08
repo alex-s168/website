@@ -45,6 +45,7 @@
   - binaryninja
   - tinygrad
   - the different v8 JITs
+  - the different spidermonkey JITs
   - hotspot jre jit
   - asmjit
   - todo: other JITs

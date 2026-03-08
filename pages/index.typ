@@ -48,15 +48,15 @@
 
   Noteable (mostly WIP) projects
   #tree-list(
+    (level:1, body. [ #link("https://codeberg.org/meera-linux")[Meera Linux] ])
+
     (level:1, body: [ Programming languages and compilers ]),
      (level:2, body: [ #link("https://github.com/vxcc-backend/vxcc-new")[ vxcc ]: multi-level compiler ]),
      (level:2, body: [ #link("https://github.com/alex-s168/uiuac")[ uiuac ]: (discontinued) Optimizing compiler for the #link("https://uiua.org")[Uiua programming language] ]),
      (level:2, body: [ #link("https://github.com/Lambda-Mountain-Compiler-Backend/lambda-mountain")[ LSTS's standard library ] ]),
-     (level:2, body: [ FP programming language compiler mostly using #link("https://en.wikipedia.org/wiki/Interaction_nets")[interaction nets] ]),
-     (level:2, body: [ #link("https://github.com/alex-s168/lil-rs")[ lil-rs ]: implementation of #link("http://beyondloom.com/decker/lil.html")[lil] ]),
 
     (level:1, body: [ Misc. ]),
-     (level:2, body: [ #link("https://github.com/alex-s168/tpre")[ tpre ]: Fast and minimal RegEx engine ]),
+     (level:2, body: [ #link("https://github.com/alex-s168/tpre")[ tpre ]: Fast RegEx engine ]),
      (level:2, body: [ nostr relay implementation ]),
 
     (level:1, body: [ Electronics ]),
