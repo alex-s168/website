@@ -25,8 +25,6 @@
   ]
 ]
 
-#pdf-readability()
-
 #section[
   Note that I have no idea what I'm talking about, and these are just my personal oppinions!
 ]

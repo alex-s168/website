@@ -385,7 +385,7 @@ SKLjfdPIAgEAhsmMKrGzSC2J4HcVcRbkGtFN/cZYxrSynBZhMqbwWg8=
 #metadata(people) <meta-people>
 
 #let person(p) = {
-  flink(p.url, p.nick)
+  flink(p.url, p.at("name", default: p.nick))
 }
 
 #let nostr-link(p) = {

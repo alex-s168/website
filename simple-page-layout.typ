@@ -58,7 +58,7 @@ function onCoffee(clbk) {
           - #variant-link("minimal HTML", ".nano.html")
         ]],
         [#if gen-index-ref [
-         #html-href("atom.xml")[Atom feed]
+         #html-href("feed.typ.desktop.html")[Feed]
          #context br()
         ]],
 

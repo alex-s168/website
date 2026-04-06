@@ -43,7 +43,7 @@ build build/git_rev.txt: update_git_rev | always
 
 rule typst
   depfile = $out.d
-  command = eval "typst compile --root . --features html -j 6 $flags $in $out --make-deps $out.d"
+  command = eval "typst compile --root . --features html -j 6 $flags $in $out --deps $out.d --deps-format make"
 
 rule git_inp
   command = git log -1 --format="--input git_rev=%H --input git_commit_date=\\\"%ad\\\"" --date="format:%d. %B %Y %H:%M" -- $in > $out.temp && \
@@ -137,8 +137,9 @@ build build/pages.typ build/pages.json : python pages.gen.py | pages.in.typ """+
 build gen_typst: phony build/pages.typ | """+ " ".join(f"build/{x}.git_rev.txt.iso" for x in pages) +"""
 """
 
+
 gen += """
-build build/deploy/atom.xml : python gen_feed.py | build/pages.json """ + " ".join(f"build/{x}.nano.html" for x in pages) + """
+build build/deploy/atom.xml build/deploy/atom-summary.xml build/deploy/atom-hybrid.xml build/deploy/rss.xml build/deploy/rss-summary.xml build/deploy/rss-hybrid.xml : python gen_feed.py | build/pages.json """ + " ".join(f"build/{x}.nano.html" for x in pages) + """
 """
 web_targets.append("build/deploy/atom.xml")
 

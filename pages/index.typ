@@ -27,7 +27,7 @@
   Low-level programming & electrical engineering
   #br()#br()
 
-  Articles (#html-href("atom.xml")[Atom feed])
+  Articles (#html-href("feed.typ.desktop.html")[Feed])
   #tree-list(..articles.filter(x => x.in-homepage).map(x => (
     level: 1,
     body: html-href(x.url, x.title)
@@ -41,7 +41,7 @@
     (level:1, body: link("https://codeberg.org/alex-s168")[ Codeberg ]),
     (level:1, body: link("https://github.com/alex-s168")[ GitHub ]),
     (level:1, body: [Discord: alex_s168]),
-    (level:1, body: link("https://njump.me/npub17semnd065ahhsajlylkyd3lahcykpuw45rhj7cge3uqdfq24y84st0g4gr")[ nostr ]),
+    (level:1, body: link("https://nostr.com/npub17semnd065ahhsajlylkyd3lahcykpuw45rhj7cge3uqdfq24y84st0g4gr")[ nostr ]),
     (level:1, body: context link(res-path()+"pgp.txt")[PGP Key]),
   )
   #br()
