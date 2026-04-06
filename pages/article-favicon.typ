@@ -5,8 +5,8 @@
 
 #let article = (
   authors: (people.alex,),
-  title: "The making of the favicon",
-  html-title: "The making of the favicon",
+  title: "Making the favicon",
+  html-title: "Making the favicon",
   summary: "It turns out that websites need a favicon, and making one is hard..."
 )
 

@@ -201,8 +201,6 @@
   = Conclusion
   Function inlining is much more complex than one might think.
 
-  PS: No idea how to implement this...
-
   Subscribe to the #flink("atom.xml")[Atom feed] to get notified about futre compiler-related articles.
 ]
 

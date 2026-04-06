@@ -298,6 +298,7 @@ document.addEventListener('scroll', (event) => {
     url: "https://alex.vxcc.dev",
     badge: "https://alex.vxcc.dev/res/badge.png",
     mail: "alexander.nutz@vxcc.dev",
+    matrix: "@alex-s168:matrix.org",
     cardano: "addr1qy9nhw7rcldtnlxpa2s9ue0fh6qyj32f84h3grryxtv83tczfcn66nzzye84dqe4s6gyre3qv8ev9zu2yfc0zxml259saxhelz",
     git: (
       "github.com": "alex-s168",

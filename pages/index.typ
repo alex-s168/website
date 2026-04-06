@@ -36,37 +36,27 @@
 
   Socials
   #tree-list(
-    (level:1, body: [Discord: alex_s168]),
+    (level:1, body: link("https://matrix.to/#/"+people.alex.matrix)[ Matrix ]),
     (level:1, body: link("mailto:"+people.alex.mail)[ E-Mail ]),
-    (level:1, body: link("https://github.com/alex-s168")[ GitHub ]),
     (level:1, body: link("https://codeberg.org/alex-s168")[ Codeberg ]),
-    (level:1, body: link("https://git.vxcc.dev")[ vxcc.dev Forgejo ]),
+    (level:1, body: link("https://github.com/alex-s168")[ GitHub ]),
+    (level:1, body: [Discord: alex_s168]),
     (level:1, body: link("https://njump.me/npub17semnd065ahhsajlylkyd3lahcykpuw45rhj7cge3uqdfq24y84st0g4gr")[ nostr ]),
     (level:1, body: context link(res-path()+"pgp.txt")[PGP Key]),
   )
   #br()
 
-  Noteable (mostly WIP) projects
+  Noteable (WIP) projects
   #tree-list(
-    (level:1, body. [ #link("https://codeberg.org/meera-linux")[Meera Linux] ])
-
-    (level:1, body: [ Programming languages and compilers ]),
-     (level:2, body: [ #link("https://github.com/vxcc-backend/vxcc-new")[ vxcc ]: multi-level compiler ]),
-     (level:2, body: [ #link("https://github.com/alex-s168/uiuac")[ uiuac ]: (discontinued) Optimizing compiler for the #link("https://uiua.org")[Uiua programming language] ]),
-     (level:2, body: [ #link("https://github.com/Lambda-Mountain-Compiler-Backend/lambda-mountain")[ LSTS's standard library ] ]),
+    (level:1, body: [ #link("https://codeberg.org/meera-linux")[Meera Linux] ]),
+    (level:1, body: [vxauth] ),
+    (level:1, body: [ #link("https://vxcc.dev/webchapow_bench.html")[WebChaPow] ]),
 
     (level:1, body: [ Misc. ]),
      (level:2, body: [ #link("https://github.com/alex-s168/tpre")[ tpre ]: Fast RegEx engine ]),
-     (level:2, body: [ nostr relay implementation ]),
 
     (level:1, body: [ Electronics ]),
-     (level:2, body: [ Differential pair transreceiver ]),
-     (level:2, body: [ Motor driver ]),
      (level:2, body: [ #link("project-etc-nand.typ.desktop.html")[ etc-nand ]: #link("https://github.com/ETC-A/etca-spec/")[ ETC.A ] CPU from NAND gates ]),
-
-    (level:1, body: [ Chip designs ]),
-     (level:2, body: [ RMII MAC in #link("https://www.chisel-lang.org/")[ Chisel ] ]),
-     (level:2, body: [ AES implementation ]),
   )
   #br()
 
