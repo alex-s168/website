@@ -2,6 +2,7 @@
 #import "../simple-page-layout.typ": *
 #import "../core-page-style.typ": *
 #import "../components/header.typ": *
+#import "../components/geizhals-price.typ": *
 
 #let article = (
   authors: (people.alex,),
@@ -53,9 +54,9 @@
 
 #section[
   = Comparision
-  - GATE: 20€
-  - HEXA: 99€
-  - PURE: 99€
+  - GATE: #geizhals-price(3204640, 20)
+  - HEXA: #geizhals-price(2870160, 99)
+  - PURE: #geizhals-price(3577614, 99)
 ]
 
 #section[

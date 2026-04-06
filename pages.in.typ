@@ -11,11 +11,6 @@
     homepage: false,
   ),
   (
-    page: "article-getting-structured-data-from-raiffeisen.typ",
-    feed:false,
-    homepage:false,
-  ),
-  (
     page: "article-truthear.typ",
     feed: true,
     homepage: true,
