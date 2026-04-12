@@ -211,7 +211,7 @@ if os.path.isfile("build/badges.txt"):
             gen += "  curlflags = -Lk\n"
             gen += "\n"
             gen += f"build {tg} : ffmpeg_compress {tg}.orig\n"
-            gen += "  ffmpeg_args = -f apng -plays 0\n"
+            gen += "  ffmpeg_args = -f gif -plays 0\n"
             gen += "\n"
 
         gen += f"\nbuild {val} : "
