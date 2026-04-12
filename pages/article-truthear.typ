@@ -18,17 +18,17 @@
   article.html-title
 )[
 
-#section[
+#html-opt-elem("header", (:), section[
   #title(article.title)
 
   #sized-p(small-font-size)[
     #rev-and-authors(article.authors)
   ]
-]
+])
 
-#section[
+#html-opt-elem("aside", (:), section[
   Note that I have no idea what I'm talking about, and these are just my personal oppinions!
-]
+])
 
 #section[
   After being sick of bad headphones, I decided to buy Truthear HEXAs for 99€,

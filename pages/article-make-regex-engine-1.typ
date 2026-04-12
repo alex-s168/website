@@ -18,22 +18,22 @@ Part 1: Introduction to RegEx",
   article.html-title
 )[
 
-#section[
+#html-opt-elem("header", (:), section[
   #title(article.title)
 
   #sized-p(small-font-size)[
     #rev-and-authors(article.authors)
   ]
-]
 
-#pdf-readability()
+  #pdf-readability()
+])
 
 #section[
   = Introduction
-  If you are any kind of programmer,
-  you've probably heard of #flink("https://en.wikipedia.org/wiki/Regular_expression", "RegEx")
+  If you've ever written any code,
+  you've probably heard of #flink("https://en.wikipedia.org/wiki/Regular_expression", "RegEx").
   
-  RegEx (Regular expression) is kind of like a small programming language 
+  RegEx (Regular expression) is kind of like a small programming language,
   used to define string search and replace patterns.
   
   \

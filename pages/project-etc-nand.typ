@@ -16,11 +16,9 @@
 )[
 
 
-#section[
+#html-opt-elem("header", (:), section[
   #title[ etc-nand ]
-]
-
-// #pdf-readability()
+])
 
 #if is-web {section[
   You can click the PCB images to switch to the other side.

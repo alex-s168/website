@@ -17,13 +17,13 @@
   article.html-title
 )[
 
-#section[
+#html-opt-elem("header", (:), section[
   #title(article.title)
 
   #sized-p(small-font-size)[
     #rev-and-authors(article.authors)
   ]
-]
+])
 
 #let w = 38%
 

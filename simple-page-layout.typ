@@ -100,7 +100,7 @@ function onCoffee(clbk) {
       )),
       [
         #html-style(class:"body-column","position: absolute; left: "+str(25+off)+"%; width: "+str(75-off)+"%")[
-          #box(width: 50%, content)
+          #box(width: 50%, html.elem("article", content))
         ]
       ],
     )
