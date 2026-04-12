@@ -4,7 +4,7 @@
 #import "../components/header.typ": *
 
 #let article = (
-  authors: (people.alex,),
+  authors: ("alex",),
   title: "Approaches to pattern matching in compilers",
   html-title: "Approaches to Compiler Pattern Matching",
   summary: "If you are working an more advanced compilers, you probably had to work with pattern matching already. In this article, we will explore different approaches.",

@@ -5,7 +5,7 @@
 #import "../components/geizhals-price.typ": *
 
 #let article = (
-  authors: (people.alex,),
+  authors: ("alex",),
   title: "Truthear HEXA vs PURE vs GATE",
   html-title: "HEXA vs PURE vs GATE Review",
   summary: "Being financially irresponsible and spending way too much money on audio tech"
@@ -35,7 +35,7 @@
   and they were by far the best headphones I ever tried...
 
   They produce a really clear sound, with strong bass, allowing you to notice musical details you would have never heard with most cheap setups.
-  However! sometimes you don't catch the "vibe" of the music; they force you to overanalyze everything, they are almost too optimal; Quoting the HEXA product page: "Present the excellent objective index".
+  However! sometimes you don't catch the "vibe" of the music; they force you to overanalyze everything, they are almost too optimal; Quoting the HEXA product page: #flink("https://web.archive.org/web/20260408175610/https://truthear.com/products/hexa#:~:text=Present%20the%20excellent%20objective%20index")["Present the excellent objective index"].
 ]
 
 #section[

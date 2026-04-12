@@ -4,7 +4,7 @@
 #import "../components/header.typ": *
 
 #let article = (
-  authors: (people.alex,),
+  authors: ("alex",),
   title: "Making a simple RegEx engine:
 Part 1: Introduction to RegEx",
   html-title: "Introduction to RegEx",

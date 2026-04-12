@@ -4,7 +4,7 @@
 #import "../components/header.typ": *
 
 #let article = (
-  authors: (people.alex,),
+  authors: ("alex",),
   title: "Comparing Compiler Frameworks & Backends",
   html-title: "Comparing Comparing Frameworks & Backends",
   // summary: "If you are working an more advanced compilers, you probably had to work with pattern matching already. In this article, we will explore different approaches.",

@@ -4,10 +4,10 @@
 #import "../components/header.typ": *
 
 #let article = (
-  authors: (people.alex,),
-  title: "Automatically inlining functions is not easy",
-  html-title: "Automatically inlining functions is not easy",
-  summary: "Compiler backends should automatically inline functions, to get rid to avoid function call overhead. A greedy approach has many issues. We'll be exploring a better approach."
+  authors: ("alex",),
+  title: "Challenges with automatically inlining functions",
+  html-title: "Challenges with automatically inlining functions",
+  summary: "Compiler backends should automatically inline functions, to get rid to avoid function call overhead. A greedy approach has many issues. We'll be exploring better approaches."
 )
 
 #metadata(article) <feed-ent>

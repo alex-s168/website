@@ -4,7 +4,7 @@
 #import "../components/header.typ": *
 
 #let article = (
-  authors: (people.alex,),
+  authors: ("alex",),
   title: "Designing a GPU architecture: Waves",
   html-title: "Designing a GPU architecture: Waves",
   summary: "Exploring GPU architecture and designing our own. Part 1: wavefronts / warps"

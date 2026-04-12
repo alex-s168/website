@@ -6,10 +6,15 @@ with open("build/pages.json", "r") as f:
     articles = json.load(f)
 articles = [x for x in articles if x["in-feed"] == True]
 
+with open("build/deploy/res/people.json", "r") as f:
+    people = json.load(f)
+
 all_authors = {}
 for article in articles:
     authors = article["authors"]
-    for author in authors:
+    for author_id in authors:
+        author = people[author_id]
+
         nick = author["nick"]
         name = author.get("name", nick)
         mail = author.get("mail", None)
@@ -19,7 +24,7 @@ for article in articles:
             out["email"] = mail
         if url:
             out["uri"] = url
-        all_authors[nick] = out
+        all_authors[author_id] = out
 
 
 def gen(this_ty: str, this_mode: str) -> FeedGenerator:
@@ -60,7 +65,7 @@ def gen(this_ty: str, this_mode: str) -> FeedGenerator:
         if this_mode == "" or (this_mode == "-hybrid" and (len(articles)-i-1) < 4):
             fe.content(content, type="html")
 
-        fe.author([all_authors[x["nick"]] for x in authors])
+        fe.author([all_authors[x] for x in authors])
 
         for tag in tags:
             fe.category(term=tag)

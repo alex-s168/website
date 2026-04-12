@@ -71,6 +71,7 @@ def typst_query_one(path, tag):
         "--input", "query=true",
         "--features", "html"
     ], capture_output=True)
+    print(meta.stderr, end="")
     meta = meta.stdout.decode("utf-8").strip()
     if len(meta) == 0:
         return None

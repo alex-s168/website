@@ -556,17 +556,39 @@ q9qe
   coppertiel: (
     nick: "coppertiel",
     url: "https://1558.space/",
-  )
+  ),
+  defectivebydesign: (
+    nick: "defectivebydesign",
+    url: "https://www.defectivebydesign.org/",
+    badge: "https://512b.dev/ote/dbd.gif",  // TODO: aaaa non reproducable aaaaaaaaaaaa
+  ),
 )
 
 #metadata(people) <meta-people>
 
-#let person(p) = {
+#let person(id) = {
+  let p = people.at(id)
   flink(p.url, p.at("name", default: p.nick))
 }
 
-#let nostr-link(p) = {
+#let nostr-link(id) = {
+  let p = people.at(id)
   flink("https://nostr.com/" + p.nostr.pub, p.nostr.at("nip05", default:p.nostr.pub))
+}
+
+#let badge(id, scale: 1) = {
+  let person = people.at(id)
+  context html.elem("a", attrs:(href:person.url))[
+    #html.elem("img", attrs:(
+      src: res-path()+"badges/"+id,
+      alt: "link to " + person.nick,
+      attributionsrc: person.badge,
+      fetchpriority: "low",
+      style: "padding-left:10px; padding-right:14px",
+      width: str(88*scale),
+      height: str(31*scale),
+    ))
+  ]
 }
 
 #let blocking-code(raw) = {

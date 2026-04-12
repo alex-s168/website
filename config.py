@@ -139,7 +139,7 @@ build gen_typst: phony build/pages.typ | """+ " ".join(f"build/{x}.git_rev.txt.i
 
 
 gen += """
-build build/deploy/atom.xml build/deploy/atom-summary.xml build/deploy/atom-hybrid.xml build/deploy/rss.xml build/deploy/rss-summary.xml build/deploy/rss-hybrid.xml : python gen_feed.py | build/pages.json """ + " ".join(f"build/{x}.nano.html" for x in pages) + """
+build build/deploy/atom.xml build/deploy/atom-summary.xml build/deploy/atom-hybrid.xml build/deploy/rss.xml build/deploy/rss-summary.xml build/deploy/rss-hybrid.xml : python gen_feed.py | build/pages.json build/deploy/res/people.json """ + " ".join(f"build/{x}.nano.html" for x in pages) + """
 """
 web_targets.append("build/deploy/atom.xml")
 

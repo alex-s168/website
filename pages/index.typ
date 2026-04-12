@@ -41,7 +41,7 @@
     (level:1, body: link("https://codeberg.org/alex-s168")[ Codeberg ]),
     (level:1, body: link("https://github.com/alex-s168")[ GitHub ]),
     (level:1, body: [Discord: alex_s168]),
-    (level:1, body: link("https://nostr.com/npub17semnd065ahhsajlylkyd3lahcykpuw45rhj7cge3uqdfq24y84st0g4gr")[ nostr ]),
+    (level:1, body: [nostr: #nostr-link("alex")]),
     (level:1, body: context link(res-path()+"Alexander_Nutz.pgp")[PGP Key]),
   )
   #br()
@@ -67,28 +67,17 @@
 
   Check out these websites:\
   #context if is-web and is-html() { // excludes min.html builds too
-    let scale = 1.3
     for id in people.keys() {
       let person = people.at(id)
       if person.at("badge", default:none) != none {
-      html.elem("a", attrs:(href:person.url, target:"_blank"))[
-        #html.elem("img", attrs:(
-          src: res-path()+"badges/"+id,
-          alt: "link to " + person.nick,
-          attributionsrc: person.badge,
-          fetchpriority: "low",
-          style: "padding-left:10px; padding-right:14px",
-          width: str(88*scale),
-          height: str(31*scale),
-        ))
-      ]
+        badge(id, scale:1.3)
       }
     }
   }
 
   and:
   - #link("https://compiler.club/")[compiler.club]
-  - #person(people.coppertiel)
+  - #person("coppertiel")
 
   #br()#br()#br()
 
