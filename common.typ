@@ -344,11 +344,6 @@ SKLjfdPIAgEAhsmMKrGzSC2J4HcVcRbkGtFN/cZYxrSynBZhMqbwWg8=
 =UDI3
 -----END PGP PUBLIC KEY BLOCK-----",
   ),
-  syn: (
-    nick: "syn",
-    url: "https://512b.dev/syn/",
-    badge: "https://512b.dev/syn/badge.png",
-  ),
   hsp: (
     nick: "hemisputnik",
     url: "https://512b.dev/hsp/",
@@ -357,10 +352,21 @@ SKLjfdPIAgEAhsmMKrGzSC2J4HcVcRbkGtFN/cZYxrSynBZhMqbwWg8=
       "codeberg.org": "hemisputnik",
     ),
   ),
+  syn: (
+    nick: "syn",
+    url: "https://512b.dev/syn/",
+    badge: "https://512b.dev/syn/badge.png",
+  ),
   barracudalake: (
     nick: "barracudalake",
     url: "https://barralake.de/",
-    badge: "https://static.barralake.de/banner.gif"
+    badge: "https://static.barralake.de/banner.gif",
+  ),
+  iczelia: (
+    nick: "iczelia", // todo: correct?
+    name: "Kamila Szewczyk",
+    url: "https://iczelia.net/",
+    badge: "https://iczelia.net/static/8831/me.png",
   ),
   mj: (
     nick: "mj",

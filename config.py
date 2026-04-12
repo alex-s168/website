@@ -1,6 +1,8 @@
 import os
 import subprocess
 
+FFMPEG_COMPATIBLE_SFX = ["png", "jpg", "jpeg", "gif", "avif"]
+
 recommend_pub = True
 
 testcmd=subprocess.run(["python", "test_py_mods.py"], capture_output=True)
@@ -98,7 +100,7 @@ rule expect_img_size
   command = eval "[ $$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 $in) = $size ]" && touch $out
 
 rule ffmpeg_compress
-  command = ffmpeg -y -i $in -compression_level 100 $out -hide_banner -loglevel error
+  command = ffmpeg -y -i $in -compression_level 100 $ffmpeg_args $out -hide_banner -loglevel error
   """
 else:
   gen += """
@@ -201,17 +203,18 @@ if os.path.isfile("build/badges.txt"):
 
         val = f"build/validate/deploy/res/badges/{user}"
 
-        gen += "\n"
-        gen += "build "+tg+": "
         if user == "alex":
-            gen += f"cp res/badge.png |@ {val}\n"
+            gen += f"\nbuild {tg} : cp res/badge.png |@ {val}\n"
         else:
-            gen += f"curl |@ {val}\n"
+            gen += f"\nbuild {tg}.orig : curl |@ {val}\n"
             gen += "  url = "+url+"\n"
-            gen += "  curlflags = -k"
+            gen += "  curlflags = -Lk\n"
+            gen += "\n"
+            gen += f"build {tg} : ffmpeg_compress {tg}.orig\n"
+            gen += "  ffmpeg_args = -f apng -plays 0\n"
+            gen += "\n"
 
-        gen += "\n"
-        gen += f"build {val} : "
+        gen += f"\nbuild {val} : "
         if user == "barracudalake": # TODO
           gen += f"expect_img_size {tg}\n"
           gen += f"  size = 80x31"
@@ -254,9 +257,9 @@ for root, dirnames, filenames in os.walk("res"):
             continue
         tg = f"build/deploy/{file}"  # file includes "res/"!
         web_targets.append(tg)
-        if any(file.endswith("."+x) for x in ["png", "jpg", "jpeg", "gif", "avif"]):
+        if any(file.endswith("."+x) for x in FFMPEG_COMPATIBLE_SFX):
             gen += "\n"
-            gen += f"build {tg} : ffmpeg_compress {file}\n"       
+            gen += f"build {tg} : ffmpeg_compress {file}\n"
         else:
             gen += "\n"
             gen += f"build {tg} : cp {file}\n"
