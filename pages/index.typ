@@ -42,7 +42,7 @@
     (level:1, body: link("https://github.com/alex-s168")[ GitHub ]),
     (level:1, body: [Discord: alex_s168]),
     (level:1, body: link("https://nostr.com/npub17semnd065ahhsajlylkyd3lahcykpuw45rhj7cge3uqdfq24y84st0g4gr")[ nostr ]),
-    (level:1, body: context link(res-path()+"pgp.txt")[PGP Key]),
+    (level:1, body: context link(res-path()+"Alexander_Nutz.pgp")[PGP Key]),
   )
   #br()
 

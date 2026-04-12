@@ -1,3 +1,5 @@
+from typing import Any
+import json
 import os
 import subprocess
 
@@ -55,10 +57,6 @@ rule git_inp
             rm -f $out.temp $out.iso.temp
   restat = 1
 
-rule badges_list
-  command = typst query $in "<meta-people>" --root . --input query=true --field value --one | jq -r 'to_entries[] | [.key,.value.badge] | @tsv' > $out
-build build/badges.txt: badges_list common.typ
-
 rule curl
   command = curl $curlflags $url > $out
 
@@ -84,7 +82,7 @@ rule python_capture
 rule minhtml
   command = minhtml --minify-js --minify-css $in -o $out
 
-build build.ninja: regen | config.py build/badges.txt res pages
+build build.ninja: regen | config.py res pages build/deploy/res/people.json
 
 rule cargo_release_bin
   command = (cd $in && cargo build --release) && cp $in/target/release/$file $out
@@ -185,42 +183,50 @@ for page in pages:
             web_targets.append(deploy_tg)
             gen += f"build {deploy_tg} : cp {tg}\n"
 
-if os.path.isfile("build/badges.txt"):
-    badges = None
-    with open("build/badges.txt", "r") as f:
-        badges = f.read().split("\n")
-    for badge in badges:
-        badge = badge.strip()
-        if len(badge) == 0:
-            continue
-        badge = badge.split("\t")
-        if len(badge) < 2:
-            continue
-        user = badge[0]
-        url = badge[1]
-        tg = f"build/deploy/res/badges/{user}"
-        web_targets.append(tg)
+if os.path.isfile("build/deploy/res/people.json"):
+    with open("build/deploy/res/people.json", "r") as f:
+        people = json.load(f)
 
-        val = f"build/validate/deploy/res/badges/{user}"
+    for person_id, person in people.items():
+        nick = person["nick"]
+        name = person.get("name", nick)
+        badge = person.get("badge", None)
+        pgp = person.get("pgp", None)
 
-        if user == "alex":
-            gen += f"\nbuild {tg} : cp res/badge.png |@ {val}\n"
-        else:
-            gen += f"\nbuild {tg}.orig : curl |@ {val}\n"
-            gen += "  url = "+url+"\n"
-            gen += "  curlflags = -Lk\n"
-            gen += "\n"
-            gen += f"build {tg} : ffmpeg_compress {tg}.orig\n"
-            gen += "  ffmpeg_args = -f gif -plays 0\n"
-            gen += "\n"
+        if badge is not None:
+            badge = badge.strip()
+            tg = f"build/deploy/res/badges/{person_id}"
+            web_targets.append(tg)
 
-        gen += f"\nbuild {val} : "
-        if user == "barracudalake": # TODO
-          gen += f"expect_img_size {tg}\n"
-          gen += f"  size = 80x31"
-        else:
-          gen += f"expect_img_size {tg}\n"
-          gen += f"  size = 88x31"
+            val = f"build/validate/deploy/res/badges/{person_id}"
+
+            if person_id == "alex":
+                gen += f"\nbuild {tg} : cp res/badge.png |@ {val}\n"
+            else:
+                gen += f"\nbuild {tg}.orig : curl |@ {val}\n"
+                gen += f"  url = {badge}\n"
+                gen += f"  curlflags = -Lk\n"
+                gen += "\n"
+                gen += f"build {tg} : ffmpeg_compress {tg}.orig\n"
+                gen += "  ffmpeg_args = -f gif -plays 0\n"
+                gen += "\n"
+
+            gen += f"\nbuild {val} : "
+            if person_id == "barracudalake": # TODO
+                gen += f"expect_img_size {tg}\n"
+                gen += f"  size = 80x31"
+            else:
+                gen += f"expect_img_size {tg}\n"
+                gen += f"  size = 88x31"
+
+        if pgp is not None:
+            pgp = pgp.strip()
+
+            for tg in [f"build/deploy/res/{name.replace(" ", "_")}.pgp", f"build/deploy/res/{person_id}.pgp"]:
+                web_targets.append(tg)
+                with open(tg, "w") as f:
+                    f.write(pgp)
+
 
 fonts = [x for x in os.listdir("./fonts/")]
 for font in fonts:
