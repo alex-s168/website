@@ -201,7 +201,7 @@
   = Conclusion
   Function inlining is much more complex than one might think.
 
-  Subscribe to the #flink("atom.xml")[Atom feed] to get notified about futre compiler-related articles.
+  Subscribe to the #html-href("feed.typ.desktop.html")[feed] to get notified about futre compiler-related articles.
 ]
 
 ]

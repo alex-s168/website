@@ -65,7 +65,7 @@
   - Buy the album/song once, and get the raw audio file. #flink("https://bandcamp.com/")[Bandcamp] allows you to do that.
   - Always have access to the raw audio file, but reliably pay the creators depending on how often you listen to it.
 
-  The only thing worse than streaming music, is DRM:
+  The only thing worse than streaming music, is DRM: \
   #badge("defectivebydesign", scale: 1.4)
 ]
 

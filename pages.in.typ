@@ -5,9 +5,8 @@
 // first element in list will show up first in the homepage and the feed => needs to be newest article!
 #let articles = (
   ( page: "article-gpu-arch-1.typ",
-    // unfinished
-    feed: false,
-    homepage: false,
+    feed: true,
+    homepage: true,
   ),
   ( page: "article-paying-for-things.typ",
     feed: true,

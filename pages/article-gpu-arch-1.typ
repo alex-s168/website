@@ -23,8 +23,6 @@
   #sized-p(small-font-size)[
     #rev-and-authors(article.authors)
   ]
-
-  #pdf-readability()
 ])
 
 #section[
@@ -46,7 +44,7 @@
   Each compute unit has multiple SIMD units, also called "wave", "wavefront" or "warp".
   Compute units also have some fast local memory (tens of kilobytes),
   main memory access queues, texture units, a scalar unit, and other features.
-  Subscribe to the #flink("atom.xml")[Atom feed] to get notified of future articles.
+  Subscribe to the #html-href("feed.typ.desktop.html")[feed] to get notified of future articles.
 
   The main memory (graphics memory) is typically outside of the GPU, and is slow, but high-bandwidth memory.
 ]
@@ -55,12 +53,12 @@
   == Waves
   A wave is a SIMD processing unit consisting of typically 32 "lanes" (sometimes called threads).
 
-  Each wave in a CU has separate control flow, and doesn't have to be related.
+  Each wave in a CU has independdent control flow.
 
   Instructions that waves support:
   - arithmetic operations
   - cross-lane data movement
-  - CU local and global memory access: each SIMD lane can access a completely different address. similar to CPU gather / scatter.
+  - CU local and global memory access: each SIMD lane can access a completely different address. similar to CPU gather / scatter. However typically accessing completely different locations in memory has bad performance.
   - synchronization with other CUs in the work group (see future article)
 
   Since only the whole wave can do control flow, and not each lane, all operations can be masked so that they only apply to specific lanes.
@@ -110,7 +108,7 @@
 
 #section[
   == Global memory
-  Since global memory reads/writes are really slow, they happen asynchronosly.
+  Since global memory reads/writes are really slow, they happen asynchronously.
 
   This means that a wave requests an access, then can continue executing, and then eventually waits for that access to finish.
 
@@ -191,7 +189,7 @@
   - `Vreg`: vector register
   - `M`:  (read only) vector gp reg as mask (1b).
           only first 32 registers can be used as mask. 
-          the operand consists of two masks and-ed together, each of which can conditionally be inverted first.
+          the operand consists of two masks ANDed together, each of which can conditionally be inverted first.
           this means that this operand takes up 12 bits
   - `Vany`: `Vreg` or `M`
   - `Simm`: immediate scalar value
@@ -266,9 +264,9 @@
 ]
 
 #section[
-  = Hand-compiling code
+  = Ccompiling Code
   Now that we decided on a simple compute-only GPU architecture,
-  we can try hand-compiling an OpenCL program.
+  we can look at an OpenCL program.
 
   I asked an LLM to produce a N*N matmul example (comments written manually):
   ```c
@@ -309,16 +307,16 @@
       tiledCol = col;
       float bv;
       if (tiledRow < N && tiledCol < N)
-          bv; = B[tiledRow * N + tiledCol];
+        bv = B[tiledRow * N + tiledCol];
       else
-          bv = 0.0f;
-      Bsub[local_row][local_col]= bv;
+        bv = 0.0f;
+      Bsub[local_row][local_col] = bv;
 
       // sync local access across local grp
       barrier(CLK_LOCAL_MEM_FENCE);
 
       for (int k = 0; k < TILE_SIZE; ++k)
-          sum += Asub[local_row][k] * Bsub[k][local_col];
+        sum += Asub[local_row][k] * Bsub[k][local_col];
 
       // sync local access across local grp
       barrier(CLK_LOCAL_MEM_FENCE);
@@ -340,13 +338,15 @@
   Our global dimension is 128*128, which means that we would need 256 compute units.
   But since we probably don't have 256 compute units,
   we can just use a on-hardware task scheduler.
+
+  Compiling this is left as an exersice to the reader.
 ]
 
 #section[
   = Outro
-  Modern GPUs are really complex, but designing a simple GPU is not that hard either.
+  Modern GPUs are complex, but designing simple GPUs is achievable.
 
-  Subscribe to the #flink("atom.xml")[Atom feed] to get notified of future articles.
+  Subscribe to the #html-href("feed.typ.desktop.html")[feed] to get notified of future articles.
 ]
 
 ]
