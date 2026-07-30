@@ -343,8 +343,9 @@
 ]
 
 #section[
-  = Outro
-  Modern GPUs are complex, but designing simple GPUs is achievable.
+  // edit june 2026: this also sounds weird. maybe I should take an beginner english class or sth
+  //= Outro
+  //Modern GPUs are complex, but designing simple GPUs is achievable.
 
   Subscribe to the #html-href("feed.typ.desktop.html")[feed] to get notified of future articles.
 ]

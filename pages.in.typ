@@ -21,9 +21,10 @@
     homepage: true,
   ),
   (
+    // edit june 2026: this is stupid. just use eqsat already
     page: "compiler-pattern-matching.typ",
-    feed: true,
-    homepage: true,
+    feed: false,
+    homepage: false,
   ),
   (
     page: "article-favicon.typ",

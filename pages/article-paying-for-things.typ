@@ -27,7 +27,7 @@
 
 #section[
   These days, most things are available for "free". Google search is free. G-Mail is free. Even Google Photos is free??
-  Obviously things are not free because the companies are nice. The companies want to collect your data, and show you ads.
+  Obviously that's not because the companies are "nice". They want to collect your data, and show you ads.
 
   The situation's gotten so bad, that most people refuse to pay for small things [citation needed].
 ]

@@ -22,9 +22,9 @@
 )[
 
   #br()
-  #title[Alexander Nutz]
+  #title[Alexander C. Nutz]
 
-  Low-level programming & electrical engineering
+  Systems programming & electrical engineering
   #br()#br()
 
   Articles (#html-href("feed.typ.desktop.html")[Feed])
@@ -37,30 +37,33 @@
   Socials
   #tree-list(
     (level:1, body: link("https://matrix.to/#/"+people.alex.matrix)[ Matrix ]),
-    (level:1, body: link("mailto:"+people.alex.mail)[ E-Mail ]),
-    (level:1, body: link("https://codeberg.org/alex-s168")[ Codeberg ]),
-    (level:1, body: link("https://github.com/alex-s168")[ GitHub ]),
-    (level:1, body: [Discord: alex_s168]),
-    (level:1, body: [nostr: #nostr-link("alex")]),
+    (level:1, body: [ #link("mailto:"+people.alex.mail)[ E-Mail ] (Currently non-operational!) ]),
     (level:1, body: context link(res-path()+"Alexander_Nutz.pgp")[PGP Key]),
+    (level:1, body: link("https://codeberg.org/alex-s168")[ Codeberg ]),
+    (level:1, body: link("https://x.com/alexn168")[ X.com ]),
+    (level:1, body: [Discord: alex_s168 (checked rarely)]),
+    (level:1, body: [nostr: #nostr-link("alex") (checked rarely)]),
+    (level:1, body: link("https://github.com/alex-s168")[ GitHub ]),
   )
   #br()
 
-  Noteable (WIP) projects
+  Working on:
   #tree-list(
-    (level:1, body: [ #link("https://codeberg.org/meera-linux")[Meera Linux] ]),
-    (level:1, body: [vxauth] ),
-    (level:1, body: [ #link("https://vxcc.dev/webchapow_bench.html")[WebChaPow] ]),
-
-    (level:1, body: [ Misc. ]),
-     (level:2, body: [ #link("https://github.com/alex-s168/tpre")[ tpre ]: Fast RegEx engine ]),
-
-    (level:1, body: [ Electronics ]),
-     (level:2, body: [ #link("project-etc-nand.typ.desktop.html")[ etc-nand ]: #link("https://github.com/ETC-A/etca-spec/")[ ETC.A ] CPU from NAND gates ]),
+    (level:1, body: [Everyone deserves cryptography: new authentication system] ),
+    (level:1, body: [ #link("https://vxcc.dev/webchapow_bench.html")[WebChaPow]: Memory-dependent Proof-of-Work prototype ]),
+    (level:1, body: [ Interaction Combinator hardware (soonTM) ]),
+    (level:1, body: [ Learning how to build a modern SMT solver (SMT-COMP 2027, I'm coming!) ]),
+    (level:1, body: [ Designing the perfect beginner-friendly&practical PL (there is gonna be a rant about this coming soon) ]),
+    //(level:1, body: [ Electronics ]),
+    (level:1, body: [ #link("project-etc-nand.typ.desktop.html")[ etc-nand ]: #link("https://github.com/ETC-A/etca-spec/")[ ETC.A ] CPU from NAND gates ]),
   )
   #br()
 
-  This website is written almost entirely in #link("https://typst.app/docs")[typst]!
+  This website is written almost entirely in #link("https://typst.app/docs")[typst]
+  #br()
+
+  Edit June 2026: I am (passively...) working on a new website that is soo much better thant his and amazing, but thanks to the *truly amazing* JavaShi- JavaScript ecosystem, it's still not done...
+  #br()
 
   #link("https://github.com/alex-s168/website")[Website source code]
   #br()

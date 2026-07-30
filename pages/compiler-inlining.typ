@@ -187,7 +187,7 @@
 
 #section[
   == Step 4: perform outlining
-  This is obvious.
+  obvious
 ]
 
 #section[
@@ -198,8 +198,9 @@
 ]
 
 #section[
-  = Conclusion
-  Function inlining is much more complex than one might think.
+  // edit june 2026: this sounds weird, so I removed it
+  //= Conclusion
+  //Function inlining is much more complex than one might think.
 
   Subscribe to the #html-href("feed.typ.desktop.html")[feed] to get notified about futre compiler-related articles.
 ]
