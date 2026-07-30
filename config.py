@@ -275,13 +275,14 @@ build web: phony """+ " ".join(web_targets) +"""
 """
 
 pub_cmd = [
-"( [ -d build-up ] && cd build-up && git fetch origin && git checkout main && git reset --hard origin/main "
-  "|| git clone root@vxcc.dev:/var/www/git.vxcc.dev/alexander.nutz/website-build build-up )",
-"cd build-up",
-"rsync -av --delete --exclude '.git' ../build/deploy/ .",
-"git add .",
-"git commit -m up",
-"git push -u origin main",
+# "( [ -d build-up ] && cd build-up && git fetch origin && git checkout main && git reset --hard origin/main "
+#   "|| git clone root@vxcc.dev:/var/www/git.vxcc.dev/alexander.nutz/website-build build-up )",
+# "cd build-up",
+# "rsync -av --delete --exclude '.git' ../build/deploy/ .",
+# "git add .",
+# "git commit -m up",
+# "git push -u origin main",
+"rsync -r build/deploy/* root@198.7.115.119:/var/www/gitea.vxcc.dev/alexander.nutz/website-build",
 ]
 
 gen+="""
