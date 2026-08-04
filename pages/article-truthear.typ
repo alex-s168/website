@@ -54,9 +54,9 @@
 
 #section[
   = Comparision
-  - GATE: #geizhals-price(3204640, 20)
-  - HEXA: #geizhals-price(2870160, 99)
-  - PURE: #geizhals-price(3577614, 99)
+  - GATE: #geizhals-price(3204644, 41)
+  - HEXA: #geizhals-price(2870160, 104)
+  - PURE: #geizhals-price(3577614, 118)
 ]
 
 #section[

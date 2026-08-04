@@ -81,6 +81,7 @@
   and:
   - #link("https://compiler.club/")[compiler.club]
   - #person("coppertiel")
+  - #link("https://essenceia.github.io")[Tales on the wire]
 
   #br()#br()#br()
 

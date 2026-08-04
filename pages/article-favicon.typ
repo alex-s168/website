@@ -29,7 +29,7 @@
 
 #section[
   The favicon of my website currently is:
-  #context wimage(res-path()+"favicon.png", width:w)
+  #context wimage(res-path()+"favicon.png", width:w, alt:"Current Favicon")
 ]
 
 #let ic_url = "https://www.sciencedirect.com/science/article/pii/S0890540197926432"
@@ -42,7 +42,7 @@
 #section[
   = Step 0: Designing the Circuit
   I ended up with this:
-  #context wimage(res-path()+"article-favicon/step0.png", width:32%)
+  #context wimage(res-path()+"article-favicon/step0.png", width:32%, alt:"Layouted circuit")
   (this is the second attempt at layouting the circuit)
 ]
 
@@ -50,16 +50,16 @@
   = Step 1: Sketching
   While starting doing this, I realised that one wire always overlaps with one node triangle, unless I cheated.
   Here is a visual representation of this (inaccurate):
-  #context wimage(res-path()+"article-favicon/step1_0.png", width:18%)
+  #context wimage(res-path()+"article-favicon/step1_0.png", width:18%, alt:"Sketching...")
 
   \
   This means that I have to modify the layouting from step 0 a bit, which is unfortunate,
   but in retrospect, I think that it makes the result look better:
-  #context wimage(res-path()+"article-favicon/step1_1.png", width:25%)
+  #context wimage(res-path()+"article-favicon/step1_1.png", width:25%, alt:"Sketching...")
 
   \
   That however takes up too much space, so I did another variation:
-  #context wimage(res-path()+"article-favicon/step1_2.png", width:25%)
+  #context wimage(res-path()+"article-favicon/step1_2.png", width:25%, alt:"Sketching...")
 
   \
   I also did another variation here, but decided to not use that.
@@ -70,7 +70,7 @@
   I colored the back side of the piece of paper which contains the sketeches with a pencil,
   put a white piece of paper behind it,
   and then re-traced the line, to get a lighter version of the sketch onto the white paper.
-  #context wimage(res-path()+"article-favicon/step2.png", width:25%)
+  #context wimage(res-path()+"article-favicon/step2.png", width:25%, alt:"sketching...")
 
   \
   Then I used modern technology (a copier) to copy that piece of paper multiple times,
@@ -81,8 +81,8 @@
   = Step 3: Coloring
   It was a disaster...
 
-  #context wimage(res-path()+"article-favicon/step3_0.png", width:70%) \
-  #context wimage(res-path()+"article-favicon/step3_1.png", width:70%)
+  #context wimage(res-path()+"article-favicon/step3_0.png", width:70%, alt:"colored version looking bad") \
+  #context wimage(res-path()+"article-favicon/step3_1.png", width:70%, alt:"colored version looking bad")
 
   \
   Some variants actually look nice, but only parts of it.
@@ -103,7 +103,7 @@
   ```
 
   And less than half a minute later, she came up with this:
-  #context wimage(res-path()+"article-favicon/step4_1.png", width:w)
+  #context wimage(res-path()+"article-favicon/step4_1.png", width:w, alt:"getting somewhere")
 
   \
   We considered that the logo will end up being quite small, so "we" wanted it to look good when zoomed out.
@@ -114,7 +114,7 @@
 
   \
   Then she came up with this (the final version):
-  #context wimage(res-path()+"article-favicon/step4_2.png", width:w)
+  #context wimage(res-path()+"article-favicon/step4_2.png", width:w, alt:"crazy results")
 
   Filling the drawing only took her about 20 seconds!
 ]

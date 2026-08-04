@@ -4,7 +4,7 @@
   context if is-html() and is-web [
     #html.elem("a", attrs:(
       class:"geizhals-price-"+str(id),
-      href:"https://geizhals.at/truthear-hexa-a"+str(id)+".html",
+      href:"https://geizhals.at/a"+str(id)+".html",
     ))[
       #at-time-of-writing € (at time of writing)
     ]
