@@ -370,7 +370,7 @@ SKLjfdPIAgEAhsmMKrGzSC2J4HcVcRbkGtFN/cZYxrSynBZhMqbwWg8=
     nick: "iczelia", // todo: correct?
     name: "Kamila Szewczyk",
     url: "https://iczelia.net/",
-    badge: "https://iczelia.net/static/8831/me.png",
+    badge: "https://iczelia.net/assets-1024x768/8831/me.png",
     pgp: "-----BEGIN PGP PUBLIC KEY BLOCK-----
 
 mQINBGLmODgBEADBp0q+9tuJS6fMMVI39FNoS4zo9CCvYXrp8wvO095wnh0vho8M
