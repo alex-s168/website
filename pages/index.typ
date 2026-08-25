@@ -47,6 +47,12 @@
   )
   #br()
 
+  Other works
+  #tree-list(
+    (level:1, body: [ (WIP) #context link(res-path()+"classof09-fanfic/crispin-likes-cars.png")[Class Of '09 FanFic: "Crispin likes Cars"] ])
+  )
+  #br()
+
   Working on:
   #tree-list(
     (level:1, body: [Everyone deserves cryptography: new authentication system] ),
