@@ -559,8 +559,13 @@ q9qe
   ),
   defectivebydesign: (
     nick: "defectivebydesign",
-    url: "https://www.defectivebydesign.org/",
+    url: "https://www.defectivebydesign.org",
     badge: "https://512b.dev/ote/dbd.gif",  // TODO: aaaa non reproducable aaaaaaaaaaaa
+  ),
+  april: (
+    nick: "april",
+    url: "https://aprl.pet",
+    badge: "https://aprl.pet/badges/april.png",
   ),
 )
 

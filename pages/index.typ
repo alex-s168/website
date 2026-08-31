@@ -42,7 +42,7 @@
     (level:1, body: link("https://codeberg.org/alex-s168")[ Codeberg ]),
     (level:1, body: link("https://x.com/alexn168")[ X.com ]),
     (level:1, body: [Discord: alex_s168 (checked rarely)]),
-    (level:1, body: [nostr: #nostr-link("alex") (checked rarely)]),
+    (level:1, body: [nostr: #nostr-link("alex") (checked barely ever)]),
     (level:1, body: link("https://github.com/alex-s168")[ GitHub ]),
   )
   #br()
@@ -62,6 +62,12 @@
     (level:1, body: [ Designing the perfect beginner-friendly&practical PL (there is gonna be a rant about this coming soon) ]),
     //(level:1, body: [ Electronics ]),
     (level:1, body: [ #link("project-etc-nand.typ.desktop.html")[ etc-nand ]: #link("https://github.com/ETC-A/etca-spec/")[ ETC.A ] CPU from NAND gates ]),
+  )
+  #br()
+
+  Other Pages:
+  #tree-list(
+    (level:1, body: [ #link("homelab-pc-setup.typ.desktop.html")[Homelab & PC setup] ]),
   )
   #br()
 

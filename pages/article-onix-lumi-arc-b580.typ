@@ -45,7 +45,7 @@
 
   Why this card? (Advantages)
   - PCIe4x8 (on a 16x slot): can fit more GPUs per CPU, and PCIe4.0 is cheaper and easier to work with.
-  - Really cheap. #geizhals-price(3687439, 297) per card.
+  - Really cheap. I bought it at 297€/card. Live price: #geizhals-price(3687439, 297) / card. 
   - Heatsink design (we'll get to this later)
 ]
 
