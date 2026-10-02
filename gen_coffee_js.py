@@ -1,9 +1,7 @@
-import requests
 import json
 
-response = requests.get("https://gist.githubusercontent.com/erdem/8c7d26765831d0f9a8c62f02782ae00d/raw/248037cd701af0a4957cce340dabb0fd04e38f4c/countries.json")
-response.raise_for_status()
-response = json.loads(response.text)
+with open("build-input/countries.json", "r") as f:
+    response = json.load(f)
 
 out = ""
 for item in response:
@@ -26,7 +24,7 @@ function userCountry() {
 }
 
 async function byCountry(country) {
-  const url = `https://alex.vxcc.dev/coffee/price/${encodeURIComponent(country)}`;
+  const url = `/coffee/price/${encodeURIComponent(country)}`;
   try {
     const response = await fetch(url);
     if(!response.ok){throw new Error(`HTTP error ${response.status}`);}
@@ -39,7 +37,7 @@ async function byCountry(country) {
 }
 
 async function usd_eur() {
-  const url = `https://alex.vxcc.dev/coffee/usd_eur`;
+  const url = `/coffee/usd_eur`;
   try {
     const response = await fetch(url);
     if(!response.ok){throw new Error(`HTTP error ${response.status}`);}
@@ -52,7 +50,7 @@ async function usd_eur() {
 }
 
 async function ada_usd() {
-  const url = `https://alex.vxcc.dev/coffee/ada_usd`;
+  const url = `/coffee/ada_usd`;
   try {
     const response = await fetch(url);
     if(!response.ok){throw new Error(`HTTP error ${response.status}`);}

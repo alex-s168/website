@@ -359,7 +359,6 @@ SKLjfdPIAgEAhsmMKrGzSC2J4HcVcRbkGtFN/cZYxrSynBZhMqbwWg8=
   syn: (
     nick: "syn",
     url: "https://512b.dev/syn/",
-    badge: "https://512b.dev/syn/badge.png",
   ),
   barracudalake: (
     nick: "barracudalake",

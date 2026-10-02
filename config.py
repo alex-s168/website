@@ -31,6 +31,10 @@ if not have_pngquant:
 
 web_targets = []
 
+# Nix supplies this directory explicitly after fetching badge inputs. Ordinary
+# Ninja builds leave it unset and fetch badges directly from their URLs.
+prefetched_badge_dir = os.environ.get("WEBSITE_BADGE_PREFETCH_DIR")
+
 gen = """
 build always: phony
 
@@ -39,9 +43,7 @@ rule regen
   generator = 1
 
 rule update_git_rev
-  command = git rev-parse HEAD > build/git_rev.txt.tmp && \
-            cmp -s build/git_rev.txt.tmp build/git_rev.txt || mv build/git_rev.txt.tmp build/git_rev.txt; \
-            rm -f build/git_rev.txt.tmp
+  command = python git_metadata.py revision build/git_rev.txt
   restat = 1
 build build/git_rev.txt: update_git_rev | always
 
@@ -50,11 +52,7 @@ rule typst
   command = eval "typst compile --root . --features html -j 6 $flags $in $out --deps $out.d --deps-format make"
 
 rule git_inp
-  command = git log -1 --format="--input git_rev=%H --input git_commit_date=\\\"%ad\\\"" --date="format:%d. %B %Y %H:%M" -- $in > $out.temp && \
-              cmp -s $out.temp $out || mv $out.temp $out; \
-            git log -1 --format="%cI" -- $in > $out.iso.temp && \
-              cmp -s $out.iso.temp $out || mv $out.iso.temp $out.iso; \
-            rm -f $out.temp $out.iso.temp
+  command = python git_metadata.py page $in $out
   restat = 1
 
 rule curl
@@ -82,7 +80,7 @@ rule python_capture
 rule minhtml
   command = minhtml --minify-js --minify-css $in -o $out
 
-build build.ninja: regen | config.py res pages build/deploy/res/people.json
+build build.ninja: regen | config.py git_metadata.py gen_coffee_js.py build-input/countries.json res pages build/deploy/res/people.json
 
 rule cargo_release_bin
   command = (cd $in && cargo build --release) && cp $in/target/release/$file $out
@@ -121,13 +119,12 @@ rule pngquant
   """
 
 gen += """
-build build/deploy/coffee.js : python_capture gen_coffee_js.py
+build build/deploy/coffee.js : python_capture gen_coffee_js.py | build-input/countries.json
 
 build build/coffee_server : cargo_release_bin coffee
   file = coffee
 """
 web_targets.append("build/deploy/coffee.js")
-web_targets.append("build/coffee_server")
 
 pages = [x for x in os.listdir("./pages/")]
 
@@ -165,7 +162,7 @@ variants = [
 for page in pages:
     gr = "build/" + page + ".git_rev.txt"
     gen += "\n"
-    gen += "build "+gr+" | "+gr+".iso : git_inp pages/" + page + " | build/git_rev.txt\n"
+    gen += "build "+gr+" | "+gr+".iso : git_inp pages/" + page + " | build/git_rev.txt git_metadata.py\n"
     for var in variants:
         tg = "build/" + page + var["suffix"]
         gen += "\n"
@@ -199,25 +196,22 @@ if os.path.isfile("build/deploy/res/people.json"):
             web_targets.append(tg)
 
             val = f"build/validate/deploy/res/badges/{person_id}"
-
             if person_id == "alex":
                 gen += f"\nbuild {tg} : cp res/badge.png |@ {val}\n"
             else:
-                gen += f"\nbuild {tg}.orig : curl |@ {val}\n"
-                gen += f"  url = {badge}\n"
-                gen += f"  curlflags = -Lk\n"
-                gen += "\n"
-                gen += f"build {tg} : ffmpeg_compress {tg}.orig\n"
-                gen += "  ffmpeg_args = -f gif -plays 0\n"
-                gen += "\n"
+                if prefetched_badge_dir is None:
+                    gen += f"\nbuild {tg}.orig : curl always |@ {val}\n"
+                    gen += f"  url = {badge}\n"
+                    gen += "  curlflags = -Lk\n"
+                else:
+                    source_badge = f"{prefetched_badge_dir}/{person_id}"
+                    gen += f"\nbuild {tg}.orig : cp {source_badge}\n"
+                gen += f"\nbuild {tg} : ffmpeg_compress {tg}.orig\n"
+                gen += "  ffmpeg_args = -f gif -plays 0\n\n"
 
-            gen += f"\nbuild {val} : "
-            if person_id == "barracudalake": # TODO
-                gen += f"expect_img_size {tg}\n"
-                gen += f"  size = 80x31"
-            else:
-                gen += f"expect_img_size {tg}\n"
-                gen += f"  size = 88x31"
+            gen += f"build {val} : expect_img_size {tg}\n"
+            size = "80x31" if person_id == "barracudalake" else "88x31"
+            gen += f"  size = {size}"
 
         if pgp is not None:
             pgp = pgp.strip()

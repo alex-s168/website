@@ -6,3 +6,6 @@ build-up
 build.ninja
 .ninja_log
 .ninja_deps
+.env
+result
+result-*
