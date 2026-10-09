@@ -4,6 +4,10 @@
 
 // first element in list will show up first in the homepage and the feed => needs to be newest article!
 #let articles = (
+  ( page: "article-netgear-poe-loud.typ",
+    feed: true,
+    homepage: true,
+  ),
   ( page: "article-onix-lumi-arc-b580.typ",
     feed: true,
     homepage: true,

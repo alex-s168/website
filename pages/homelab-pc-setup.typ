@@ -39,9 +39,10 @@
   - #link("https://sable.moe")[Sable matrix client]
 
   == Networking
-  - 1x basic-ahh managed 8-port gigabit Netgear switch
-  - 1x basic-ahh PoE managed 8-port gigabit Netgear switch
+  - 1x managed 8-port gigabit Netgear switch
+  - 1x PoE managed 8-port gigabit Netgear switch
     - with a waterproof isolated MeanWell PSU, because of the annoying-ass humming of the default PSU
+    - See #link("article-netgear-poe-loud.typ.desktop.html")[I thought Netgear makes Ethernet switches, not *synthesizers*]
   - 1x Arista DCS-7050QX-32, 40gbit qsfp really cool, amazing, and loud-asf managed switch, with ZTP over management VLAN from my PC
 
   == Server No1

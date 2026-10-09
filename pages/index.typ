@@ -37,7 +37,7 @@
   Socials
   #tree-list(
     (level:1, body: link("https://matrix.to/#/"+people.alex.matrix)[ Matrix ]),
-    (level:1, body: [ #link("mailto:"+people.alex.mail)[ E-Mail ] (Currently non-operational!) ]),
+    (level:1, body: [ #link("mailto:"+people.alex.mail)[ E-Mail ] (Yes, the mail server is finally back up again) ]),
     (level:1, body: context link(res-path()+"Alexander_Nutz.pgp")[PGP Key]),
     (level:1, body: link("https://codeberg.org/alex-s168")[ Codeberg ]),
     (level:1, body: link("https://x.com/alexn168")[ X.com ]),
@@ -49,7 +49,7 @@
 
   Other works
   #tree-list(
-    (level:1, body: [ (WIP) #context link(res-path()+"classof09-fanfic/crispin-likes-cars.png")[Class Of '09 FanFic: "Crispin likes Cars"] ])
+    (level:1, body: [ (WIP) #context link(res-path()+"classof09-fanfic/crispin-likes-cars.png")[Class Of '09 FanFic: "Crispin & Cars"] ])
   )
   #br()
 
@@ -62,6 +62,7 @@
     (level:1, body: [ Designing the perfect beginner-friendly&practical PL (there is gonna be a rant about this coming soon) ]),
     //(level:1, body: [ Electronics ]),
     (level:1, body: [ #link("project-etc-nand.typ.desktop.html")[ etc-nand ]: #link("https://github.com/ETC-A/etca-spec/")[ ETC.A ] CPU from NAND gates ]),
+    (level:1, body: [ #link("project-vxdp.typ.desktop.html")[vxdp]: low-cost high-reliability ethernet-compatible physical link ]),
   )
   #br()
 

@@ -82,10 +82,14 @@
 ]
 
 #section[
-  If you'd like to support this project, consider donating (over Cardano): \
-  #donate-cardano(people.alex.cardano, mult:1)
-  #donate-cardano(people.alex.cardano, mult:7)
-  #donate-cardano(people.alex.cardano, mult:16)
+  Update august 2026: After being frustrated as to why the PCBs always short, I finally figured it out. The tristate buffer enable input was inverted...
+]
+
+#section[
+  If you'd like to support this project, consider donating (over Cardano):
+  - #donate-cardano(people.alex.cardano, mult:1)
+  - #donate-cardano(people.alex.cardano, mult:7)
+  - #donate-cardano(people.alex.cardano, mult:16)
 ]
 
 
