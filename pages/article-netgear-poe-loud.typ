@@ -61,7 +61,7 @@
 
   Now there are multiple reasons this could cause sounds.
 
-  First, inductors can resonate weirldy or something no idea. Basically you can't do anything about that, other than making sure the inductor is mounted really solidly, without room for wiggling.
+  First, inductors can resonate weirdly or something no idea. Basically you can't do anything about that, other than making sure the inductor is mounted really solidly, without room for wiggling.
 ]
 
 #section[
