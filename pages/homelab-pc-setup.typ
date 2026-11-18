@@ -26,11 +26,10 @@
   - #strike[WinWing] WinCtrl URSA MINOR Fighter Joystick R
 
   == Software
-  - #link("https://chimera-linux.org")[Chimera Linux] + KDE Plasma
+  - NixOS + KDE Plasma (eventually will switch to cosmic)
   - #link("https://mullvad.net")[Mullvad VPN]
-  - vanilla Firefox, sadly
+  - Firefox
   - #link("https://gram-editor.com")[Gram Editor]
-  - neovim (#link("https://github.com/alex-s168/nvim-config")[config])
   - Tidal for music streaming
   - Mixxx for offline music listening
   - Thunderbird as E-Mail client
@@ -50,6 +49,7 @@
   - MSI MAG B850 TOMAHAWK MAX WIFI
   - 2x32GB G.Skill Ripjaws S5 White DDR5-5200 CL36
   - 3x Crucial P3 Plus NVMe 2TB
+  - Tenstorrent Wormhole n300d (Interested in getting it for cheap? Send me a message)
 
   == Server No2
   - EPYC 7282

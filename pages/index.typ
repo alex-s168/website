@@ -42,14 +42,7 @@
     (level:1, body: link("https://codeberg.org/alex-s168")[ Codeberg ]),
     (level:1, body: link("https://x.com/alexn168")[ X.com ]),
     (level:1, body: [Discord: alex_s168 (checked rarely)]),
-    (level:1, body: [nostr: #nostr-link("alex") (checked barely ever)]),
     (level:1, body: link("https://github.com/alex-s168")[ GitHub ]),
-  )
-  #br()
-
-  Other works
-  #tree-list(
-    (level:1, body: [ (WIP) #context link(res-path()+"classof09-fanfic/crispin-likes-cars.png")[Class Of '09 FanFic: "Crispin & Cars"] ])
   )
   #br()
 
